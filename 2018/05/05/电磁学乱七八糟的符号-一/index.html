@@ -58,15 +58,15 @@
   <meta name="description" content="电磁学乱七八糟的符号(一)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="电磁学乱七八糟的符号(一)">
-<meta property="og:url" content="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/电磁学乱七八糟的符号-一/index.html">
 <meta property="og:site_name" content="HWB-blog">
 <meta property="og:description" content="电磁学乱七八糟的符号(一)">
 <meta property="og:locale" content="cn">
-<meta property="og:updated_time" content="2019-10-11T10:03:55.134Z">
+<meta property="og:updated_time" content="2019-10-11T10:05:59.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="电磁学乱七八糟的符号(一)">
 <meta name="twitter:description" content="电磁学乱七八糟的符号(一)">
-  <link rel="canonical" href="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/">
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/电磁学乱七八糟的符号-一/">
 
 
 <script id="page-configurations">
@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/电磁学乱七八糟的符号-一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="He Wei Bao">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Bearbeitet am</span>
-                <time title="Geändert am: 2019-10-11 18:03:55" itemprop="dateModified" datetime="2019-10-11T18:03:55+08:00">2019-10-11</time>
+                <time title="Geändert am: 2019-10-11 18:05:59" itemprop="dateModified" datetime="2019-10-11T18:05:59+08:00">2019-10-11</time>
               </span>
             
           
@@ -538,6 +538,56 @@
 
   
 
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   

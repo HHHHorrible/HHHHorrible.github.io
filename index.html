@@ -279,7 +279,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="cn">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/电磁学乱七八糟的符号-一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="He Wei Bao">
@@ -294,7 +294,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/" class="post-title-link" itemprop="url">电磁学乱七八糟的符号(一)</a>
+            <a href="/2018/05/05/电磁学乱七八糟的符号-一/" class="post-title-link" itemprop="url">电磁学乱七八糟的符号(一)</a>
           
         </h1>
 
@@ -320,7 +320,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Bearbeitet am</span>
-                <time title="Geändert am: 2019-10-11 18:03:55" itemprop="dateModified" datetime="2019-10-11T18:03:55+08:00">2019-10-11</time>
+                <time title="Geändert am: 2019-10-11 18:05:59" itemprop="dateModified" datetime="2019-10-11T18:05:59+08:00">2019-10-11</time>
               </span>
             
           
@@ -357,7 +357,7 @@
           <!--noindex-->
           
             <div class="post-button">
-              <a class="btn" href="/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/">
+              <a class="btn" href="/2018/05/05/电磁学乱七八糟的符号-一/">
                 Weiterlesen &raquo;
               </a>
             </div>
@@ -532,6 +532,58 @@
       
     
       
+        
+      
+    
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
     
   
 
