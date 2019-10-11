@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="电磁学乱七八糟的符号(一)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电磁学乱七八糟的符号(一)">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/index.html">
+<meta property="og:site_name" content="HWB-blog">
+<meta property="og:description" content="电磁学乱七八糟的符号(一)">
+<meta property="og:locale" content="cn">
+<meta property="og:updated_time" content="2019-10-11T10:03:55.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电磁学乱七八糟的符号(一)">
+<meta name="twitter:description" content="电磁学乱七八糟的符号(一)">
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>电磁学乱七八糟的符号(一) | HWB-blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HWB-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Startseite</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archiv</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/2018-05-05-电磁学乱七八糟的符号-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="今日你学左米啊">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HWB-blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            电磁学乱七八糟的符号(一)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-05-05 01:07:04" itemprop="dateCreated datePublished" datetime="2018-05-05T01:07:04+08:00">2018-05-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2019-10-11 18:03:55" itemprop="dateModified" datetime="2019-10-11T18:03:55+08:00">2019-10-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电磁波/" itemprop="url" rel="index">
+                    <span itemprop="name">电磁波</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">电磁学乱七八糟的符号(一)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电磁学乱七八糟的符号-一"><a href="#电磁学乱七八糟的符号-一" class="headerlink" title="电磁学乱七八糟的符号(一)"></a>电磁学乱七八糟的符号(一)</h1><p><strong>author:何伟宝</strong></p>
+<hr>
+<p>[TOC]</p>
+<h2 id="chapter1-场量基础"><a href="#chapter1-场量基础" class="headerlink" title="chapter1 场量基础"></a>chapter1 场量基础</h2><h3 id="通量-psi"><a href="#通量-psi" class="headerlink" title="通量$\psi$"></a>通量$\psi$</h3><p>$$\psi = \int_s \vec F \bullet \vec a_n d S$$<br>$$\psi = \oint_S \vec F \bullet d\vec S$$</p>
+<h3 id="旋量-Gamma"><a href="#旋量-Gamma" class="headerlink" title="旋量$\Gamma$"></a>旋量$\Gamma$</h3><p>$$\Gamma=\int_l \vec F \bullet d\vec l$$<br>$$\Gamma=\oint_l \vec F \bullet d\vec l$$</p>
+<h3 id="矢性微分算符-nabla"><a href="#矢性微分算符-nabla" class="headerlink" title="矢性微分算符$\nabla$"></a>矢性微分算符$\nabla$</h3><p>$$\nabla =\vec a_x  \frac{\partial }{\partial x}+\vec a_y  \frac{\partial }{\partial y}+\vec a_z  \frac{\partial }{\partial z} $$</p>
+<h3 id="拉普拉斯算符-nabla-2"><a href="#拉普拉斯算符-nabla-2" class="headerlink" title="拉普拉斯算符$\nabla^2$"></a>拉普拉斯算符$\nabla^2$</h3><p>$$\nabla =\vec a_x  \frac{\partial^2 }{\partial x^2}+\vec a_y  \frac{\partial^2 }{\partial y^2}+\vec a_z  \frac{\partial^2 }{\partial z^2} $$</p>
+<p>$$\nabla \times (\nabla \times \vec F) = \nabla(\nabla \bullet \vec F) -\nabla^2 \vec F $$</p>
+<h3 id="梯度-grad-u"><a href="#梯度-grad-u" class="headerlink" title="梯度 grad u"></a>梯度 grad u</h3><p>$$grad u =\vec a_x  \frac{\partial u}{\partial x}+\vec a_y  \frac{\partial u}{\partial y}+\vec a_z  \frac{\partial u}{\partial z} $$<br>$$    gradu=\nabla u$$</p>
+<h3 id="散度div-F"><a href="#散度div-F" class="headerlink" title="散度div F"></a>散度div F</h3><p>$$ div \vec F \triangleq    \lim_{\triangle  V\to 0}  \frac{\oint_S \vec F d \vec S}{\triangle V}$$</p>
+<p>$$div \vec F=\frac{\partial F_x}{\partial x}+\frac{\partial F_y}{\partial y}+ \frac{\partial F_z}{\partial z} =\nabla \bullet \vec F $$</p>
+<p>$$\int_V \nabla \bullet \vec F d V =\oint_l \vec F d \vec S$$</p>
+<h3 id="环量面密度-gamma-n"><a href="#环量面密度-gamma-n" class="headerlink" title="环量面密度$\gamma_n$"></a>环量面密度$\gamma_n$</h3><p>$$ \gamma_n \triangleq    \lim_{\triangle  S\to 0}  \frac{\oint_l \vec F d \vec l}{\triangle S}$$</p>
+<h3 id="旋度-R-m"><a href="#旋度-R-m" class="headerlink" title="旋度$R_m$"></a>旋度$R_m$</h3><p>$$ \vec R_m \triangleq rot \vec F =\vec a_n \lgroup \lim_{\triangle S \to 0} \frac{\oint \vec F d \vec l }{\triangle S}  \rgroup_{max} $$</p>
+<p>$$ rot \vec F =\nabla \times \vec F $$</p>
+<p>$$\int_S \nabla \times \vec F \bullet d \vec S = \oint_l \vec F d \vec l$$</p>
+<h2 id="chapter2-常量基本方程"><a href="#chapter2-常量基本方程" class="headerlink" title="chapter2 常量基本方程"></a>chapter2 常量基本方程</h2><h3 id="电荷密度"><a href="#电荷密度" class="headerlink" title="电荷密度"></a>电荷密度</h3><p>体电荷密度:<br>$$\rho (\vec r^{\bullet} ) = \lim_{\triangle V \to 0 } \frac{\triangle q}{\triangle V^\bullet} = \frac{d q}{d V^\bullet} $$<br>$$ q= \int_V \rho(\vec r^\bullet) d V^\bullet $$</p>
+<p>面电荷密度:<br>$$\rho_s (\vec r^{\bullet} ) = \lim_{\triangle S \to 0 } \frac{\triangle q}{\triangle S^\bullet} = \frac{d q}{d S^\bullet} $$<br>$$ q= \int_S \rho_S(\vec r^\bullet) d S^\bullet $$</p>
+<p>线电荷密度:<br>$$\rho_l (\vec r^{\bullet} ) = \lim_{\triangle l \to 0 } \frac{\triangle q}{\triangle l^\bullet} = \frac{d q}{d l^\bullet} $$<br>$$ q= \int_l \rho_l(\vec r^\bullet) d l^\bullet $$</p>
+<p>点电荷:<br>$$q(\vec r)= \sum_{i=1}^N q_i(\vec r_i)$$</p>
+<h3 id="电流-amp-amp-电流密度"><a href="#电流-amp-amp-电流密度" class="headerlink" title="电流&amp;&amp;电流密度"></a>电流&amp;&amp;电流密度</h3><p>电流:<br>$$i = \lim_{\triangle t \to 0}\frac{\triangle q }{\triangle t}=\frac{d q}{d t} $$</p>
+<p>体电流密度矢量:</p>
+<p>$$\vec J= \vec a_n \lim_{\triangle S^\bullet \to 0} \frac{\triangle i}{\triangle S^\bullet}=\vec a_n \frac{di }{dS^\bullet}$$</p>
+<p>$$i = \int_s \vec J \bullet d \vec S$$</p>
+<p>$$\nabla \bullet \vec J=- \frac{\partial \rho}{\partial t}$$</p>
+<p>面电流密度:</p>
+<p>$$\vec J_s =\vec a_n \lim_{\triangle l^\bullet \to 0} \frac{\triangle i}{\triangle l^\bullet} = \vec a_n \frac{d i}{d l^\bullet}$$</p>
+<p>$$i = \int_l \vec J_s \bullet (\vec n \times d \vec l^\bullet)$$</p>
+<p>由于静态场的麦克斯韦方程组还没有统一,这里就不写了</p>
+<h3 id="电场强度E"><a href="#电场强度E" class="headerlink" title="电场强度E:"></a>电场强度E:</h3><p>$$\vec E \triangleq \frac{\vec F}{q_0} $$</p>
+<h3 id="磁感应强度B"><a href="#磁感应强度B" class="headerlink" title="磁感应强度B:"></a>磁感应强度B:</h3><p>$$\vec B \triangleq \frac{\mu}{4\pi}\oint_l \frac{I d \vec l \times a_R}{R^2}$$</p>
+<h3 id="感应电动势-varepsilon-in"><a href="#感应电动势-varepsilon-in" class="headerlink" title="感应电动势$\varepsilon_{in}$"></a>感应电动势$\varepsilon_{in}$</h3><p>$$\varepsilon_{in} \triangleq -\frac{d \psi}{d t}$$<br>其中$\psi$为磁通量<br>$$ \psi \triangleq \int_S \vec B \bullet d \vec S $$<br>所以:<br>$$\varepsilon_{in} = \int_s \frac{\partial \vec B}{\partial t} \bullet d \vec S$$ </p>
+<h3 id="本章的一些常数"><a href="#本章的一些常数" class="headerlink" title="本章的一些常数"></a>本章的一些常数</h3><ol>
+<li>$\varepsilon_0 自由空间的电容率 (介电常数) $<br> $$\varepsilon_0 =8.85\times 10^{-12}\approx \frac {10^{-9}}{36\pi} F/m$$</li>
+<li>$\mu_0$真空磁导率<br> $$\mu_0=4\pi \times 10^{-7}H/m$$<br>##chapter3静态场</li>
+</ol>
+<h3 id="标量电位-Phi"><a href="#标量电位-Phi" class="headerlink" title="标量电位$\Phi$"></a>标量电位$\Phi$</h3><p>$$\vec E(\vec r) \triangleq -\triangle\Phi(\vec r)$$</p>
+<p>$$\Phi(\vec r)=\frac{W}{q}$$</p>
+<p>电位的<strong>标量泊松方程</strong>:<br>$$\nabla^2 \Phi(\vec r) = - \frac{\rho(\vec r)}{\varepsilon_0} $$</p>
+<p>电位的<strong>标量拉普拉斯方程</strong>:<br>$$\nabla^2 \Phi(\vec r) = 0$$</p>
+<h3 id="矢量磁位-磁矢位-A"><a href="#矢量磁位-磁矢位-A" class="headerlink" title="矢量磁位(磁矢位) A"></a>矢量磁位(磁矢位) A</h3><p>$$\vec B (\vec r )\triangleq \nabla \times \vec A(\vec r)$$</p>
+<p><strong>库仑规范</strong>:<br>$$\nabla \bullet \vec A = 0$$</p>
+<p>磁矢位的<strong>矢量泊松方程</strong>:<br>$$\nabla^2 \vec A (\vec r )=- \mu_0 \vec J (\vec r)$$</p>
+<p>磁矢位的<strong>矢量拉普拉斯方程</strong><br>$$\nabla^2 \vec A (\vec r )=0$$</p>
+<p>磁矩m:<br>$$\vec m \triangleq \vec I \vec S $$</p>
+<h3 id="极化强度矢量P"><a href="#极化强度矢量P" class="headerlink" title="极化强度矢量P"></a>极化强度矢量P</h3><p>$$\vec P(\vec r)=\lim_{\triangle V \to 0} \frac{\sum_i \vec p_i}{\triangle V}$$<br>$$\vec P = \chi_e \varepsilon_0 \vec E$$<br>其中$\chi_e$为电极化率</p>
+<h3 id="电位移矢量D"><a href="#电位移矢量D" class="headerlink" title="电位移矢量D"></a>电位移矢量D</h3><p>$$\vec D(\vec r) \triangleq \varepsilon_0 \vec E(\vec r)+\vec P(\vec r)$$<br>所以有:</p>
+<p>$$\int_s \vec D(\vec r) \bullet d \vec S =q $$    </p>
+<p>$$\nabla \bullet \vec D(\vec r) = \rho(\vec r) $$</p>
+<p>$$\vec D = \varepsilon \vec E $$</p>
+<h3 id="磁化强度矢量M"><a href="#磁化强度矢量M" class="headerlink" title="磁化强度矢量M"></a>磁化强度矢量M</h3><p>$$\vec M(\vec r)=\lim_{\triangle V \to 0} \frac{\sum_i \vec m_i}{\triangle V}$$<br>$$\vec M = \chi_m H$$<br>其中$\chi_m$为磁化率</p>
+<h3 id="磁化强度H"><a href="#磁化强度H" class="headerlink" title="磁化强度H"></a>磁化强度H</h3><p>$$\vec H(\vec r)=\frac{\vec B(\vec r)}{\mu_0}-\vec M(\vec r)$$<br>$$\oint_l \vec H\bullet d\vec l=I$$<br>$$\nabla \times \vec H (\vec r )=\vec J(\vec r)$$<br>$$\vec B=\mu \vec H$$</p>
+<h3 id="欧姆定律微分形式"><a href="#欧姆定律微分形式" class="headerlink" title="欧姆定律微分形式"></a>欧姆定律微分形式</h3><p>$$\vec J(\vec r)=\sigma \vec E(\vec r)$$<br>其中$\sigma$为电导率</p>
+<h3 id="热损耗功率"><a href="#热损耗功率" class="headerlink" title="热损耗功率"></a>热损耗功率</h3><p>$$p(\vec r)=\vec J(\vec r)\bullet \vec E(\vec r)=\sigma E^2(\vec r)$$</p>
+<h3 id="边界条件"><a href="#边界条件" class="headerlink" title="边界条件"></a>边界条件</h3><p>$$\vec a_n \times (\vec E_1 -\vec E_2)=0,\quad \quad  E_{1t}=E_{2t}$$<br>$$\vec a_n \times (\vec H_1 -\vec H_2)=\vec J_s,\quad \quad H_{1t}-H_{2t}=J_s<br>$$<br>$$\vec a_n \bullet (\vec D_1 -\vec D_2) =\rho_s, \quad D_{1n}-D_{2n}=\rho_s $$<br>$$\vec a_n \bullet (\vec B_1 - \vec B_2)=0,\quad \quad   B_{1n}=B_{2n} $$</p>
+<h3 id="能量"><a href="#能量" class="headerlink" title="能量"></a>能量</h3><p>静电场能量<strong>密度</strong>:<br>$$\omega_e = \frac 12 \varepsilon E^2$$<br>$$\omega_e = \frac 12 \vec D(\vec r )\bullet \vec E(\vec r)$$<br>静磁场能量<strong>密度</strong>:<br>$$\omega_m = \frac 12 \mu H^2$$<br>$$\omega_m = \frac 12 \vec H(\vec r )\bullet \vec B(\vec r)$$</p>
+<h2 id="chapter4-动态场"><a href="#chapter4-动态场" class="headerlink" title="chapter4 动态场"></a>chapter4 动态场</h2><h3 id="麦克斯韦方程组"><a href="#麦克斯韦方程组" class="headerlink" title="麦克斯韦方程组"></a>麦克斯韦方程组</h3><p>$$ \begin{cases}<br>\oint_l \vec E(\vec r,t)\bullet d \vec l = -\int_S \frac{\partial \vec B(\vec r,t)}{\partial t} \bullet d \vec S , \quad\quad \nabla \times \vec E(\vec r,t) = - \frac{\partial \vec B(\vec r,t)}{\partial t} \<br>\oint_l \vec H(\vec r,t)\bullet d\vec l = \int_S (\vec J(\vec r,t)+\frac{\partial \vec D(\vec r,t)}{\partial t}),\quad \nabla \times \vec H(\vec r,t)=\vec J(\vec r,t)+\frac{\partial \vec D(\vec r,t)}{\partial t}\<br>\oint_S \vec D(\vec r,t)\bullet d \vec S = \int_V \rho(\vec r,t)dV,\quad\quad\quad\quad \nabla \bullet \vec D(\vec r,t)=\rho(\vec r,t)\<br>\oint_S \vec B(\vec r ,t)\bullet d \vec S =0 ,\quad \quad\quad\quad\quad\quad\quad\quad\nabla \bullet \vec B(\vec r,t)=0<br>\end{cases}$$</p>
+<h3 id="标量电位更新"><a href="#标量电位更新" class="headerlink" title="标量电位更新"></a>标量电位更新</h3><p>$$\vec E=-\nabla\Phi -\frac{\partial \vec A}{\partial t}$$</p>
+<h3 id="波动方程"><a href="#波动方程" class="headerlink" title="波动方程"></a>波动方程</h3><p>洛伦兹条件(洛伦兹规范):<br>$$\nabla \bullet \vec A=-\mu \varepsilon \frac{\partial \Phi}{\partial t}$$<br>非齐次波动方程(动态退化可以得到其他规范):<br>$$\nabla^2 \Phi(\vec r,t)-\mu\varepsilon\frac{\partial^2\Phi(\vec r,t)}{\partial t^2}=- \frac{\rho(\vec r,t)}{\varepsilon}$$ </p>
+<p>$$\nabla^2 A(\vec r,t)-\mu\varepsilon\frac{\partial^2 A(\vec r,t)}{\partial t^2}= -\mu \vec J(\vec r,t)$$ </p>
+<h3 id="坡印亭矢量"><a href="#坡印亭矢量" class="headerlink" title="坡印亭矢量"></a>坡印亭矢量</h3><p>$$\vec S (\vec r,t)  \triangleq \vec E(\vec r,t)\times \vec H(\vec r,t)$$</p>
+<p>$$-\nabla \bullet \vec S=\frac{\partial\omega}{\partial t}+p$$</p>
+<p>$$-\oint_S \vec S(\vec r,t)\bullet d \vec S=\frac{\partial}{\partial t}\int_V \omega(\vec r,t)d V+\int_Vp(\vec r,t)dV$$</p>
+<h3 id="复数表示"><a href="#复数表示" class="headerlink" title="复数表示"></a>复数表示</h3><p>$$u(z,t)=Re{ [U_0(z)e^{j\phi}]e^{j\omega t} } = Re { \dot{U}(z) e^{j\omega t} }$$<br>$$\dot{U}(z)=U_0(z)e^{j\phi}$$</p>
+<h3 id="复数形式麦克斯韦方程"><a href="#复数形式麦克斯韦方程" class="headerlink" title="复数形式麦克斯韦方程"></a>复数形式麦克斯韦方程</h3><p>$$\nabla \times \vec E=j\omega \vec B $$<br>$$\nabla \times \vec H =\vec J + j \omega \vec D $$<br>$$\dot{\vec E}=\vec a_x\dot{E_x}(\vec r)+\vec a_y\dot{E_y}(\vec r)+\vec a_z\dot{E_z}(\vec r)$$</p>
+<h3 id="复波动方程"><a href="#复波动方程" class="headerlink" title="复波动方程"></a>复波动方程</h3><p>$$\nabla \bullet \vec A(\vec r) = -j\omega \mu\varepsilon \Phi(\vec r) $$</p>
+<p>$$\nabla^2\Phi(\vec r)+\omega^2\mu\varepsilon\Phi(\vec r)=-\frac{\rho(\vec r)}{\varepsilon}$$<br>$$\nabla^2 \vec A(\vec r)+\omega^2\mu\varepsilon \vec A(\vec r)=-\mu \vec J(\vec r)$$<br>令$k^2=\omega^2\mu\varepsilon$有:<br>非齐次亥姆霍兹方程:<br>$$\nabla^2\Phi(\vec r)+k^2\Phi(\vec r)=-\frac{\rho(\vec r)}{\varepsilon}$$<br>$$\nabla^2 \vec A(\vec r)+k^2 \vec A(\vec r)=-\mu \vec J(\vec r)$$<br>齐次亥姆霍兹方程:<br>$$\nabla^2\Phi(\vec r)+k^2\Phi(\vec r)=0$$<br>$$\nabla^2 \vec A(\vec r)+k^2 \vec A(\vec r)=0$$</p>
+<h3 id="波阻抗-eta"><a href="#波阻抗-eta" class="headerlink" title="波阻抗$\eta$"></a>波阻抗$\eta$</h3><p>$$\eta_0=\sqrt{\frac{\mu_0}{\varepsilon_0}}$$</p>
+<h3 id="时均坡印亭矢量-S-av"><a href="#时均坡印亭矢量-S-av" class="headerlink" title="时均坡印亭矢量$S_{av}$"></a>时均坡印亭矢量$S_{av}$</h3><p>$$\vec S_av(\vec r)=\frac 1T\int_0^T\vec S(\vec r,t)dt=\frac 12 [\vec E_0(\vec r)\times \vec H_0(\vec r)]cos(\phi_e-\phi_n)$$</p>
+<h3 id="复坡印亭矢量-dot-S"><a href="#复坡印亭矢量-dot-S" class="headerlink" title="复坡印亭矢量$\dot{S}$"></a>复坡印亭矢量$\dot{S}$</h3><p>$$\dot{S}(\vec r)=\frac 12 \vec E(\vec r) \times \vec H^*(\vec r)=\frac 12 \vec E_0(\vec r)e^{-j\phi_e}\times \vec H_0(\vec r )e^{j\phi_n}=\frac 12[\vec E_0(\vec r)\times \vec H_0(\vec r)]e^{\phi_e-\phi_n}$$</p>
+<p>其中:<br>$$\vec S_av(\vec r)=Re{ \dot{S}(\vec r) }$$</p>
+<h3 id="复坡印亭定理"><a href="#复坡印亭定理" class="headerlink" title="复坡印亭定理"></a>复坡印亭定理</h3><p>$$-\oint_s \dot{S}(\vec r)\bullet d \dot{S} =j2\omega \int_V[\omega_{m-av}(\vec r)-\omega_{e-av}(\vec r)]dV +\int_V p_{av}(\vec r)dV $$</p>
+<p>其中:<br>$$\omega_av (\vec r)=\frac 14[\vec E(\vec r)\bullet \vec D^<em>(\vec r)+\vec B(\vec r)\bullet \vec H^</em>(\vec r)]=\frac 14[\varepsilon|\vec E(\vec r)|^2 + \mu|\vec H(\vec r)|^2 ]=Re\omega(\vec r)$$<br>$$p_{av}(\vec r)=\frac 12 \vec E(\vec r )\bullet \vec J^*(\vec r) =\frac 12 \sigma |\vec E(\vec r)|^2 =Rep(\vec r) $$</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><strong>天书虽然可怕,但,他还是你爸爸</strong><br><strong>也就,100条公式而已,前四章</strong></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/11/hello-world/" rel="prev" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#电磁学乱七八糟的符号-一"><span class="nav-number">1.</span> <span class="nav-text">电磁学乱七八糟的符号(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter1-场量基础"><span class="nav-number">1.1.</span> <span class="nav-text">chapter1 场量基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通量-psi"><span class="nav-number">1.1.1.</span> <span class="nav-text">通量$\psi$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋量-Gamma"><span class="nav-number">1.1.2.</span> <span class="nav-text">旋量$\Gamma$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矢性微分算符-nabla"><span class="nav-number">1.1.3.</span> <span class="nav-text">矢性微分算符$\nabla$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉普拉斯算符-nabla-2"><span class="nav-number">1.1.4.</span> <span class="nav-text">拉普拉斯算符$\nabla^2$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度-grad-u"><span class="nav-number">1.1.5.</span> <span class="nav-text">梯度 grad u</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#散度div-F"><span class="nav-number">1.1.6.</span> <span class="nav-text">散度div F</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环量面密度-gamma-n"><span class="nav-number">1.1.7.</span> <span class="nav-text">环量面密度$\gamma_n$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋度-R-m"><span class="nav-number">1.1.8.</span> <span class="nav-text">旋度$R_m$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter2-常量基本方程"><span class="nav-number">1.2.</span> <span class="nav-text">chapter2 常量基本方程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电荷密度"><span class="nav-number">1.2.1.</span> <span class="nav-text">电荷密度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电流-amp-amp-电流密度"><span class="nav-number">1.2.2.</span> <span class="nav-text">电流&amp;&amp;电流密度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电场强度E"><span class="nav-number">1.2.3.</span> <span class="nav-text">电场强度E:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁感应强度B"><span class="nav-number">1.2.4.</span> <span class="nav-text">磁感应强度B:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感应电动势-varepsilon-in"><span class="nav-number">1.2.5.</span> <span class="nav-text">感应电动势$\varepsilon_{in}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本章的一些常数"><span class="nav-number">1.2.6.</span> <span class="nav-text">本章的一些常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标量电位-Phi"><span class="nav-number">1.2.7.</span> <span class="nav-text">标量电位$\Phi$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矢量磁位-磁矢位-A"><span class="nav-number">1.2.8.</span> <span class="nav-text">矢量磁位(磁矢位) A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#极化强度矢量P"><span class="nav-number">1.2.9.</span> <span class="nav-text">极化强度矢量P</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电位移矢量D"><span class="nav-number">1.2.10.</span> <span class="nav-text">电位移矢量D</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁化强度矢量M"><span class="nav-number">1.2.11.</span> <span class="nav-text">磁化强度矢量M</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁化强度H"><span class="nav-number">1.2.12.</span> <span class="nav-text">磁化强度H</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧姆定律微分形式"><span class="nav-number">1.2.13.</span> <span class="nav-text">欧姆定律微分形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#热损耗功率"><span class="nav-number">1.2.14.</span> <span class="nav-text">热损耗功率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边界条件"><span class="nav-number">1.2.15.</span> <span class="nav-text">边界条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能量"><span class="nav-number">1.2.16.</span> <span class="nav-text">能量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter4-动态场"><span class="nav-number">1.3.</span> <span class="nav-text">chapter4 动态场</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#麦克斯韦方程组"><span class="nav-number">1.3.1.</span> <span class="nav-text">麦克斯韦方程组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标量电位更新"><span class="nav-number">1.3.2.</span> <span class="nav-text">标量电位更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#波动方程"><span class="nav-number">1.3.3.</span> <span class="nav-text">波动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坡印亭矢量"><span class="nav-number">1.3.4.</span> <span class="nav-text">坡印亭矢量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复数表示"><span class="nav-number">1.3.5.</span> <span class="nav-text">复数表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复数形式麦克斯韦方程"><span class="nav-number">1.3.6.</span> <span class="nav-text">复数形式麦克斯韦方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复波动方程"><span class="nav-number">1.3.7.</span> <span class="nav-text">复波动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#波阻抗-eta"><span class="nav-number">1.3.8.</span> <span class="nav-text">波阻抗$\eta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时均坡印亭矢量-S-av"><span class="nav-number">1.3.9.</span> <span class="nav-text">时均坡印亭矢量$S_{av}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复坡印亭矢量-dot-S"><span class="nav-number">1.3.10.</span> <span class="nav-text">复坡印亭矢量$\dot{S}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复坡印亭定理"><span class="nav-number">1.3.11.</span> <span class="nav-text">复坡印亭定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.4.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">今日你学左米啊</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">Kategorien</span>
+        
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    Design – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
