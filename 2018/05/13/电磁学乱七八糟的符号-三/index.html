@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="电磁学乱七八糟的符号(三)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电磁学乱七八糟的符号(三)">
+<meta property="og:url" content="http://yoursite.com/2018/05/13/电磁学乱七八糟的符号-三/index.html">
+<meta property="og:site_name" content="HWB-blog">
+<meta property="og:description" content="电磁学乱七八糟的符号(三)">
+<meta property="og:locale" content="cn">
+<meta property="og:image" content="https://img-blog.csdn.net/20180511143337380?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180511143511112?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180511144634689?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180511144833337?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180511144718241?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://i.loli.net/2019/10/11/4p18WRewitYaFXd.png">
+<meta property="og:image" content="https://img-blog.csdn.net/2018051302331341?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2019-10-11T10:27:29.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电磁学乱七八糟的符号(三)">
+<meta name="twitter:description" content="电磁学乱七八糟的符号(三)">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180511143337380?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+  <link rel="canonical" href="http://yoursite.com/2018/05/13/电磁学乱七八糟的符号-三/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>电磁学乱七八糟的符号(三) | HWB-blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HWB-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Startseite</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archiv</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/电磁学乱七八糟的符号-三/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="今日你学左米啊">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HWB-blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            电磁学乱七八糟的符号(三)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-05-13 03:37:49" itemprop="dateCreated datePublished" datetime="2018-05-13T03:37:49+08:00">2018-05-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2019-10-11 18:27:29" itemprop="dateModified" datetime="2019-10-11T18:27:29+08:00">2019-10-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电磁波/" itemprop="url" rel="index">
+                    <span itemprop="name">电磁波</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">电磁学乱七八糟的符号(三)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电磁学乱七八糟的符号-三"><a href="#电磁学乱七八糟的符号-三" class="headerlink" title="电磁学乱七八糟的符号(三)"></a>电磁学乱七八糟的符号(三)</h1><hr>
+<p>这里重点是针对各种入射反射折射,<strong>chapter5 电磁波的传播</strong></p>
+<p>[TOC]</p>
+<h2 id="review"><a href="#review" class="headerlink" title="review"></a>review</h2><p>1.上两张图说明一下极化是怎么回事<br><img src="https://img-blog.csdn.net/20180511143337380?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="jihua"><br><img src="https://img-blog.csdn.net/20180511143511112?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="line"><br>2.行波与驻波<br>1.驻波<br><img src="https://img-blog.csdn.net/20180511144634689?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="zhubo"><br><strong>每一个点都在等相位震荡</strong></p>
+<p>借了,平面电磁波,理想介质to理想导体,垂直入射  讲了一下<br>&nbsp;<br>2.行波(没找到好一点的图,凑合着看吧)<br><img src="https://img-blog.csdn.net/20180511144833337?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="hangbo2">)<img src="https://img-blog.csdn.net/20180511144718241?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="hangbo"></p>
+<p><strong>每一个点都在等幅震荡</strong><br>&nbsp;</p>
+<h2 id="平面电磁波-理想介质to理想介质-垂直入射"><a href="#平面电磁波-理想介质to理想介质-垂直入射" class="headerlink" title="平面电磁波,理想介质to理想介质,垂直入射"></a>平面电磁波,理想介质to理想介质,垂直入射</h2><p>这里借一个最普通的情况,说明基本概念:</p>
+<h3 id="反射系数R"><a href="#反射系数R" class="headerlink" title="反射系数R"></a>反射系数R</h3><p>$$ R=\frac {E^{-r}<em>{x0}}{E^{+i}</em>{x0}}=\frac{\eta_2-\eta_1}{\eta2+\eta1}$$<br>定义为边界上反射波<strong>电场分量</strong>与入射波<strong>电场分量</strong>之比</p>
+<h3 id="折射系数T"><a href="#折射系数T" class="headerlink" title="折射系数T"></a>折射系数T</h3><p>$$ T=\frac {E^{+t}<em>{x0}}{E^{+i}</em>{x0}}=\frac{2\eta_2}{\eta2+\eta1}$$<br>定义为边界上折射波<strong>电场分量</strong>与入射波<strong>电场分量</strong>之比<br>可以观察到有:<br>$$T-R=1$$<br>###合成波场量<br>看书的图看书的图看书的图看书的图:<br>$$ E_{1x}(z)= E^{+i}<em>{xo}(1-R)e^{-jk</em>{1}z}+2RE^{+i}<em>{x0}cosk</em>{1}z $$<br>$$H_{1y}(z)=\frac{E^{+i}<em>{x0}}{\eta_1}(1-R)e^{jk</em>{1}z}+2R\frac{E^{+i}<em>{x0}}{\eta_1}e^{-j\frac{\pi}{2}}sink_1z$$<br>对于折射波:<br>$$E</em>{2x}(z)=TE^{+i}<em>{x0}e^{-jk_2 z}$$<br>$$E</em>{2y}(z)=T\frac{E^{+i}_{x0}}{\eta_2}e^{-jk_2 z}$$</p>
+<h2 id="平面电磁波-理想介质to理想介质-斜入射"><a href="#平面电磁波-理想介质to理想介质-斜入射" class="headerlink" title="平面电磁波,理想介质to理想介质,斜入射"></a>平面电磁波,理想介质to理想介质,斜入射</h2><h3 id="1-垂直极化波"><a href="#1-垂直极化波" class="headerlink" title="1.垂直极化波"></a>1.垂直极化波</h3><p><strong>1.垂直极化波:电场强度分量与入射角垂直的波称为垂直极化波</strong></p>
+<h3 id="斯涅尔反射定律"><a href="#斯涅尔反射定律" class="headerlink" title="斯涅尔反射定律"></a>斯涅尔反射定律</h3><p>$$ \theta_i=\theta_r $$</p>
+<h3 id="斯涅尔折射定律"><a href="#斯涅尔折射定律" class="headerlink" title="斯涅尔折射定律"></a>斯涅尔折射定律</h3><p>$$ \frac {sin \theta_i}{sin \theta_t}=\frac{k_2}{k_1}=\frac{n_2}{n_1} $$<br>其中</p>
+<h3 id="折射指数-折射率"><a href="#折射指数-折射率" class="headerlink" title="折射指数,折射率"></a>折射指数,折射率</h3><p>$$ n=c\sqrt{\mu\varepsilon}=\frac c \omega k $$</p>
+<p><strong>垂直极化波</strong>的反射系数和折射系数<br>$$R_{\bot}=\frac{\eta_{2}cos\theta_{i}-{\eta_{1}cos\theta_{t}}}{\eta_{2}cos\theta_{i}+{\eta_{1}cos\theta_{t}}}$$<br>$$T_{\bot}=\frac{2\eta_{2}cos\theta_{i}}{\eta_{2}cos\theta_{i}+{\eta_{1}cos\theta_{t}}}$$</p>
+<p>对于非铁磁性媒质,$\mu_{1}\approx\mu_{2}\approx\mu_{0}$,则有$\frac{\eta_{1}}{\eta_{2}}=\sqrt{\frac{\varepsilon_{1}}{\varepsilon_{2}}}$和$sin\theta_{t}=\sqrt{\frac{\varepsilon_{2}}{\varepsilon_{1}}}$上式可改为</p>
+<p>$$R_{\bot}=\frac{cos\theta_{i}-\sqrt{\frac{\epsilon_{2}}{\epsilon_{1}}-sin^{2}\theta_{i}}}{cos\theta_{i}+\sqrt{\frac{\epsilon_{2}}{\epsilon_{1}}-sin^{2}\theta_{i}}}$$</p>
+<p>$$T_{\bot}=\frac{2cos\theta_{i}}{cos\theta_{i}+\sqrt{\frac{\epsilon_{2}}{\epsilon_{1}}-sin^{2}\theta_{i}}}$$</p>
+<h3 id="平行极化波"><a href="#平行极化波" class="headerlink" title="平行极化波"></a>平行极化波</h3><p><strong>平行极化波:电场强度分量与入射角平行的波称为平行极化波</strong><br>平行极化波的发射系数和折射系数:<br>$$R_{//}=\frac{\eta_{1}cos\theta_{i}-{\eta_{2}cos\theta_{t}}}{\eta_{1}cos\theta_{i}+{\eta_{2}cos\theta_{t}}}$$<br>$$T_{//}=\frac{2\eta_{2}cos\theta_{i}}{\eta_{1}cos\theta_{i}+{\eta_{2}cos\theta_{t}}}$$</p>
+<p>对于非铁磁性媒介,上两式可改写为<br>$$R_{//}=\frac{({\varepsilon_{2}/\varepsilon_{1}})cos\theta_{i}-\sqrt{\frac{\epsilon_{2}}{\epsilon_{1}}-sin^{2}\theta_{i}}}{({\varepsilon_{2}/\varepsilon_{1}})cos\theta_{i}+\sqrt{\frac{\epsilon_{2}}{\epsilon_{1}}-sin^{2}\theta_{i}}}$$</p>
+<p><img src="https://i.loli.net/2019/10/11/4p18WRewitYaFXd.png" alt="image.png"><br>公式太长被识别为bug了，截图放之</p>
+<p>显然,斜入射就是可以分解成垂直极化波和水平极化波而被介绍.</p>
+<h3 id="全反射"><a href="#全反射" class="headerlink" title="全反射"></a>全反射</h3><p>当 |R|=1时,入射波全部反射走了:<br>显然让$R_{\bot} $和$R_{//}$都等于1时会有全反射:<br>$$sin \theta_i =\sqrt{\frac {\varepsilon_2}{\varepsilon_1}} \tag {5,1}$$<br>对于非铁磁性媒质,$\mu_{1}\approx\mu_{2}\approx\mu_{0}$,有:<br>$$sin \theta_i =\sqrt{\frac {\varepsilon_2}{\varepsilon_1}}sin\theta_t$$<br>显然当$\theta_t=\frac \pi 2$时全反射,但这个不是重点,因为自变量是$\theta_i$,所以这只是一个现象而已.<br>所以有:</p>
+<h4 id="临界角-theta-c"><a href="#临界角-theta-c" class="headerlink" title="临界角$\theta_c$"></a>临界角$\theta_c$</h4><p>满足1.1的$\theta_i$记作$\theta_c$有:<br>$$ \theta_c= arcsin \sqrt{\frac{\varepsilon_2}{\varepsilon_1}} $$<br>当$\theta_i =\theta_c 时有:sin\theta_c=1 ,\theta_t =\frac \pi 2$</p>
+<h4 id="全内反射"><a href="#全内反射" class="headerlink" title="全内反射"></a>全内反射</h4><p>当入射角大于临界角之后,可以求出:</p>
+<p>$$sin\theta_{3t}=\sqrt{\frac {\varepsilon_1}{\varepsilon_2}}sin\theta_{3i}&gt;sin\theta_t=1$$</p>
+<p>可以看出这个角用平面已经没办法解析了,应该放成复平面再用欧拉公式展开才能探看,但是所幸的是:<br>$$cos\theta_{3t} =\sqrt{1-sin^2\theta_{3t}}=\pm j \sqrt{\frac{\varepsilon_1}{\varepsilon_2}sin^2\theta_{3i}-1}\<br>\quad \quad=\pm j(\frac{\varepsilon_1}{\varepsilon_2})^{\frac 12}\sqrt{sin^2\theta_{3i}-\varepsilon_2/\varepsilon_1}=\pm j a$$<br>可以代入反射系数公式,还是可以得到$|R_{\bot}|=|R_{//}|=1$,还是达到了全反射的条件<br>但是这个时候,可以代入折射系数可知,$T_{\bot}\neq 0 , T_{//}\neq 0$,此时随便带入一个方向的折射波方程得(以垂直为例):<br>$$\vec E^t(\vec r)=\vec a_y T_{\bot}E^{+i}<em>0 e^{-jk_2xsin\theta</em>{3t}}e^{-jk_2zcos\theta_{3t}}\<br>\quad \vec a_y T_{\bot}E^{+i}<em>0e^{-az}e^{jk_2 xsin\theta</em>{3t}}$$<br>可以看到,此时的TEM波已经变成了<br>振幅往+z方向衰减,方向沿+x方向传播的非均匀平面波,综合反射折射来看,就可以说是很像光纤了</p>
+<p><img src="https://img-blog.csdn.net/2018051302331341?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="guangxian"></p>
+<p>画了个小图,自己了解一下.<br>从图都可以得出,反射和折射的表面波之间是存在光程差,也就存在着相移,考虑该波等相面:<br>$$ k_2 xsin\theta_{3t}-\omega t=C $$<br>求导得相速:</p>
+<h5 id="慢波-amp-amp-表面波"><a href="#慢波-amp-amp-表面波" class="headerlink" title="慢波&amp;&amp;表面波"></a>慢波&amp;&amp;表面波</h5><p>$$ v_{px} = \frac{\omega}{k_2 sin\theta_{3t}}=\frac {v_p}{sin\theta_{3t}}&lt;v_p $$<br>所以称该波为慢波,或者是表面波</p>
+<p>建议看书P147-148</p>
+<h3 id="4-全折射"><a href="#4-全折射" class="headerlink" title="4.全折射"></a>4.全折射</h3><p>同理,入射波全部折射进理想介质2,但理论上我们只考虑$R_{//}=0$具体原因可以看书!<br>整理得:</p>
+<h4 id="布儒斯特角-amp-amp-极化角-theta-b"><a href="#布儒斯特角-amp-amp-极化角-theta-b" class="headerlink" title="布儒斯特角&amp;&amp;极化角$\theta_b$"></a>布儒斯特角&amp;&amp;极化角$\theta_b$</h4><p>$$ sin \theta_i =\frac{\varepsilon_2}{\varepsilon_2 +\varepsilon_1} $$<br>当存在$\theta_i$满足上式时,记作布儒斯特角$\theta_b$:<br>$$\theta_b=arcsin\sqrt{\frac{\varepsilon_2}{\varepsilon_1+\varepsilon_2}}$$<br>此时会有垂直极化分量剩余,也就是说,发生全折射的时候,会剩下垂直极化分量<br>所以这过程也会被称为极化滤波.所以布儒斯特角也称为<strong>极化角</strong></p>
+<h2 id="平面电磁波-理想介质to理想导体-垂直入射"><a href="#平面电磁波-理想介质to理想导体-垂直入射" class="headerlink" title="平面电磁波,理想介质to理想导体,垂直入射"></a>平面电磁波,理想介质to理想导体,垂直入射</h2><p>由于良导体存在趋肤效应,所以研究折射是没有意义的,所以这里只需要研究全反射条件.</p>
+<p>由前文的垂直入射的反射系数和折射系数可以看到:<br>$$ R=-1 \quad \quad T=0 $$<br>也可以由理想导体的边界中,电场强度切向连续得到,代入前面的垂直入射分析中得:<br>$$ \vec E_{1x}(z)=\vec E^{+i}<em>{x0}(e^{-jk_1 z}-e^{jk_1 z}) = -j2\vec E^{+i}</em>{x0}sink_1 z $$<br>$$ \vec E_{1y}(z)= \frac {\vec E^{+i}<em>{x0}}{\eta_1} (e^{-jk_1 z}+e^{jk_1 z}) = \frac 2{\eta_1} \vec E^{+i}</em>{x0}cosk_1 z  $$</p>
+<p>改写成瞬时形式:<br>$$ E_{1x}(z,t)=Re[E_{1x}(z)e^{j\omega t}]=2E^{+i}<em>{x0} \quad \quad  sink_1 z \quad \quad sin \omega t $$<br>$$ H</em>{1y}(z,t)=Re[H_{1y}(z)e^{j\omega t}]=\frac 2 {\eta_1}E^{+i}_{x0}\quad \quad  cosk_1 z\quad\quad cos\omega t   $$</p>
+<p>由公式可以看出:</p>
+<ol>
+<li>在固定一个x-y平面(z固定),<strong>波幅</strong>只会因为t而改变,这个改变是通过改变<strong>相位</strong>而来的</li>
+<li>在固定一个周期中(t固定),  <strong>相位</strong>不会因为z的传播而改变</li>
+<li>在固定一个周期中(t固定), <strong>波幅</strong>会因为z的传播而震荡</li>
+</ol>
+<p>直观一点来说,只要你固定x-y平面,固定看一个周期,想着z往着图里投射波形,就可以看见blog开头的</p>
+<h3 id="纯驻波"><a href="#纯驻波" class="headerlink" title="纯驻波"></a>纯驻波</h3><p>还可以在时均能流密度$S_{av}$中:<br>$$ \vec S_{av}=\frac12 Re[\vec a_zE_{1x}(z)\vec H^*<em>{1y}(z)] \<br>\quad \quad \quad \quad \quad  \quad \quad \quad =\frac 12Re[-\vec a_z j\frac {4|E^{+i}</em>{x0}|^2}{\eta_1}sink_1zcosk_1z]=0$$<br>可以看出驻波并不会传输能量,只是周期地把电场能量和磁场能量交换了而已.</p>
+<h2 id="平面电磁波-理想介质to理想导体-斜入射"><a href="#平面电磁波-理想介质to理想导体-斜入射" class="headerlink" title="平面电磁波,理想介质to理想导体,斜入射"></a>平面电磁波,理想介质to理想导体,斜入射</h2><p>跟之前是一样的,斜入射分成垂直极化波和水平极化波来分析<br>也是只研究全反射</p>
+<h3 id="垂直极化入射"><a href="#垂直极化入射" class="headerlink" title="垂直极化入射"></a>垂直极化入射</h3><p>垂直极化入射情况下的合成波:<br>$$\vec E_{1}(\vec r)=\vec E^{i}(\vec r)+\vec E^{r}(\vec r)\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\<br>= -\vec{a}<em>{y}j2E^{+i}</em>{0}\quad sin(k_{1}zcos\theta_{i})\quad e^{-jk_{1}xsin\theta_{i}}$$<br>$$\vec H_{1}(\vec r)=\vec H^{I}(\vec r)+\vec H^{r}(\vec r)\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad \<br>\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad=[-\vec{a_{x}}cos\theta_{i}cos(k_{1}zcos\theta_{i})-\vec{a_{z}}jsin\theta_{i}sin(k_{1}zcos_{\theta_{i}})]\frac{2E^{+i}<em>{0}}{\eta</em>{1}}e^{-jk_{1}xsin\theta_{i}}$$<br>可以看出(统一看电场,因为几乎所有定义都是用电场定义的):</p>
+<h4 id="x方向上的行波性"><a href="#x方向上的行波性" class="headerlink" title="x方向上的行波性"></a>x方向上的行波性</h4><p>由$e^{-j(k_{1}xsin\theta_{i}-\omega t)}$给出,而且传播相速为慢波:<br>$$ v_{px}=\frac{\omega}{k_1 sin\theta_i}=\frac{v_p}{sin \theta_i}&lt;v_p $$</p>
+<h4 id="z方向上的驻波性"><a href="#z方向上的驻波性" class="headerlink" title="z方向上的驻波性"></a>z方向上的驻波性</h4><p>由$sin(k_{1}zcos\theta_{i})$可以得到</p>
+<h4 id="振幅非均匀性"><a href="#振幅非均匀性" class="headerlink" title="振幅非均匀性"></a>振幅非均匀性</h4><p>振幅往+z方向做周期性变化,方向沿+x方向等相面 传播的非均匀平面波</p>
+<p>以上者三点都有点类似于全内反射</p>
+<h4 id="横电波性-TE波"><a href="#横电波性-TE波" class="headerlink" title="横电波性(TE波)"></a>横电波性(TE波)</h4><h3 id="平行极化入射"><a href="#平行极化入射" class="headerlink" title="平行极化入射"></a>平行极化入射</h3><p>$$ \vec E_1(\vec r)=-[\vec a_x jcos\theta_i sin(k_1 zcos\theta_i)+\vec a_z sin\theta_i cos(k_1 zcos\theta_i)]<br>2E_0^{+i}e^{-jk_1 xsin\theta_i} $$<br>$$\vec H_1(\vec r)=\vec a_y 2\frac{E_0^{+i}}{\eta_1}cos(k_1 z cos\theta_i)e^{-jk_1 xcos\theta_i}$$<br>同上分析,依然有:</p>
+<h4 id="x方向上的行波性-1"><a href="#x方向上的行波性-1" class="headerlink" title="x方向上的行波性"></a>x方向上的行波性</h4><h5 id="行波因子-e-j-k-1-xsin-theta-i-omega-t"><a href="#行波因子-e-j-k-1-xsin-theta-i-omega-t" class="headerlink" title="行波因子$e^{-j(k_{1}xsin\theta_{i}-{\omega}t)}$"></a>行波因子$e^{-j(k_{1}xsin\theta_{i}-{\omega}t)}$</h5><p>由行波因子表示,而且传播相速为慢波:</p>
+<p>$$v_{px}=\frac{\omega}{k_1 sin\theta_i}=\frac{v_p}{sin \theta_i} &lt; v_p$$</p>
+<h4 id="z方向上的驻波性-1"><a href="#z方向上的驻波性-1" class="headerlink" title="z方向上的驻波性"></a>z方向上的驻波性</h4><h5 id="驻波因子-sin-cos-k-1-zcos-theta-i"><a href="#驻波因子-sin-cos-k-1-zcos-theta-i" class="headerlink" title="驻波因子$^{sin}{cos}(k{1}zcos\theta_{i})$"></a>驻波因子$^{sin}<em>{cos}(k</em>{1}zcos\theta_{i})$</h5><p>由驻波因子表示</p>
+<h4 id="振幅非均匀性-1"><a href="#振幅非均匀性-1" class="headerlink" title="振幅非均匀性"></a>振幅非均匀性</h4><p>振幅随z变化的非均匀平面波</p>
+<h4 id="横磁波-TM波"><a href="#横磁波-TM波" class="headerlink" title="*横磁波(TM波)"></a>*横磁波(TM波)</h4><p>在x的传播方向上电场分量不为0,磁场分量为0</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>第五章算是写完了,剩下的内容课上也没有介绍了,也开始从单纯的抄写公式到以公式入手理解意义了.<br>但是万万不足的是,blog上大多其实还是结论,真正要处理的波动方程除了难一点的之外都没有写出,还需要大家好好看书!</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/05/11/电磁学乱七八糟的符号-二/" rel="next" title="电磁学乱七八糟的符号(二)">
+                  <i class="fa fa-chevron-left"></i> 电磁学乱七八糟的符号(二)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/05/31/电磁学乱七八糟的符号-四/" rel="prev" title="电磁学乱七八糟的符号(四)">
+                  电磁学乱七八糟的符号(四) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#电磁学乱七八糟的符号-三"><span class="nav-number">1.</span> <span class="nav-text">电磁学乱七八糟的符号(三)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#review"><span class="nav-number">1.1.</span> <span class="nav-text">review</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-理想介质to理想介质-垂直入射"><span class="nav-number">1.2.</span> <span class="nav-text">平面电磁波,理想介质to理想介质,垂直入射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反射系数R"><span class="nav-number">1.2.1.</span> <span class="nav-text">反射系数R</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#折射系数T"><span class="nav-number">1.2.2.</span> <span class="nav-text">折射系数T</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-理想介质to理想介质-斜入射"><span class="nav-number">1.3.</span> <span class="nav-text">平面电磁波,理想介质to理想介质,斜入射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-垂直极化波"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.垂直极化波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斯涅尔反射定律"><span class="nav-number">1.3.2.</span> <span class="nav-text">斯涅尔反射定律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斯涅尔折射定律"><span class="nav-number">1.3.3.</span> <span class="nav-text">斯涅尔折射定律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#折射指数-折射率"><span class="nav-number">1.3.4.</span> <span class="nav-text">折射指数,折射率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平行极化波"><span class="nav-number">1.3.5.</span> <span class="nav-text">平行极化波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全反射"><span class="nav-number">1.3.6.</span> <span class="nav-text">全反射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#临界角-theta-c"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">临界角$\theta_c$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全内反射"><span class="nav-number">1.3.6.2.</span> <span class="nav-text">全内反射</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#慢波-amp-amp-表面波"><span class="nav-number">1.3.6.2.1.</span> <span class="nav-text">慢波&amp;&amp;表面波</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-全折射"><span class="nav-number">1.3.7.</span> <span class="nav-text">4.全折射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#布儒斯特角-amp-amp-极化角-theta-b"><span class="nav-number">1.3.7.1.</span> <span class="nav-text">布儒斯特角&amp;&amp;极化角$\theta_b$</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-理想介质to理想导体-垂直入射"><span class="nav-number">1.4.</span> <span class="nav-text">平面电磁波,理想介质to理想导体,垂直入射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#纯驻波"><span class="nav-number">1.4.1.</span> <span class="nav-text">纯驻波</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-理想介质to理想导体-斜入射"><span class="nav-number">1.5.</span> <span class="nav-text">平面电磁波,理想介质to理想导体,斜入射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直极化入射"><span class="nav-number">1.5.1.</span> <span class="nav-text">垂直极化入射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#x方向上的行波性"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">x方向上的行波性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#z方向上的驻波性"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">z方向上的驻波性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#振幅非均匀性"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">振幅非均匀性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#横电波性-TE波"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">横电波性(TE波)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平行极化入射"><span class="nav-number">1.5.2.</span> <span class="nav-text">平行极化入射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#x方向上的行波性-1"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">x方向上的行波性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#行波因子-e-j-k-1-xsin-theta-i-omega-t"><span class="nav-number">1.5.2.1.1.</span> <span class="nav-text">行波因子$e^{-j(k_{1}xsin\theta_{i}-{\omega}t)}$</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#z方向上的驻波性-1"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">z方向上的驻波性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#驻波因子-sin-cos-k-1-zcos-theta-i"><span class="nav-number">1.5.2.2.1.</span> <span class="nav-text">驻波因子$^{sin}{cos}(k{1}zcos\theta_{i})$</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#振幅非均匀性-1"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">振幅非均匀性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#横磁波-TM波"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">*横磁波(TM波)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.6.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">今日你学左米啊</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">Kategorien</span>
+        
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    Design – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

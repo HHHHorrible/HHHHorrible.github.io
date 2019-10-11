@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="电磁学乱七八糟的符号(二)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电磁学乱七八糟的符号(二)">
+<meta property="og:url" content="http://yoursite.com/2018/05/11/电磁学乱七八糟的符号-二/index.html">
+<meta property="og:site_name" content="HWB-blog">
+<meta property="og:description" content="电磁学乱七八糟的符号(二)">
+<meta property="og:locale" content="cn">
+<meta property="og:updated_time" content="2019-10-11T10:18:58.566Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电磁学乱七八糟的符号(二)">
+<meta name="twitter:description" content="电磁学乱七八糟的符号(二)">
+  <link rel="canonical" href="http://yoursite.com/2018/05/11/电磁学乱七八糟的符号-二/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>电磁学乱七八糟的符号(二) | HWB-blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HWB-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Startseite</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archiv</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/11/电磁学乱七八糟的符号-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="今日你学左米啊">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HWB-blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            电磁学乱七八糟的符号(二)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-05-11 08:24:14" itemprop="dateCreated datePublished" datetime="2018-05-11T08:24:14+08:00">2018-05-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2019-10-11 18:18:58" itemprop="dateModified" datetime="2019-10-11T18:18:58+08:00">2019-10-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电磁学/" itemprop="url" rel="index">
+                    <span itemprop="name">电磁学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">电磁学乱七八糟的符号(二)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电磁学乱七八糟的符号-二"><a href="#电磁学乱七八糟的符号-二" class="headerlink" title="电磁学乱七八糟的符号(二)"></a>电磁学乱七八糟的符号(二)</h1><p>前言:第五章开始因为要大量考虑介质的各种媒质常数,所以一定要分清公式的使用范围!<br>还有特定关系的前提和假设</p>
+<p>[TOC]</p>
+<h2 id="chapter5电磁波的传播-TEM-理想介质"><a href="#chapter5电磁波的传播-TEM-理想介质" class="headerlink" title="chapter5电磁波的传播(TEM,理想介质)"></a>chapter5电磁波的<strong>传播</strong>(TEM,理想介质)</h2><h3 id="波动方程"><a href="#波动方程" class="headerlink" title="波动方程"></a>波动方程</h3><p>因为这里和上一篇blog有出入,重写一次:<br>$$\nabla^2 \vec E(\vec r,t)-\mu\varepsilon\frac{\partial^2\vec E(\vec r,t)}{\partial t^2}=- \mu\sigma \frac{\partial \vec E(\vec r,t)}{\partial t}$$<br>$$\nabla^2 \vec H(\vec r,t)-\mu\varepsilon\frac{\partial^2 \vec H(\vec r,t)}{\partial t^2}=- \mu\sigma\frac{\partial \vec H(\vec r,t)}{\partial t}$$<br>由于$\partial E 和\partial H$极其难算,所以上式为<strong>一般波动方程</strong><br>在<strong>理想介质</strong>中($\sigma=0$)(空气)下,<strong>一般波动方程</strong>退化为<strong>齐次非含源项波动方程</strong>:<br>$$\nabla^2 \vec E(\vec r,t)-\mu\varepsilon\frac{\partial^2\vec E(\vec r,t)}{\partial t^2}=0$$<br>$$\nabla^2 \vec H(\vec r,t)-\mu\varepsilon\frac{\partial^2 \vec H(\vec r,t)}{\partial t^2}=0$$<br>在真空中有:</p>
+<h3 id="光速c"><a href="#光速c" class="headerlink" title="光速c"></a>光速c</h3><p>$$\nabla^2 \vec E(\vec r,t)-\frac1 {c^2}\frac{\partial^2\vec E(\vec r,t)}{\partial t^2}=0$$<br>$$\nabla^2 \vec H(\vec r,t)-\frac1 {c^2}\frac{\partial^2 \vec H(\vec r,t)}{\partial t^2}=0$$<br>其中光速c:<br>$$c=\frac1 {\sqrt{\mu_0 \varepsilon_0}} \approx 3 \times 10^{-8}(m/s)$$<br>&nbsp;<br>取<strong>齐次非含源项波动方程</strong>复数化有:</p>
+<h3 id="波数-amp-amp-相位常数k-同一个东西"><a href="#波数-amp-amp-相位常数k-同一个东西" class="headerlink" title="波数&amp;&amp;相位常数k(同一个东西)"></a>波数&amp;&amp;相位常数k(同一个东西)</h3><p>$$\nabla^2 \vec E(\vec r,t)-k^2\vec E(\vec r)=0$$<br>$$\nabla^2 \vec H(\vec r,t)-k^2\vec H(\vec r)=0$$<br>其中<strong>波数</strong>:<br>$$ k=\omega\sqrt{\mu\varepsilon}=\frac \omega v$$<br>由TEM的瞬时通解可以知道,k表示<strong>波传播单位距离的空间相位变化</strong>,又称相位常数:<br>$$k=\frac {2\pi}{\lambda}$$</p>
+<h3 id="TEM波动方程"><a href="#TEM波动方程" class="headerlink" title="TEM波动方程"></a>TEM波动方程</h3><p>引入平面电磁波(<strong>TEM</strong>)约束:<br>$$\begin{cases}  E_z=0,H_z=0  \quad 在z=c处\ \frac \partial{\partial x}=0 ,\frac \partial{\partial y}=0 <br> \end{cases}$$<br>代入波动方程可得到:<br>$$\frac {d^2 E_x}{dz^2}+k^2 E_x =0$$<br>$$\frac {d^2 H_y}{dz^2}+k^2 H_y =0$$<br>通解形式(瞬时):<br>$$E_x(z,t)=Re[E_x(z)e^{j\omega t}]=E^+_{x0} cos(\omega t -kz)$$</p>
+<h3 id="角频率-omega"><a href="#角频率-omega" class="headerlink" title="角频率$\omega$"></a>角频率$\omega$</h3><p>角频率:$\omega$表示单位时间内时间相位变化<br>$$\omega T=2\pi \f=\frac1 T =\frac \omega{2\pi}$$<br>###相速$v_p$</p>
+<p>相速$v_p$表示等相面移动的速度:<br>$$v_p=\frac {dz}{dt}=\frac \omega k = \frac1 {\sqrt{\mu \varepsilon}}$$</p>
+<h3 id="传播特性-amp-amp-时均坡印亭矢量-计算用"><a href="#传播特性-amp-amp-时均坡印亭矢量-计算用" class="headerlink" title="传播特性&amp;&amp;时均坡印亭矢量(计算用)"></a>传播特性&amp;&amp;时均坡印亭矢量(计算用)</h3><p>若已知E,求H,有:<br>$$E(z)=a_x E^+<em>{x0}e^{-jkz}$$<br>$$H_y(z,t)=\frac 1\eta E^+</em>{x0}cos(\omega t-kz)  $$<br>所以同理,时均坡印亭矢量$S_{av}$可以写成:<br>$$S_{av}=\frac 12 Re(\vec E \times \vec H^*)=\vec a_z \frac1 {2\eta E_x^2}$$</p>
+<h3 id="波阻抗-eta"><a href="#波阻抗-eta" class="headerlink" title="波阻抗$\eta$"></a>波阻抗$\eta$</h3><p>重写,$\eta$又称本征阻抗或特性阻抗,单位是$\Omega$<br>$$\eta=\sqrt{\frac \mu\varepsilon}$$</p>
+<h3 id="能速-v-e"><a href="#能速-v-e" class="headerlink" title="能速$v_e$"></a>能速$v_e$</h3><p>在均匀平面电磁波中有能速:<br>$$\frac {\vec S_{av}}{\omega_{av}}=\vec a_z \frac 1{\sqrt{\varepsilon\mu}} =v_e$$<br>其中$\omega_{av}$表示时均电磁能流密度,变形为$S_{av}=v_{av}\omega_{av}$则有:<br>空间某点的时均能流密度是以速度$v_e$运动的时均能量密度$\omega_{av}$,所以称$v_e$为能速</p>
+<p>特别地,在理想介质中,$v_e=v_{p}$</p>
+<h2 id="平面电磁波-导电媒质"><a href="#平面电磁波-导电媒质" class="headerlink" title="平面电磁波,导电媒质"></a>平面电磁波,导电媒质</h2><p>在这里考虑的重点在于$\sigma \neq 0$所以波动方程不能像上面一样化简<br>由于这一节概念多,会配以理解</p>
+<h3 id="TEM波动方程-1"><a href="#TEM波动方程-1" class="headerlink" title="TEM波动方程"></a>TEM波动方程</h3><p>回归最原始的波动方程:<br>$$\nabla^2 \vec E(\vec r,t)-\mu\varepsilon\frac{\partial^2\vec E(\vec r,t)}{\partial t^2}=- \mu\sigma \frac{\partial \vec E(\vec r,t)}{\partial t}$$ </p>
+<p>$$\nabla^2 \vec H(\vec r,t)-\mu\varepsilon\frac{\partial^2 \vec H(\vec r,t)}{\partial t^2}=- \mu\sigma\frac{\partial \vec H(\vec r,t)}{\partial t}$$ </p>
+<p>用复数形式表示后,用类理想介质的齐次方程表示为:<br>$$\frac {d^2 E_x}{dz^2}+\vec k^2_c E_x =0$$<br>$$\frac {d^2 H_y}{dz^2}+\vec k^2_c H_y =0$$<br>注意到,因为右边的是一次项,微分下来会让k变成一个复数</p>
+<h3 id="复波数-k-c-amp-amp-复电容率-varepsilon-c"><a href="#复波数-k-c-amp-amp-复电容率-varepsilon-c" class="headerlink" title="复波数$k_c$&amp;&amp;复电容率$\varepsilon_c$"></a>复波数$k_c$&amp;&amp;复电容率$\varepsilon_c$</h3><p>$$k_c=\omega \sqrt{\mu \varepsilon_c} , \varepsilon_c = (\varepsilon - j\frac \sigma\omega)=\varepsilon^` -j\varepsilon^{``}$$<br>由于复电容率的更新,导致理想介质中的很多参数都复数化了,所以会有新的拓展</p>
+<h3 id="复传播常数-gamma-amp-amp-衰减常数-alpha-amp-amp-相位常数-beta"><a href="#复传播常数-gamma-amp-amp-衰减常数-alpha-amp-amp-相位常数-beta" class="headerlink" title="复传播常数$\gamma$&amp;&amp;衰减常数$\alpha$&amp;&amp;相位常数$\beta$"></a>复传播常数$\gamma$&amp;&amp;衰减常数$\alpha$&amp;&amp;相位常数$\beta$</h3><p>$$\gamma=jk_c=\omega \sqrt{\mu \varepsilon_c}=\alpha +j\beta$$<br>其中:<br>$$\alpha=\omega\sqrt{\frac{\mu\varepsilon}{2}[\sqrt{1+(\frac {\sigma}{\omega\varepsilon})^2}-1]}$$<br>$$\beta=\omega\sqrt{\frac{\mu\varepsilon}{2}[\sqrt{1+(\frac {\sigma}{\omega\varepsilon})^2}+1]}$$<br>是有点复杂,但是到后面的良导体良介质会化简!<br>注意到这里的相位常数不再等于波数了.(虽然后面用起来还是很像的)</p>
+<p>对于TEM来说,波动方程可退化为:<br>$$\frac {d^2 E_x}{dz^2}-\gamma^2 E_x =0$$<br>$$\frac {d^2 H_y}{dz^2}-\gamma^2 H_y =0$$<br>简单的微分方程求解得:<br>$$E(z)=\vec E^+<em>{x0}e^{-\gamma z}=\vec E^+</em>{x0}e^{-\alpha z}e^{-j\beta z}$$<br>$$H_y(z,t)=\frac 1\eta_c \vec E^+<em>{x0}e^{-\gamma z}=\frac 1\eta_c  \vec E^+</em>{x0}e^{-\alpha z}e^{-j\beta z} = \frac 1 {|\eta_c|}  \vec E^+_{x0}e^{-\alpha z}e^{-j\beta z+\phi} $$</p>
+<h3 id="复波阻抗-amp-amp-复本征阻抗-eta-c"><a href="#复波阻抗-amp-amp-复本征阻抗-eta-c" class="headerlink" title="复波阻抗&amp;&amp;复本征阻抗$\eta_c$"></a>复波阻抗&amp;&amp;复本征阻抗$\eta_c$</h3><p>$$\eta_c=\sqrt{\frac \mu{\varepsilon_c}}=|\eta_c|e^{j\phi}$$<br>其中:<br>$$|\eta_c|=(\frac \mu\varepsilon)^{\frac 12}[1+(\frac {\sigma}{\omega \varepsilon})^2]^{- \frac14}$$<br>$$\phi=\frac 12 arctan(\frac \sigma{\omega\varepsilon})$$</p>
+<h3 id="相速-v-p-amp-amp-色散波"><a href="#相速-v-p-amp-amp-色散波" class="headerlink" title="相速$v_p$&amp;&amp;色散波"></a>相速$v_p$&amp;&amp;色散波</h3><p>$$v_p=\frac \omega\beta=\frac1 {\varepsilon_c \mu}=\frac1 {\sqrt{\varepsilon \mu(1-j\frac {\sigma}{\omega\varepsilon})}}$$<br>可以看出这里的相速会和频率有关,所以这种波称为色散波,相应导电媒质称为<strong>色散媒质</strong></p>
+<h3 id="良导体和良介质的判定"><a href="#良导体和良介质的判定" class="headerlink" title="良导体和良介质的判定"></a>良导体和良介质的判定</h3><p>$$\frac{\vec J}{\vec J_d} \sim \frac{\sigma}{\omega\varepsilon} \begin{cases} \gg 1,\quad 良导体 \ \ll 1,\quad 良介质 \end{cases}$$</p>
+<h2 id="平面电磁波-良导体"><a href="#平面电磁波-良导体" class="headerlink" title="平面电磁波,良导体"></a>平面电磁波,良导体</h2><h3 id="传播常数-gamma"><a href="#传播常数-gamma" class="headerlink" title="传播常数$\gamma$"></a>传播常数$\gamma$</h3><p>$$\gamma=jk_c=\sqrt{\varepsilon \mu(1-j\frac {\sigma}{\omega\varepsilon})} \approx j\omega\sqrt{\frac{\mu\sigma}{j\omega}}=\frac{1+j}{\sqrt2} \sqrt{\omega \mu\sigma}$$</p>
+<h3 id="衰减常数-amp-amp-相位常数"><a href="#衰减常数-amp-amp-相位常数" class="headerlink" title="衰减常数&amp;&amp;相位常数"></a>衰减常数&amp;&amp;相位常数</h3><p>$$\alpha \approx \beta \approx \sqrt{\pi f \mu\sigma}=\sqrt{\frac{\omega\mu\sigma}{2}}$$</p>
+<h3 id="复波阻抗"><a href="#复波阻抗" class="headerlink" title="复波阻抗"></a>复波阻抗</h3><p>$$\eta_c =\sqrt{\frac \mu{\varepsilon_c}}=\sqrt{\frac \mu\varepsilon (\frac1 {1-j\frac \sigma{\omega\varepsilon}})} \approx \sqrt{\frac {j\omega\mu}{\sigma}}=(1+j)\sqrt{\frac {\pi f \mu}{\sigma}}=e^{j\frac\pi 4}\sqrt{\frac {2\pi f \mu}{\sigma}}$$</p>
+<h3 id="相速"><a href="#相速" class="headerlink" title="相速"></a>相速</h3><p>$$v_p=\frac \omega\beta=\frac1{\sqrt{\mu{\varepsilon_c}}}=\frac1{\sqrt{\mu{\varepsilon}(1-j\frac{\sigma}{\omega\varepsilon})}} \approx \sqrt{\frac {2\omega}{\mu\sigma}}$$</p>
+<h3 id="趋肤深度-delta"><a href="#趋肤深度-delta" class="headerlink" title="趋肤深度$\delta$"></a>趋肤深度$\delta$</h3><p>由上述可知:<br>$$a\sim f,\mu,\sigma $$<br>所以在良导体中,电磁波很快就衰减完了,电磁波仅局限于道题表面附近区域,称为趋肤效应,故有趋肤深度$\delta$:<br>$$\delta =\frac1a =\sqrt{\frac2 {\omega\mu\sigma}}=\frac 1{\sqrt{\pi f \mu\sigma}} $$<br>在良导体中:<br>$$\delta=\frac1\beta=\frac\lambda {2\pi} $$</p>
+<h3 id="表面阻抗和表面电抗"><a href="#表面阻抗和表面电抗" class="headerlink" title="表面阻抗和表面电抗"></a>表面阻抗和表面电抗</h3><p>$$ \eta_c=R_S+jX_S \approx (1+j)\sqrt{\frac {\pi f \mu}{\sigma}} $$<br>其中$R_S$表面阻抗 和$X_S$表面电抗,相应$Z_S$称为表面阻抗,所以有:<br>$$ R_S=X_S=\sqrt{\frac{\pi f \mu}{\sigma}}=\frac1{\sigma\delta} $$</p>
+<h2 id="平面电磁波-良介质"><a href="#平面电磁波-良介质" class="headerlink" title="平面电磁波,良介质"></a>平面电磁波,良介质</h2><p>因为前面就讲过理想介质,所以这个没多少</p>
+<h3 id="传播常数"><a href="#传播常数" class="headerlink" title="传播常数"></a>传播常数</h3><p>$$\gamma=\sqrt{\varepsilon \mu(1-j\frac {\sigma}{\omega\varepsilon})} \approx j\omega\sqrt{\mu\sigma}=(1-j\frac{\sigma}{2\omega\varepsilon})$$</p>
+<h3 id="衰减常数"><a href="#衰减常数" class="headerlink" title="衰减常数"></a>衰减常数</h3><p>$$ \alpha \approx \frac\sigma 2\sqrt{\frac \mu\varepsilon} $$</p>
+<h3 id="相位常数"><a href="#相位常数" class="headerlink" title="相位常数"></a>相位常数</h3><p>$$\beta \approx \omega \sqrt{\mu\varepsilon}$$</p>
+<h3 id="复波阻抗-1"><a href="#复波阻抗-1" class="headerlink" title="复波阻抗"></a>复波阻抗</h3><p>$$ \eta_c =\sqrt{\frac \mu{\varepsilon_c}}=\sqrt{\frac \mu\varepsilon (\frac1 {1-j\frac \sigma{\omega\varepsilon}})} \approx \sqrt{\frac\mu\varepsilon}(1+j\frac{\sigma}{2\omega\varepsilon}) $$<br>##任意方向传播的均匀平面电磁波</p>
+<h3 id="波数矢量-amp-amp-位置矢量"><a href="#波数矢量-amp-amp-位置矢量" class="headerlink" title="波数矢量&amp;&amp;位置矢量"></a>波数矢量&amp;&amp;位置矢量</h3><p>$$\vec E(\vec r)=\vec E^+_0 e^{-j\vec k\bullet \vec r}=\vec E^+_0e^{-j k\vec a_n\bullet \vec r}$$<br>其中k为波数矢量,又称<strong>传播矢量</strong>,r称为位置矢量</p>
+<h2 id="平面电磁波-极化"><a href="#平面电磁波-极化" class="headerlink" title="平面电磁波,极化"></a>平面电磁波,极化</h2><p>以合成波电场强度与x轴夹角$\alpha$分类:</p>
+<h3 id="线极化波"><a href="#线极化波" class="headerlink" title="线极化波"></a>线极化波</h3><p>$$ \alpha =arctan(\frac {E_{y0}}{E_{x0}})=C $$</p>
+<h3 id="圆极化波"><a href="#圆极化波" class="headerlink" title="圆极化波"></a>圆极化波</h3><p>$$ \alpha =arctan(\frac {E_{y0}}{E_{x0}})= arctan(\frac {\mp E_{0}sin\omega t}{E_{0}cos\omega t})=arctan(\mp tan\omega t)=\mp \omega t$$</p>
+<h3 id="椭圆极化波"><a href="#椭圆极化波" class="headerlink" title="椭圆极化波"></a>椭圆极化波</h3><p>$$ \alpha =arctan (\mp \frac {E_{y0}}{E_{x0}}tan \omega t) \neq \mp \omega t $$</p>
+<p>方向用$\alpha$ 来判断也是可以的,在z正向下,$\alpha$为负右旋,为正左旋,其他类似没订阅就不写了……</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/05/05/电磁学乱七八糟的符号-一/" rel="next" title="电磁学乱七八糟的符号(一)">
+                  <i class="fa fa-chevron-left"></i> 电磁学乱七八糟的符号(一)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/05/13/电磁学乱七八糟的符号-三/" rel="prev" title="电磁学乱七八糟的符号(三)">
+                  电磁学乱七八糟的符号(三) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#电磁学乱七八糟的符号-二"><span class="nav-number">1.</span> <span class="nav-text">电磁学乱七八糟的符号(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter5电磁波的传播-TEM-理想介质"><span class="nav-number">1.1.</span> <span class="nav-text">chapter5电磁波的传播(TEM,理想介质)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#波动方程"><span class="nav-number">1.1.1.</span> <span class="nav-text">波动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#光速c"><span class="nav-number">1.1.2.</span> <span class="nav-text">光速c</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#波数-amp-amp-相位常数k-同一个东西"><span class="nav-number">1.1.3.</span> <span class="nav-text">波数&amp;&amp;相位常数k(同一个东西)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TEM波动方程"><span class="nav-number">1.1.4.</span> <span class="nav-text">TEM波动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#角频率-omega"><span class="nav-number">1.1.5.</span> <span class="nav-text">角频率$\omega$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传播特性-amp-amp-时均坡印亭矢量-计算用"><span class="nav-number">1.1.6.</span> <span class="nav-text">传播特性&amp;&amp;时均坡印亭矢量(计算用)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#波阻抗-eta"><span class="nav-number">1.1.7.</span> <span class="nav-text">波阻抗$\eta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能速-v-e"><span class="nav-number">1.1.8.</span> <span class="nav-text">能速$v_e$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-导电媒质"><span class="nav-number">1.2.</span> <span class="nav-text">平面电磁波,导电媒质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TEM波动方程-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">TEM波动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复波数-k-c-amp-amp-复电容率-varepsilon-c"><span class="nav-number">1.2.2.</span> <span class="nav-text">复波数$k_c$&amp;&amp;复电容率$\varepsilon_c$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复传播常数-gamma-amp-amp-衰减常数-alpha-amp-amp-相位常数-beta"><span class="nav-number">1.2.3.</span> <span class="nav-text">复传播常数$\gamma$&amp;&amp;衰减常数$\alpha$&amp;&amp;相位常数$\beta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复波阻抗-amp-amp-复本征阻抗-eta-c"><span class="nav-number">1.2.4.</span> <span class="nav-text">复波阻抗&amp;&amp;复本征阻抗$\eta_c$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相速-v-p-amp-amp-色散波"><span class="nav-number">1.2.5.</span> <span class="nav-text">相速$v_p$&amp;&amp;色散波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#良导体和良介质的判定"><span class="nav-number">1.2.6.</span> <span class="nav-text">良导体和良介质的判定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-良导体"><span class="nav-number">1.3.</span> <span class="nav-text">平面电磁波,良导体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传播常数-gamma"><span class="nav-number">1.3.1.</span> <span class="nav-text">传播常数$\gamma$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#衰减常数-amp-amp-相位常数"><span class="nav-number">1.3.2.</span> <span class="nav-text">衰减常数&amp;&amp;相位常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复波阻抗"><span class="nav-number">1.3.3.</span> <span class="nav-text">复波阻抗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相速"><span class="nav-number">1.3.4.</span> <span class="nav-text">相速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#趋肤深度-delta"><span class="nav-number">1.3.5.</span> <span class="nav-text">趋肤深度$\delta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表面阻抗和表面电抗"><span class="nav-number">1.3.6.</span> <span class="nav-text">表面阻抗和表面电抗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-良介质"><span class="nav-number">1.4.</span> <span class="nav-text">平面电磁波,良介质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传播常数"><span class="nav-number">1.4.1.</span> <span class="nav-text">传播常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#衰减常数"><span class="nav-number">1.4.2.</span> <span class="nav-text">衰减常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相位常数"><span class="nav-number">1.4.3.</span> <span class="nav-text">相位常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复波阻抗-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">复波阻抗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#波数矢量-amp-amp-位置矢量"><span class="nav-number">1.4.5.</span> <span class="nav-text">波数矢量&amp;&amp;位置矢量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平面电磁波-极化"><span class="nav-number">1.5.</span> <span class="nav-text">平面电磁波,极化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线极化波"><span class="nav-number">1.5.1.</span> <span class="nav-text">线极化波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#圆极化波"><span class="nav-number">1.5.2.</span> <span class="nav-text">圆极化波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#椭圆极化波"><span class="nav-number">1.5.3.</span> <span class="nav-text">椭圆极化波</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">今日你学左米啊</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">Kategorien</span>
+        
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    Design – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

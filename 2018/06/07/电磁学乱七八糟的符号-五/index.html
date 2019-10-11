@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="电磁学乱七八糟的符号(五)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电磁学乱七八糟的符号(五)">
+<meta property="og:url" content="http://yoursite.com/2018/06/07/电磁学乱七八糟的符号-五/index.html">
+<meta property="og:site_name" content="HWB-blog">
+<meta property="og:description" content="电磁学乱七八糟的符号(五)">
+<meta property="og:locale" content="cn">
+<meta property="og:image" content="https://i.loli.net/2018/06/06/5b17e6d3e6aae.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/06/07/5b180bd36628e.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/06/06/5b17f6d138d69.png">
+<meta property="og:updated_time" content="2019-10-11T10:16:43.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电磁学乱七八糟的符号(五)">
+<meta name="twitter:description" content="电磁学乱七八糟的符号(五)">
+<meta name="twitter:image" content="https://i.loli.net/2018/06/06/5b17e6d3e6aae.jpg">
+  <link rel="canonical" href="http://yoursite.com/2018/06/07/电磁学乱七八糟的符号-五/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>电磁学乱七八糟的符号(五) | HWB-blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HWB-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Startseite</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archiv</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/07/电磁学乱七八糟的符号-五/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="今日你学左米啊">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HWB-blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            电磁学乱七八糟的符号(五)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-06-07 00:27:17" itemprop="dateCreated datePublished" datetime="2018-06-07T00:27:17+08:00">2018-06-07</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2019-10-11 18:16:43" itemprop="dateModified" datetime="2019-10-11T18:16:43+08:00">2019-10-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电磁波/" itemprop="url" rel="index">
+                    <span itemprop="name">电磁波</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">电磁学乱七八糟的符号(五)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电磁学乱七八糟的符号-五"><a href="#电磁学乱七八糟的符号-五" class="headerlink" title="电磁学乱七八糟的符号(五)"></a>电磁学乱七八糟的符号(五)</h1><p><strong>author:何伟宝</strong></p>
+<hr>
+<p>本来已经是不打算更得了,没想到到了最后还有一个重要的知识面没涵盖到,那就写一下吧</p>
+<p>[TOC]</p>
+<h2 id="一般传输线方程"><a href="#一般传输线方程" class="headerlink" title="一般传输线方程"></a>一般传输线方程</h2><p>这一次需要被建模的类型是平行双导线,数学建模后是长这个样子的:<br><img src="https://i.loli.net/2018/06/06/5b17e6d3e6aae.jpg" alt="pic"></p>
+<p>由于直接从麦克斯韦方程式不好起手,所以这里注重求电压电流的解和关系</p>
+<h2 id="分布参量"><a href="#分布参量" class="headerlink" title="分布参量"></a>分布参量</h2><h3 id="长短线"><a href="#长短线" class="headerlink" title="长短线"></a>长短线</h3><p>为了便于分析,定义$\frac {l}{\lambda}$为传输线的电长度,并且定义长短线:<br>$$低频电路\longleftrightarrow \frac {l}{\lambda}&lt;1 \longleftrightarrow 短线$$<br>$$高频电路\longleftrightarrow \frac {l}{\lambda}&gt;1 \longleftrightarrow 长线$$<br>###分布参量<br>如上图的一些电阻电容电感电导,由下表给出:<br><img src="https://i.loli.net/2018/06/07/5b180bd36628e.jpg" alt="fenbu"><br>但是题目一般会给出,所以就不多说了,重点是<strong>单位!</strong>如果题目给出总的,一点要记得除以长度</p>
+<h2 id="稳态解"><a href="#稳态解" class="headerlink" title="稳态解"></a>稳态解</h2><p>忙于复习,就直接上结论了</p>
+<h3 id="电报方程-电报方程"><a href="#电报方程-电报方程" class="headerlink" title="电报方程/电报方程"></a>电报方程/电报方程</h3><p>$$\frac {dU(z)}{dz}=Z_0I(z)$$<br>$$\frac {dU(z)}{dz}=Y_0I(z)$$</p>
+<h4 id="串联阻抗和并联导纳"><a href="#串联阻抗和并联导纳" class="headerlink" title="串联阻抗和并联导纳"></a>串联阻抗和并联导纳</h4><p>由上式定义了:<br>$$Z_0=R_0+j\omega L_0 \quad ,\quad Y_0=G_0+j\omega C_0$$</p>
+<h3 id="波动方程"><a href="#波动方程" class="headerlink" title="波动方程"></a>波动方程</h3><p>同样地做分离U,I两个变量得:<br>$$\frac {d^2U(z)}{dz^2}-\gamma^2U(z)=0$$<br>$$\frac {d^2I(z)}{dz^2}-\gamma^2I(z)=0$$<br>所以可以很容易得求得通解:<br>$$U(z)=Ae^{\gamma z}+Be^{-\gamma z}$$<br>回代到电压的一阶微分式有:<br>$$I(z)=\frac1{Z_0}\frac{dU(z)}{dz}=\frac1{Z_c}(Ae^{\gamma z}+Be^{-\gamma z})$$</p>
+<h4 id="特征阻抗-Z-c"><a href="#特征阻抗-Z-c" class="headerlink" title="特征阻抗$Z_c$"></a>特征阻抗$Z_c$</h4><p>可以看出,特征阻抗是描述传输线上电压电流转换关系的,而且有:<br>$$Z_c=\sqrt{\frac{Z_0}{Y_0}}=\sqrt{\frac{R_0+j\omega L_0}{G_0+j\omega C_0}}$$<br>所以这里的特征阻抗和前面说的<strong>波阻抗</strong>有点像.</p>
+<h4 id="传播常数-gamma-amp-amp-衰减常数-amp-amp-相位常数"><a href="#传播常数-gamma-amp-amp-衰减常数-amp-amp-相位常数" class="headerlink" title="传播常数$\gamma$&amp;&amp;衰减常数&amp;&amp;相位常数"></a>传播常数$\gamma$&amp;&amp;衰减常数&amp;&amp;相位常数</h4><p>又是熟悉的字母,又是熟悉的定义:<br>$$\gamma=\sqrt{Z_0Y_0}=\sqrt{(R_0+j\omega L_0)(G_0+j\omega C_0)}=\alpha + j \beta$$<br>$\gamma$称为传输线上电压波和电流波的传播常数 , $\alpha$为衰减常数 , $\beta$为相位常数</p>
+<h3 id="任意点电压电流"><a href="#任意点电压电流" class="headerlink" title="任意点电压电流"></a>任意点电压电流</h3><p>对一般传输线:<br>$$U(z)=\frac{U_0+I_0 Z_c}2 e^{\gamma z}+\frac{U_0-I_0 Z_c}2 e^{-\gamma z}$$<br>$$U(z)=\frac1{Z_c}(\frac{U_0+I_0 Z_c}2 e^{\gamma z}-\frac{U_0-I_0 Z_c}2 e^{-\gamma z})$$<br>对无损耗传输线,有$\gamma=j\beta$,(<strong>划重点</strong>)<br>$$U(z)=U_0cos\beta z+jI_0Z_c sin\beta z$$<br>$$U(z)=I_0cos\beta z+j\frac{U_0}{Z_c} sin\beta z$$</p>
+<h2 id="传输特性"><a href="#传输特性" class="headerlink" title="传输特性"></a>传输特性</h2><p>由于<strong>某些原因</strong>,这里可能偏向<strong>无损耗传输线</strong>,也就是$R_0=0 \quad,\quad G_0=0$</p>
+<h3 id="特性阻抗"><a href="#特性阻抗" class="headerlink" title="特性阻抗"></a>特性阻抗</h3><p>在<strong>无损耗传输线</strong>中:<br>$$Z_c=\sqrt{\frac{L_0}{C_0}}$$</p>
+<h3 id="传播常数"><a href="#传播常数" class="headerlink" title="传播常数"></a>传播常数</h3><p>在<strong>无损耗传输线</strong>中:<br>$$\gamma=j\beta \quad,\quad \alpha=0 \quad,\quad \beta=\omega\sqrt{L_0 C_0}$$</p>
+<h3 id="相速与波长"><a href="#相速与波长" class="headerlink" title="相速与波长"></a>相速与波长</h3><p>参考前面的定义,可以定义传输波的相速为:<br>$$v_p=\frac{\omega}{\beta}=\frac1{\sqrt{L_0 C_0}}$$<br>同理定义波长:<br>$$\lambda=\frac{2\pi}{\beta}$$</p>
+<h2 id="工作状态"><a href="#工作状态" class="headerlink" title="工作状态"></a>工作状态</h2><h3 id="输入阻抗"><a href="#输入阻抗" class="headerlink" title="输入阻抗"></a>输入阻抗</h3><p>从图形上看,<strong>无损耗传输线</strong>,输入阻抗是这样的:<br><img src="https://i.loli.net/2018/06/06/5b17f6d138d69.png" alt="z_in"><br>注意这里的起点不一定是z=0,可以是任意点往负载方向看的阻抗,所以由前面的公式可以知道:<br>$$Z_{in}(z)=\frac{U(z)}{I(z)}=Z_c\frac{Z_L+jZ_ctan\beta z}{Z_c+jZ_Ltan\beta z}$$</p>
+<p>特别地(习题结论),<br>考虑传播线开路,即$Z_L\rightarrow\infty$时:<br>对公式中的分式$Z_L$作洛必达法则,可得到开路输入阻抗$Z_{ino}$:<br>$$Z_{ino}=-jZ_c cot\beta z \tag{1.1}$$<br>同理考虑传播线开路,即$Z_L\rightarrow 0 $时:<br>代入原公式得短路输入阻抗$Z_{ins}$:<br>$$Z_{ins}=jZ_c tan\beta z \tag{1.2}$$</p>
+<p>(1.1)*(1.2)得:<br>$$Z_c=\sqrt{Z_{ino}Z_{ins}}$$<br>(1.1)/(1.2)得:<br>$$\beta=\frac1z arctan\sqrt{\frac{Z_{ins}} {Z_{ino}}}  $$</p>
+<h3 id="反射系数"><a href="#反射系数" class="headerlink" title="反射系数"></a>反射系数</h3><p>描述的就好像是,以某一点的一个电压波为基准,<br>然后那个电压波通过传输先跑到了对面,对原来的电压波的影响:<br>自然地,电压波跑过的路程是2z,所以有:<br>$$\Gamma(z)=\Gamma_0 e^{-2j\beta z}\quad \quad \Gamma_0=|\Gamma_0| e^{j\varphi_0}$$<br>其中$\Gamma_0$称为传输线的终端电压反射系数$\varphi$是辅角,对<strong>无损耗传输线</strong>来说,$|\Gamma(z)|=|\Gamma_0|$</p>
+<h3 id="驻波系数-amp-amp-行波系数"><a href="#驻波系数-amp-amp-行波系数" class="headerlink" title="驻波系数&amp;&amp;行波系数"></a>驻波系数&amp;&amp;行波系数</h3><p>驻波系数:<br>$$\rho=\frac{|U(z)|<em>{max}}{|U(z)|</em>{min}}$$<br>行波系数:<br>$$K=\frac1\rho=\frac{|U(z)|<em>{min}}{|U(z)|</em>{max}}$$</p>
+<h3 id="参量间关系"><a href="#参量间关系" class="headerlink" title="参量间关系"></a>参量间关系</h3><p>因为这里是重点,所以这里给出常用公式,推导就自行看书了..<br>$$Z_{in}(z)=Z_c\frac{1+\Gamma(z)}{1-\Gamma(z)}\quad \quad\Gamma(z)=\frac{Z_{in}(z)-Z_c}{Z_{in}(z)+Z_c}$$</p>
+<p>$$Z_{L}=Z_c\frac{1+\Gamma_0}{1-\Gamma_0}\quad \quad \quad\Gamma_0=\frac{Z_L-Z_c}{Z_L+Z_c}$$</p>
+<p>$$\rho=\frac{1+|\Gamma_0|}{1-|\Gamma_0|}\quad \quad\quad \quad \quad  |\Gamma(z)|=|\Gamma_0|=\frac{\rho-1}{\rho+1}$$</p>
+<h2 id="行波状态"><a href="#行波状态" class="headerlink" title="行波状态"></a>行波状态</h2><p>在反射系数$\Gamma(z)=0$时,显然没有反射波,即$U^-(z)=0$<br>所以有以下结论:</p>
+<ol>
+<li>沿线电压和电流振幅不变:<br>$$U(z)=U^+(z)=\frac{U_0+I_0 Z_c}2 e^{\gamma z}=U^+_0e^{\gamma z}$$<br>$$I(z)=I^+(z)=\frac{U_0+I_0 Z_c}{2Z_c} e^{\gamma z}=\frac{U^+_0}{Z_c}e^{\gamma z}$$</li>
+<li>沿线电压和电流相位相同:<br>$$u(z,t)=|U^+_0|cos(\omega t+\beta z +\varphi_0)$$<br>$$i(z,t)=\frac{|U^+_0|}{Z_c}cos(\omega t+\beta z +\varphi_0)$$</li>
+<li>沿线各点输入阻抗等于其特性阻抗:<br>$$Z_{in}(z)=Z_c$$</li>
+</ol>
+<h2 id="驻波状态"><a href="#驻波状态" class="headerlink" title="驻波状态"></a>驻波状态</h2><p>在反射系数$|\Gamma(z)|=1$时,显然反射波和入射波相叠(所以有个系数2)加成纯驻波,不对外吸收或传输能量</p>
+<p>显然只有在负载短路,开路,纯电抗(不损耗能量)时有$|\Gamma(z)|=1$</p>
+<p>这里就直接上结论了(以$Z_L=0$)为例:<br>$$U(z)=j2U^+_0sin\beta z$$<br>$$I(z)=2I^+_0cos\beta z$$<br>可以看出这里电压和电流差了一个$\frac \pi 2$的相位 ,由于总路程是2z,所以引起的相移是$\frac{\lambda}4$<br>&nbsp;<br>&nbsp;<br>此时传输线上任意一点的输入阻抗为:<br>$$ Z_in(z)=jZ_ctan\beta z$$</p>
+<h3 id="frac-lambda-4-阻抗变换性"><a href="#frac-lambda-4-阻抗变换性" class="headerlink" title="$\frac \lambda 4$阻抗变换性"></a>$\frac \lambda 4$阻抗变换性</h3><p>特别地,考虑:<br>$$\Gamma(z)=\Gamma_0 e^{-2j\beta z}\quad \quad$$<br>可以清晰地看出,每当z改变$\frac \lambda 4$时,反射系数就会取反,称为阻抗变换性</p>
+<h2 id="混合波状态"><a href="#混合波状态" class="headerlink" title="混合波状态"></a>混合波状态</h2><p>相当于上面两个的结合,主要特征保留这样子:<br>$$U(z)=U^+_0 e^{j\beta z}(1-\Gamma_0)+2\Gamma_0 U^+_0 cos\beta z$$<br>$$I(z)=I^+_0 e^{j\beta z}(1-\Gamma_0)+j2\Gamma_0 U^+_0 cos\beta z$$</p>
+<h2 id="阻抗匹配"><a href="#阻抗匹配" class="headerlink" title="阻抗匹配"></a>阻抗匹配</h2><h3 id="共轭阻抗匹配"><a href="#共轭阻抗匹配" class="headerlink" title="共轭阻抗匹配"></a>共轭阻抗匹配</h3><p>向负载方向看去的输入阻抗与向微波信源方向看去的输入阻抗的共轭值相等:<br>$$Z_{in}=Z^*_g$$</p>
+<h3 id="源阻抗匹配"><a href="#源阻抗匹配" class="headerlink" title="源阻抗匹配"></a>源阻抗匹配</h3><p>微波信源的内阻抗等于传输线的特性阻抗:<br>$$Z_g=Z_c$$</p>
+<h3 id="负载阻抗匹配"><a href="#负载阻抗匹配" class="headerlink" title="负载阻抗匹配"></a>负载阻抗匹配</h3><p>负载阻抗等于传输线的特性阻抗:<br>$$Z_L=Z_c$$</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这次是真的再见了!       </p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/05/31/电磁学乱七八糟的符号-四/" rel="next" title="电磁学乱七八糟的符号(四)">
+                  <i class="fa fa-chevron-left"></i> 电磁学乱七八糟的符号(四)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/11/hello-world/" rel="prev" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#电磁学乱七八糟的符号-五"><span class="nav-number">1.</span> <span class="nav-text">电磁学乱七八糟的符号(五)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一般传输线方程"><span class="nav-number">1.1.</span> <span class="nav-text">一般传输线方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布参量"><span class="nav-number">1.2.</span> <span class="nav-text">分布参量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#长短线"><span class="nav-number">1.2.1.</span> <span class="nav-text">长短线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稳态解"><span class="nav-number">1.3.</span> <span class="nav-text">稳态解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电报方程-电报方程"><span class="nav-number">1.3.1.</span> <span class="nav-text">电报方程/电报方程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#串联阻抗和并联导纳"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">串联阻抗和并联导纳</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#波动方程"><span class="nav-number">1.3.2.</span> <span class="nav-text">波动方程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特征阻抗-Z-c"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">特征阻抗$Z_c$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传播常数-gamma-amp-amp-衰减常数-amp-amp-相位常数"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">传播常数$\gamma$&amp;&amp;衰减常数&amp;&amp;相位常数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任意点电压电流"><span class="nav-number">1.3.3.</span> <span class="nav-text">任意点电压电流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输特性"><span class="nav-number">1.4.</span> <span class="nav-text">传输特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特性阻抗"><span class="nav-number">1.4.1.</span> <span class="nav-text">特性阻抗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传播常数"><span class="nav-number">1.4.2.</span> <span class="nav-text">传播常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相速与波长"><span class="nav-number">1.4.3.</span> <span class="nav-text">相速与波长</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作状态"><span class="nav-number">1.5.</span> <span class="nav-text">工作状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入阻抗"><span class="nav-number">1.5.1.</span> <span class="nav-text">输入阻抗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射系数"><span class="nav-number">1.5.2.</span> <span class="nav-text">反射系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#驻波系数-amp-amp-行波系数"><span class="nav-number">1.5.3.</span> <span class="nav-text">驻波系数&amp;&amp;行波系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参量间关系"><span class="nav-number">1.5.4.</span> <span class="nav-text">参量间关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行波状态"><span class="nav-number">1.6.</span> <span class="nav-text">行波状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#驻波状态"><span class="nav-number">1.7.</span> <span class="nav-text">驻波状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frac-lambda-4-阻抗变换性"><span class="nav-number">1.7.1.</span> <span class="nav-text">$\frac \lambda 4$阻抗变换性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合波状态"><span class="nav-number">1.8.</span> <span class="nav-text">混合波状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻抗匹配"><span class="nav-number">1.9.</span> <span class="nav-text">阻抗匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共轭阻抗匹配"><span class="nav-number">1.9.1.</span> <span class="nav-text">共轭阻抗匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源阻抗匹配"><span class="nav-number">1.9.2.</span> <span class="nav-text">源阻抗匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#负载阻抗匹配"><span class="nav-number">1.9.3.</span> <span class="nav-text">负载阻抗匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.10.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">今日你学左米啊</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">Kategorien</span>
+        
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    Design – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

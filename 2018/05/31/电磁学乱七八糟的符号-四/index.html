@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="电磁学乱七八糟的符号(四)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电磁学乱七八糟的符号(四)">
+<meta property="og:url" content="http://yoursite.com/2018/05/31/电磁学乱七八糟的符号-四/index.html">
+<meta property="og:site_name" content="HWB-blog">
+<meta property="og:description" content="电磁学乱七八糟的符号(四)">
+<meta property="og:locale" content="cn">
+<meta property="og:image" content="https://i.loli.net/2018/05/26/5b08edc82a0bf.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/19/5b78da41a4869.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/19/5b78da517ba08.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/05/31/5b0fc8997e489.jpg">
+<meta property="og:updated_time" content="2019-10-11T10:16:56.551Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电磁学乱七八糟的符号(四)">
+<meta name="twitter:description" content="电磁学乱七八糟的符号(四)">
+<meta name="twitter:image" content="https://i.loli.net/2018/05/26/5b08edc82a0bf.png">
+  <link rel="canonical" href="http://yoursite.com/2018/05/31/电磁学乱七八糟的符号-四/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>电磁学乱七八糟的符号(四) | HWB-blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HWB-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Navigationsleiste an/ausschalten">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Startseite</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archiv</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/31/电磁学乱七八糟的符号-四/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="今日你学左米啊">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HWB-blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            电磁学乱七八糟的符号(四)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-05-31 18:10:49" itemprop="dateCreated datePublished" datetime="2018-05-31T18:10:49+08:00">2018-05-31</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2019-10-11 18:16:56" itemprop="dateModified" datetime="2019-10-11T18:16:56+08:00">2019-10-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/电磁波/" itemprop="url" rel="index">
+                    <span itemprop="name">电磁波</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">电磁学乱七八糟的符号(四)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电磁学乱七八糟的符号-四"><a href="#电磁学乱七八糟的符号-四" class="headerlink" title="电磁学乱七八糟的符号(四)"></a>电磁学乱七八糟的符号(四)</h1><hr>
+<p>这里重点是一般传输规律和矩形波导,<strong>chapter6 电磁波的传输</strong></p>
+<p>[TOC]</p>
+<h2 id="纵向场量法"><a href="#纵向场量法" class="headerlink" title="纵向场量法"></a>纵向场量法</h2><p>说白了也就是从麦克斯韦方程式抽象出我们需要的波动方程,流程如下:<br><img src="https://i.loli.net/2018/05/26/5b08edc82a0bf.png" alt="peocess"></p>
+<h3 id="矢量波动方程"><a href="#矢量波动方程" class="headerlink" title="矢量波动方程"></a>矢量波动方程</h3><p>在无源自由空间场量中(由麦克斯韦方程式):<br>$$ \nabla^2 \vec E+k^2\vec E=0 \tag{1.1} $$<br>$$ \nabla^2 \vec H+k^2\vec H=0 \tag{1.2}$$<br>在波导中,设电磁波沿着z轴传输:<br>$$ \vec E(x,y,z) = \vec E(x,y)e^{\gamma r } \tag{1.3}$$<br>$$ \vec H(x,y,z) = \vec H(x,y)e^{\gamma r } \tag{1.4}$$<br>其中有:</p>
+<h4 id="行波因子-gamma"><a href="#行波因子-gamma" class="headerlink" title="行波因子$\gamma$"></a>行波因子$\gamma$</h4><p>在上一章说过他也是一个<strong>传播常数</strong>,当$\gamma$为实数时,信号衰减.虚数时信号传播,且波数为其虚部</p>
+<h3 id="矢量分解"><a href="#矢量分解" class="headerlink" title="矢量分解"></a>矢量分解</h3><p>这里有意地把纵横量分开了:<br>$$ \vec E = (\vec a_x E_x+\vec a_y E_y) + \vec a_z E_z$$<br>$$ \vec H = (\vec a_x H_x+\vec a_y H_y) + \vec a_z H_z$$<br>顺便把拉普拉斯算符$\nabla$也分开:<br>$$ \nabla_t^2 = (\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2})+ \frac {\partial^2}{\partial z^2}=\nabla^2_{xy}+\frac {\partial^2}{\partial z^2} $$</p>
+<h3 id="标量波动方程"><a href="#标量波动方程" class="headerlink" title="标量波动方程"></a>标量波动方程</h3><p>将矢量分解的三个方程先带入(1.3)(1.4)再代入(1.1)(1.2),<strong>只截取纵向分量</strong>得:</p>
+<p>$$\nabla^2_{xy}\vec E_z+(k^2+\gamma^2)\vec E_z=0$$<br>$$\nabla^2_{xy}\vec H_z+(k^2+\gamma^2)\vec H_z=0$$</p>
+<p>再将上式改写成(1.3)(1.4)形式:<br>$$E_z(x,y,z) = E_z(x,y)E^{-\gamma z}$$<br>$$H_z(x,y,z) = H_z(x,y)H^{-\gamma z}$$</p>
+<p>考虑麦克斯韦方程的旋度式:<br>$$\nabla \times \vec E=-j\omega \mu \vec H$$<br>$$\nabla\times\vec H =j\omega\varepsilon \vec E$$<br>联立上四式可得六个标量方程:</p>
+<p>$$\frac{\partial E_z}{\partial y}+\gamma E_y = -j\omega \mu H_x                                        \tag{标量1}$$<br>$$-\gamma E_x -\frac{\partial E_z}{\partial x}=-j\omega \mu H_y                                        \tag{标量2}$$<br>$$\frac{\partial E_y}{\partial x}-\frac{\partial E_x}{\partial x}=-j\omega \mu H_z                \tag{标量3}$$<br>千万不要慌,由麦克斯韦美好的对称性可以知道,我们只要算一对叉乘就可以了,由对称性:<br>$$\frac{\partial H_z}{\partial y}+\gamma H_y = j\omega \varepsilon E_x                              \tag{标量4}$$<br>$$-\gamma H_x -\frac{\partial H_z}{\partial x}=j\omega \varepsilon E_y                              \tag{标量5}$$<br>$$\frac{\partial H_y}{\partial x}-\frac{\partial H_x}{\partial x}=j\omega \varepsilon E_z      \tag{标量6}$$</p>
+<h3 id="纵横关系式"><a href="#纵横关系式" class="headerlink" title="纵横关系式"></a>纵横关系式</h3><p>联立以上六式可得(解这个会有点痛苦,但是这不重要)纵横关系式:</p>
+<p>$$E_x = -\frac {1} {k_c^2}(\gamma\frac{\partial E_z}{\partial x}+j\omega\mu\frac{\partial H_z}{\partial y})\tag{e.x}$$<br>$$E_y = -\frac {1} {k_c^2}(\gamma\frac{\partial E_z}{\partial y}-j\omega\mu\frac{\partial H_z}{\partial x})\tag{e.y}$$<br>$$H_x = -\frac {1} {k_c^2}(\gamma\frac{\partial H_z}{\partial x}-j\omega\mu\frac{\partial E_z}{\partial y})\tag{h.x}$$<br>$$H_y = -\frac {1} {k_c^2}(\gamma\frac{\partial H_z}{\partial y}+j\omega\mu\frac{\partial E_z}{\partial x})\tag{h.y}$$<br>其中:<br>$$k_c^2=k^2+\gamma^2$$<br> 如果不用书本的表示方法的话,你会发现一点公式的美学… </p>
+<p>自此,纵向常量法就介绍完成了.这里的重点在于纵横关系式</p>
+<h2 id="各种导波的一般传输特性"><a href="#各种导波的一般传输特性" class="headerlink" title="各种导波的一般传输特性"></a>各种导波的一般传输特性</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>这一小节解决的问题是,某种电磁波要在波导中传输的存在可能性问题.重点有TEM,TE,TM波等.并且提供假设各种波存在的时候,怎么求解波动方程的思路.</p>
+<h3 id="TEM横电磁波"><a href="#TEM横电磁波" class="headerlink" title="TEM横电磁波"></a>TEM横电磁波</h3><p>还是回到我们熟悉的波动方程,可以把上面的纵横关系式:<br>$$\nabla^2_{xy}E_z  + k_c^2 E_z=0 \tag{波动1}$$<br>$$\nabla^2_{xy}H_z + k_c^2 H_z=0 \tag{波动2}$$<br>显然这一节的教材安排是不合理的…因为在TEM波中:<br>$$E_z=0,H_z=0$$<br>显然代入纵横关系式中,全军覆没……所以分析横电磁波的时候不能采用纵向常量法得到直接表达式<br>这时候我们可以代入得到纵横关系式前面一点的关系式中:<br>$$k_c^2=0\quad或\quad\gamma^2+k^2=0\tag{2.1}$$<br>$$\nabla^2_{xy}\vec E(x,y)=0 \quad \quad \nabla^2_{xy}\vec H(x,y)=0   \tag{tem}$$<br>那么我们就可以知道,代入纵横关系式会凉凉的原因是,(tem)他看上去就是一个静态场的方程,用麦克斯韦旋度式便变成0了.</p>
+<p>这也启发我们,在求解TEM波动方程的时候,之需要先算出导波的横向分布函数,再乘以纵向传播因子$e^{-\gamma z}$就可以得到波动方程了.而且并不是每一种波导都会有TEM模.</p>
+<h4 id="存在条件"><a href="#存在条件" class="headerlink" title="存在条件"></a>存在条件</h4><p>首先说明的一点是:空心波导只能传输TM或TE波,不能传输TEM波,因为在无外源的无限长导体空管中不可能存在静电场<br>书上P175,结合来看吧..(懒得打字)</p>
+<h4 id="TEM传播常数和相速"><a href="#TEM传播常数和相速" class="headerlink" title="TEM传播常数和相速"></a>TEM传播常数和相速</h4><p>由(2.1)可知<br>$$\gamma=\alpha+j\beta =jk=j\omega \sqrt{\varepsilon \mu}$$<br>解得<br>$$\alpha =0 \quad,\quad \beta =\omega\sqrt{\varepsilon \mu}$$<br>所以相速为:<br>$$v=\frac {\omega}{\beta}=\frac1{\sqrt{\varepsilon \mu}}$$<br>可以看出TEM模导行波是与频率无关的非色散波</p>
+<h4 id="TEM的波阻抗"><a href="#TEM的波阻抗" class="headerlink" title="TEM的波阻抗"></a>TEM的波阻抗</h4><p>由(标量2)和(标量6)并代入TEM的定义式:<br>$$\gamma E_x=j\omega \mu H_y$$<br>$$\gamma H_y=j\omega \varepsilon E_x $$<br>代入$\gamma = j\omega\sqrt{\varepsilon \mu}$得(注意,求解不是联立.只要用其中一条代入就行了)<br>$$Z^{TEM}=\frac{E_x}{H_y}=\sqrt{\frac{\mu}{\varepsilon}}=\eta$$<br>可以看出,$Z^{TEM}$和频率是没有关系的.<br>所以:<strong>TEM模在任何频率下都能传播非色散横电磁波</strong></p>
+<h3 id="TE-nor-TM"><a href="#TE-nor-TM" class="headerlink" title="TE nor TM"></a>TE nor TM</h3><p>在TM波中,$E_z \neq 0$和$H_z=0$.所以只需要代入(波动1),同理:<br>在TE波中,$H_z \neq 0$和$E_z=0$.所以只需要代入(波动2)</p>
+<h4 id="存在条件-1"><a href="#存在条件-1" class="headerlink" title="存在条件"></a>存在条件</h4><p>可以看出,无论是哪一种,$k_c^2$都不会等于0,所以:<br>$$\gamma^2+k^2 \neq 0$$<br>被称为波导中TM波和TE波的存在条件。</p>
+<h4 id="传播常数和截止频率"><a href="#传播常数和截止频率" class="headerlink" title="传播常数和截止频率"></a>传播常数和截止频率</h4><p>由传播因子$e^{-j\gamma z}$可以知道，在$e^{-\gamma z}\to 0$时,传播截止.这个时候有$\gamma \to 1$<br>所以有:<br>$$\gamma=\sqrt{k^2_c-\omega_c^2 \varepsilon \mu}=0$$<br>解得:<br>$$f_c=\frac{k_c}{2\pi\sqrt{\varepsilon\mu}}$$<br>其中,$f_c$被称为<strong>截止频率或临界频率</strong>(c to cut),所以反过来求$\gamma$得:<br>$$\gamma=\begin{cases} jk\sqrt{1-(\frac{f_c}{f})^2}= j\beta \quad f&gt;f_c \k_c\sqrt{1-(\frac{f_c}{f})^2}=\alpha\quad f&lt;f_c \end{cases} $$<br>可以看出:<br>当$f&lt;f_c$时,传播因子变成了$e^{-\alpha z}$,是一个衰减型凋落场<br>当$f&gt;f_c$时,传播因子变成了$e^{-j\beta z}$,表示一个传播型色散行波</p>
+<h4 id="相速和波导波长"><a href="#相速和波导波长" class="headerlink" title="相速和波导波长"></a>相速和波导波长</h4><p>当$f&gt;f_c$时,因为是一个色散波,我们可以来讨论一下他的相速,由上面:<br>$$\beta=k\sqrt{1-(\frac{f_c}{f})^2}$$<br>所以有,相速:<br>$$v_p=\frac\omega\beta=\frac{v}{\sqrt{1-(\frac{f_c}{f})^2}}&gt;v$$</p>
+<p>波导内波导行波的波长称为波导波长:<br>$$\lambda_g=\frac{2\pi}{\beta}=\frac{2\pi}{k}\frac1{\sqrt{1-(\frac{f_c}{f})^2}}=\frac\lambda{\sqrt{1-(\frac{f_c}{f})^2}} &gt;\lambda$$<br>表明导行波是与频率有关的色散行波</p>
+<h4 id="波阻抗"><a href="#波阻抗" class="headerlink" title="波阻抗"></a>波阻抗</h4><h5 id="TM波"><a href="#TM波" class="headerlink" title="TM波"></a>TM波</h5><p>由纵横关系式,结合tm波的特征可得:<br>$$E_x=-\frac{\gamma}{k_c^2}\bullet\frac{\partial E_z}{\partial x}$$<br>$$E_y=-\frac{\gamma}{k_c^2}\bullet\frac{\partial E_z}{\partial y}$$<br>$$H_x=\frac{j\omega\varepsilon}{k_c^2}\bullet\frac{\partial E_z}{\partial y}$$<br>$$E_y=-\frac{j\omega\varepsilon}{k_c^2}\bullet\frac{\partial E_z}{\partial x}$$<br>所以定义TM波的波阻抗为:<br>$$Z^{TM}=\frac{E_x}{H_y}=\frac{-E_y}{H_x}=\frac{\gamma}{j\omega\varepsilon}$$<br>消去$\gamma$得:<br>$$Z^{TM}=\begin{cases}\eta\sqrt{1-(\frac{f_c}{f})^2} =R^{TM},\quad \quad\quad\quad f&gt;f_c  \-j\frac{k_c}{\omega\varepsilon}\sqrt{1-(\frac{f_c}{f})^2}=-jX_c^{TM}, \quad f&lt;f_c             \end{cases}$$</p>
+<h5 id="TE波"><a href="#TE波" class="headerlink" title="TE波"></a>TE波</h5><p>按照TM波的套路,代入$E_z=0$得:<br>$$Z^{TM}=\begin{cases}\eta\frac1{\sqrt{1-(\frac{f_c}{f})^2}} =R^{TE},\quad \quad\quad\quad f&gt;f_c  \j\frac{\mu\omega}{k_c}\frac1{\sqrt{1-(\frac{f_c}{f})^2}}=jX_c^{TE},\quad \quad \quad f&lt;f_c              \end{cases}$$</p>
+<h5 id="互易性"><a href="#互易性" class="headerlink" title="互易性"></a>互易性</h5><p>由上面可以得出:<br>$$Z^{TM}\bullet Z^{TE}=\eta^2 =(Z^{TEM})^2$$<br>可以看到TE和TM波的波阻抗具有互易性</p>
+<p>##矩形波导<br>这里也是要做纵横关系式求解的最后一步,<strong>代入边界条件</strong><br>由前面就可以知道,<strong>矩形波导不能传播TEM波</strong><br>首先假设矩形波导的数学模型:<br><img src="https://i.loli.net/2018/08/19/5b78da41a4869.png" alt="ass"><br>长a宽b壁导体<br>先上一张图辅助一下大家后面看边界条件的法向还是切向<br><img src="https://i.loli.net/2018/08/19/5b78da517ba08.jpg" alt="bodao"></p>
+<h3 id="TM-图的右边"><a href="#TM-图的右边" class="headerlink" title="TM(图的右边)"></a>TM(图的右边)</h3><h4 id="边界条件"><a href="#边界条件" class="headerlink" title="边界条件:"></a>边界条件:</h4><p>$$(\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}+k_c^2)E_z(x,y)=0$$<br>$$\begin{cases}E_z|<em>{x=0}=0,\quad E_z|</em>{x=a}=0 \ E_z|<em>{y=0}=0,\quad E_z|</em>{y=b}=0\end{cases}$$<br>其中$k_c^2=\gamma^2+k^2$称为截止波数.<br>公式的意义是很明确的:<br><strong>传播TM波的时候矩形波导的边界都没有电场强度</strong><br>以下是我以为的原因(有异议可以评论,大家互相学习一下)</p>
+<ol>
+<li>一个原因(一对边)在于,边界条件中,法向的电场强度连续,而理想导体内部没有电磁场</li>
+<li>另一对边是因为,上一章说过的趋肤效应导致的,而由于是$\sigma=\infty$所以就为0了<h4 id="纵向解"><a href="#纵向解" class="headerlink" title="纵向解"></a>纵向解</h4>由于我们想求的纵横关系式中,x和y是独立分开的.所以假设:<br>$$E_z(x,y)=X(x)Y(y)$$<br>代入波动方程并化成常微分方程得:<br>$$\frac {d^2 X}{dx^2}+k_x^2 X=0$$<br>$$\frac {d^2 Y}{dx^2}+k_y^2 Y=0$$<br>其中:$\quad \quad k_c^2=k_x^2+k^2_y$<br>显然特征方程的根是两个纯虚数,故设通解:<br>$$X(x)=Asink_x x +Bcosk_x x$$<br>$$Y(y)=Csink_y y +Dcosk_y y$$ </li>
+</ol>
+<p>分别代入边界条件可得(书上P176):<br>$$E_z(x,y)=E_0 sin\frac{m\pi}{a}x sin \frac{n\pi}{b}y,\quad m,n=1,2,3……$$<br>其中:$\quad\quad \quad E_0=AC$由激励源强度确定<br>大概的思路是先带入x=0和y=0那两条,算出B,D=0再代入剩下两条即可.</p>
+<h4 id="横向解"><a href="#横向解" class="headerlink" title="横向解"></a>横向解</h4><p>现在求出了$E_z$的表达式,显然,代入一般情况可得:<br>$$E_x=-\frac{\gamma}{k_c^2}(\frac{m\pi}{a})E_0 cos\frac{m\pi}{a}xsin\frac{n\pi}{b}y$$<br>$$E_y=-\frac{\gamma}{k_c^2}(\frac{n\pi}{b})E_0 sin\frac{m\pi}{a}xsin\frac{n\pi}{b}y$$<br>$$H_x=\frac{j\omega\varepsilon}{k_c^2}(\frac{n\pi}{b})E_0 sin\frac{m\pi}{a}xcos\frac{n\pi}{b}y$$<br>$$H_y=\frac{j\omega\varepsilon}{k_c^2}(\frac{m\pi}{a})E_0 sin\frac{n\pi}{b}xcos\frac{m\pi}{a}y$$<br>其中:<br>$$k_c=\sqrt{\gamma^2+k^2}=\sqrt{k_x^2+k_y^2}=\sqrt{(\frac{m\pi}{a})^2+(\frac{n\pi}{b})^2}$$<br>由TE,TM的存在条件可以知道,当m=n=0时,方程无意义<br>###TE(图的左边)<br>由于和TM是同一个套路,这里就直接给公式了:</p>
+<h4 id="边界条件-1"><a href="#边界条件-1" class="headerlink" title="边界条件"></a>边界条件</h4><p>$$(\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}+k_c^2)H_z(x,y)=0$$<br>$$\begin{cases}H_z|<em>{x=0}=0,\quad H_z|</em>{x=a}=0 \ H_z|<em>{y=0}=0,\quad H_z|</em>{y=b}=0\end{cases}$$</p>
+<h4 id="纵向解-1"><a href="#纵向解-1" class="headerlink" title="纵向解"></a>纵向解</h4><p>$$H_z(x,y)=H_0 cos\frac{m\pi}{a}x cos\frac{n\pi}{b}y,\quad m,n=1,2,3……$$</p>
+<h4 id="横向解-1"><a href="#横向解-1" class="headerlink" title="横向解"></a>横向解</h4><p>$$E_x=\frac{j\omega\varepsilon}{k_c^2}(\frac{n\pi}{b})H_0 cos\frac{m\pi}{a}xsin\frac{n\pi}{b}y$$<br>$$E_y=-\frac{j\omega\varepsilon}{k_c^2}(\frac{m\pi}{a})H_0 sin\frac{m\pi}{a}xcos\frac{n\pi}{b}y$$<br>$$H_x=\frac{\gamma}{k_c^2}(\frac{m\pi}{a})H_0 cos\frac{n\pi}{b}ysin\frac{m\pi}{b}x$$<br>$$H_y=\frac{\gamma}{k_c^2}(\frac{n\pi}{b})H_0 sin\frac{m\pi}{a}xsin\frac{n\pi}{b}y$$<br>同理:m=n=0时,公式无意义</p>
+<h3 id="横场分布的物理特性"><a href="#横场分布的物理特性" class="headerlink" title="横场分布的物理特性"></a>横场分布的物理特性</h3><p>这里对应的是P178,下面列举出来只作复习回想用:</p>
+<blockquote>
+<ol>
+<li><strong>沿x,y的驻波性和z向的行波性</strong></li>
+<li>平面波的非均匀性</li>
+<li><strong>场的多模性</strong></li>
+<li>模式的兼并性</li>
+<li><strong>模式的阶次性</strong></li>
+</ol>
+</blockquote>
+<h3 id="导波的纵场传输特性"><a href="#导波的纵场传输特性" class="headerlink" title="导波的纵场传输特性*"></a>导波的纵场传输特性*</h3><h4 id="截止性-高通特性"><a href="#截止性-高通特性" class="headerlink" title="截止性(高通特性)"></a>截止性(高通特性)</h4><p>之前在一般传输特性就讲过这个问题,只是k可以由m和n给出,所以回代得:<br>$$k_c=\sqrt{\gamma^2+k^2}=\sqrt{k_x^2+k_y^2}=\sqrt{(\frac{m\pi}{a})^2+(\frac{n\pi}{b})^2}$$<br>$$ f_c-\frac{k_c}{2\pi \sqrt{\varepsilon\mu}}=\frac1{2\sqrt{\varepsilon\mu}}\sqrt{(\frac ma)^2+(\frac nb)^2} $$<br>$$ \lambda_c=\frac{2\pi}{k_c}=\frac2{\sqrt{(\frac ma)^2+(\frac nb)^2} } $$</p>
+<h4 id="色散性和滤波性"><a href="#色散性和滤波性" class="headerlink" title="色散性和滤波性"></a>色散性和滤波性</h4><p>由上一个性质可以知道,在截取频率之前的波形都会因为传播常数的实部不为0而全部被去掉<br>所以当f&gt;$f_c$时($\alpha=0$):<br>$$\beta=\sqrt{\omega^2\varepsilon\mu-(\frac{m\pi}{a})^2-(\frac{n\pi}{b})^2}$$<br>$$\lambda_g=\frac{2\pi}{\beta}=\frac{2\pi}{\sqrt{\omega^2\varepsilon\mu-(\frac{m\pi}{a})^2-(\frac{n\pi}{b})^2}}$$<br>$$v_p=\frac{\omega}{\beta}=\frac{\omega}{\sqrt{\omega^2\varepsilon\mu-(\frac{m\pi}{a})^2-(\frac{n\pi}{b})^2}}$$</p>
+<h4 id="阻抗双重性"><a href="#阻抗双重性" class="headerlink" title="阻抗双重性"></a>阻抗双重性</h4><p>这个由截止性就知道,低于截止频率的波阻抗呈阻性,高于的呈电抗性:<br>$$Z^{TM}=\frac{\gamma}{j\omega\varepsilon}=\begin{cases}\frac1{\omega\varepsilon}\sqrt{\omega^2\varepsilon\mu-(\frac {m\pi}{a})^2-(\frac{n\pi}{b})^2}=R^{TM},\quad\quad \quad\quad f&gt;f_c\<br>-j\frac1{\omega\varepsilon}\sqrt{(\frac{m\pi}{a})^2+(\frac{n\pi}{b})^2-\omega^2\varepsilon\mu}=-jX_c^{TM},\quad \quad f&lt;f_c\end{cases}$$</p>
+<p>$$Z^{TE}=\frac{j\omega\mu}{\gamma}=\begin{cases}\frac1{\omega\mu}\frac1{\sqrt{\omega^2\varepsilon\mu-(\frac {m\pi}{a})^2-(\frac{n\pi}{b})^2}}=R^{TM},\quad\quad \quad\quad\quad\quad\quad f&gt;f_c\<br>j\omega\mu\frac1{\sqrt{(\frac{m\pi}{a})^2+(\frac{n\pi}{b})^2-\omega^2\varepsilon\mu}}=jX_c^{TM},\quad \quad\quad\quad\quad\quad\quad f&lt;f_c\end{cases}$$</p>
+<h3 id="主模-TE-10-的传输特性"><a href="#主模-TE-10-的传输特性" class="headerlink" title="主模$TE_{10}$的传输特性"></a>主模$TE_{10}$的传输特性</h3><p>用主模传输的重点问题在于<strong>单模传输</strong> <strong>单模传输</strong> <strong>单模传输</strong> <strong>单模传输</strong></p>
+<h4 id="场分布"><a href="#场分布" class="headerlink" title="场分布"></a>场分布</h4><p>至于为什么$TE^{10}$是主模的话,就不说了,你只要把 m,n的各个值代进去纵横关系式,就可以知道了<br>$$E_y=\frac{\omega\mu a}{\pi}H_0sin{\frac{\pi}ax}cos(\omega t-\beta z-\frac\pi2)$$<br>$$H_x=\frac{\beta a}{\pi}H_0sin{\frac{\pi}ax}cos(\omega t-\beta z+\frac\pi2)$$<br>$$H_z=H_0cos\frac\pi a xcos(\omega t-\beta z)$$<br>…其他三个为0…</p>
+<h4 id="传输特性"><a href="#传输特性" class="headerlink" title="传输特性"></a>传输特性</h4><p>根据前面说的那些,代入m=1,n=0得:<br>$$f_c=\frac1{2a\sqrt{\varepsilon\mu}}$$<br>$$\lambda_c=2a$$<br>$$\beta=k\sqrt{1-({\frac {f_c}{f}})^2}=\sqrt{\omega^2\varepsilon\mu-(\frac{\pi}{a})^2}$$<br>$$\lambda_g=\frac{2\pi}{\beta}=\frac{2\pi}{k}\frac1{\sqrt{1-({\frac {f_c}{f}})^2}}=\frac{2\pi}{\sqrt{\omega^2\varepsilon\mu-(\frac{\pi}{a})^2}}$$<br>$$v_p=\frac{\omega}{\beta}=\frac v{\sqrt{1-({\frac {f_c}{f}})^2}}=\frac{\omega}{\sqrt{\omega^2\varepsilon\mu-(\frac{\pi}{a})^2}}$$<br>$$Z^{TE}=\eta\frac1{\sqrt{1-({\frac {f_c}{f}})^2}}=\omega\mu\frac1{\sqrt{\omega^2\varepsilon\mu-(\frac{\pi}{a})^2}}$$<br><img src="https://i.loli.net/2018/05/31/5b0fc8997e489.jpg" alt="多模"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>因为这里写了比较多的波动方程,所以会有点长!</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/05/13/电磁学乱七八糟的符号-三/" rel="next" title="电磁学乱七八糟的符号(三)">
+                  <i class="fa fa-chevron-left"></i> 电磁学乱七八糟的符号(三)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/06/07/电磁学乱七八糟的符号-五/" rel="prev" title="电磁学乱七八糟的符号(五)">
+                  电磁学乱七八糟的符号(五) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Inhaltsverzeichnis
+        </li>
+        <li class="sidebar-nav-overview">
+          Übersicht
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#电磁学乱七八糟的符号-四"><span class="nav-number">1.</span> <span class="nav-text">电磁学乱七八糟的符号(四)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#纵向场量法"><span class="nav-number">1.1.</span> <span class="nav-text">纵向场量法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#矢量波动方程"><span class="nav-number">1.1.1.</span> <span class="nav-text">矢量波动方程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#行波因子-gamma"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">行波因子$\gamma$</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矢量分解"><span class="nav-number">1.1.2.</span> <span class="nav-text">矢量分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标量波动方程"><span class="nav-number">1.1.3.</span> <span class="nav-text">标量波动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纵横关系式"><span class="nav-number">1.1.4.</span> <span class="nav-text">纵横关系式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种导波的一般传输特性"><span class="nav-number">1.2.</span> <span class="nav-text">各种导波的一般传输特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TEM横电磁波"><span class="nav-number">1.2.2.</span> <span class="nav-text">TEM横电磁波</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存在条件"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">存在条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TEM传播常数和相速"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">TEM传播常数和相速</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TEM的波阻抗"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">TEM的波阻抗</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TE-nor-TM"><span class="nav-number">1.2.3.</span> <span class="nav-text">TE nor TM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存在条件-1"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">存在条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传播常数和截止频率"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">传播常数和截止频率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相速和波导波长"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">相速和波导波长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#波阻抗"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">波阻抗</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TM波"><span class="nav-number">1.2.3.4.1.</span> <span class="nav-text">TM波</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TE波"><span class="nav-number">1.2.3.4.2.</span> <span class="nav-text">TE波</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#互易性"><span class="nav-number">1.2.3.4.3.</span> <span class="nav-text">互易性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TM-图的右边"><span class="nav-number">1.2.4.</span> <span class="nav-text">TM(图的右边)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#边界条件"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">边界条件:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#纵向解"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">纵向解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#横向解"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">横向解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#边界条件-1"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">边界条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#纵向解-1"><span class="nav-number">1.2.4.5.</span> <span class="nav-text">纵向解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#横向解-1"><span class="nav-number">1.2.4.6.</span> <span class="nav-text">横向解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#横场分布的物理特性"><span class="nav-number">1.2.5.</span> <span class="nav-text">横场分布的物理特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导波的纵场传输特性"><span class="nav-number">1.2.6.</span> <span class="nav-text">导波的纵场传输特性*</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#截止性-高通特性"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">截止性(高通特性)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#色散性和滤波性"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">色散性和滤波性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻抗双重性"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">阻抗双重性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主模-TE-10-的传输特性"><span class="nav-number">1.2.7.</span> <span class="nav-text">主模$TE_{10}$的传输特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场分布"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">场分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传输特性"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">传输特性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.3.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">今日你学左米啊</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">Kategorien</span>
+        
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    Design – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>
