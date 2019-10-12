@@ -55,13 +55,13 @@
   };
 </script>
 
-  <meta name="description" content="IIR滤波器的FPGA实现">
+  <meta name="description" content="IIR滤波器的FPGA实现生产实习著此篇实现的是直接1型7阶切比雪夫1型低通滤波器">
 <meta name="keywords" content="FPGA ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IIR滤波器的FPGA实现">
 <meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/06/26/IIR滤波器的FPGA实现/index.html">
 <meta property="og:site_name" content="何伟宝的后花园">
-<meta property="og:description" content="IIR滤波器的FPGA实现">
+<meta property="og:description" content="IIR滤波器的FPGA实现生产实习著此篇实现的是直接1型7阶切比雪夫1型低通滤波器">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.loli.net/2019/06/26/5d12f28a9b45795946.png">
 <meta property="og:image" content="https://i.loli.net/2019/06/26/5d12f30709cc361997.png">
@@ -69,10 +69,10 @@
 <meta property="og:image" content="https://i.loli.net/2019/06/26/5d12f656cedcd27954.png">
 <meta property="og:image" content="https://i.loli.net/2019/06/26/5d12fc4f37ec571189.png">
 <meta property="og:image" content="https://i.loli.net/2019/06/26/5d12fe6fc312e92869.png">
-<meta property="og:updated_time" content="2019-10-12T07:56:07.396Z">
+<meta property="og:updated_time" content="2019-10-12T08:12:40.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IIR滤波器的FPGA实现">
-<meta name="twitter:description" content="IIR滤波器的FPGA实现">
+<meta name="twitter:description" content="IIR滤波器的FPGA实现生产实习著此篇实现的是直接1型7阶切比雪夫1型低通滤波器">
 <meta name="twitter:image" content="https://i.loli.net/2019/06/26/5d12f28a9b45795946.png">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/06/26/IIR滤波器的FPGA实现/">
 
@@ -263,7 +263,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 15:56:07" itemprop="dateModified" datetime="2019-10-12T15:56:07+08:00">2019-10-12</time>
+                <time title="修改时间：2019-10-12 16:12:40" itemprop="dateModified" datetime="2019-10-12T16:12:40+08:00">2019-10-12</time>
               </span>
             
           
@@ -286,8 +286,6 @@
           
 
           
-            <div class="post-description">IIR滤波器的FPGA实现</div>
-          
 
         </div>
       </header>
@@ -299,6 +297,7 @@
 
       
         <h1 id="IIR滤波器的FPGA实现"><a href="#IIR滤波器的FPGA实现" class="headerlink" title="IIR滤波器的FPGA实现"></a>IIR滤波器的FPGA实现</h1><p>生产实习著<br>此篇实现的是直接1型7阶切比雪夫1型低通滤波器</p>
+<a id="more"></a>
 <p>[TOC]</p>
 <h2 id="IIR原理"><a href="#IIR原理" class="headerlink" title="IIR原理"></a>IIR原理</h2><h3 id="IIR定义"><a href="#IIR定义" class="headerlink" title="IIR定义"></a>IIR定义</h3><p>IIR（Infinite Impulse Response）无限脉冲响应数字滤波器,也叫作递归滤波器.<br>由差分方程:<br>$$ y(n) = \sum^M_{i=0}b_i x(n-i) -  \sum^N_{i=1}a_i y(n-i)$$<br>进行Z变换:<br>$$<br>Y(z)=\sum_{i=0}^{M} b_{i} z^{-i} X(z)-\sum_{i=1}^{N} a_{i} z^{-i} Y(z)<br>$$<br>得到系统函数:<br>$$<br>H(z)=\frac{Y(z)}{X(z)}=\frac{\sum_{i=0}^{M} b_{i} z^{-i}}{1+\sum_{i=1}^{N} a_{i} z^{-i}}<br>$$<br>至于为什么叫IIR,和FIR有什么区别,大家做一下z逆变换就知道了</p>
 <h3 id="模拟滤波器设计"><a href="#模拟滤波器设计" class="headerlink" title="模拟滤波器设计"></a>模拟滤波器设计</h3><p>要提及到模拟滤波器设计的理由很简单,就是因为设计IIR的一般是先设计好相应的模拟滤波器,然后再利用双线性变换转换成数字滤波器,在这里我们介绍一个切比雪夫1型滤波器:<br>他的幅度平方函数长这个样:<br>$$<br>G_{n}(\omega)=\left|H_{n}(j \omega)\right|=\frac{1}{\sqrt{1+\epsilon^{2} T_{n}^{2}\left(\frac{\omega}{\omega_{0}}\right)}}<br>$$<br>当$\omega = \omega_0$时有:<br>$$<br>\left|H\left(\omega_{0}\right)\right|=\frac{1}{\sqrt{1+\epsilon^{2}}}<br>$$<br>其中,$T_{n}\left(\frac{\omega}{\omega_{0}}\right)$是n阶切比雪夫多项式,定义为:<br>$$<br>\begin{cases}<br>T_{n}\left(\frac{\omega}{\omega_{0}}\right)=\cos \left(n \cdot \arccos \frac{\omega}{\omega_{0}}\right) ; 0 \leq \omega \leq \omega_{0}\<br>T_{n}\left(\frac{\omega}{\omega_{0}}\right)=\cosh \left(n \cdot \operatorname{arccosh} \frac{\omega}{\omega_{0}}\right) ; \omega&gt;\omega_{0}<br>\end{cases}<br>$$<br>当0&lt;x&lt;1时，$T_{n}(x)$在0和1之间变化 ;当x&gt;1时，cos−是虚数，所以$T_{n}(x)$像双曲余弦一样单调地增加;∣Hn(w)∣对于0≤w/w0≤1呈现出在1和$\frac1{2\epsilon^2}$之间的<strong>波动</strong>；而对于w/w0〉1单调地减小。需要用三个参量来确定该滤波器：ε，w0和N。在典型的设计中，用容许的通带波纹来确定ε，而用希望的通带截止频率来确定w0。然后选择合适的阶次n，以便阻带的技术要求得到满足。</p>

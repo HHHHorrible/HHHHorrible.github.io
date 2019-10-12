@@ -55,21 +55,21 @@
   };
 </script>
 
-  <meta name="description" content="LMS自适应滤波的FPGA实现(二)">
+  <meta name="description" content="LMS自适应滤波的FPGA实现(二)闭环系统搞自闭著">
 <meta name="keywords" content="FPGA ML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LMS自适应滤波的FPGA实现(二)">
 <meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-二/index.html">
 <meta property="og:site_name" content="何伟宝的后花园">
-<meta property="og:description" content="LMS自适应滤波的FPGA实现(二)">
+<meta property="og:description" content="LMS自适应滤波的FPGA实现(二)闭环系统搞自闭著">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.loli.net/2019/07/26/5d3a9c8cba90d31140.png">
 <meta property="og:image" content="https://i.loli.net/2019/07/26/5d3aa8ac7d2b636209.png">
 <meta property="og:image" content="https://i.loli.net/2019/07/26/5d3aaa145158c86418.png">
-<meta property="og:updated_time" content="2019-10-12T07:56:10.090Z">
+<meta property="og:updated_time" content="2019-10-12T08:12:40.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LMS自适应滤波的FPGA实现(二)">
-<meta name="twitter:description" content="LMS自适应滤波的FPGA实现(二)">
+<meta name="twitter:description" content="LMS自适应滤波的FPGA实现(二)闭环系统搞自闭著">
 <meta name="twitter:image" content="https://i.loli.net/2019/07/26/5d3a9c8cba90d31140.png">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-二/">
 
@@ -260,7 +260,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 15:56:10" itemprop="dateModified" datetime="2019-10-12T15:56:10+08:00">2019-10-12</time>
+                <time title="修改时间：2019-10-12 16:12:40" itemprop="dateModified" datetime="2019-10-12T16:12:40+08:00">2019-10-12</time>
               </span>
             
           
@@ -283,8 +283,6 @@
           
 
           
-            <div class="post-description">LMS自适应滤波的FPGA实现(二)</div>
-          
 
         </div>
       </header>
@@ -296,6 +294,7 @@
 
       
         <h1 id="LMS自适应滤波的FPGA实现-二"><a href="#LMS自适应滤波的FPGA实现-二" class="headerlink" title="LMS自适应滤波的FPGA实现(二)"></a>LMS自适应滤波的FPGA实现(二)</h1><p>闭环系统搞自闭著</p>
+<a id="more"></a>
 <p>[TOC]</p>
 <h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>这个算法来源于上一篇博客<a href="https://www.jianshu.com/p/c110a0743c79" target="_blank" rel="noopener">LMS自适应滤波的FPGA实现(一)</a><br>所介绍的最后一个算法-&gt;Widrow-Hoff -LMS算法</p>
 <p>回顾一下,最主要的公式:<br>$$ \vec{f}[n+1] = \vec{f}[n] + \mu e[n]\vec{x}[n] $$<br>其中:<br>$$ e[n] = d[n] - y[n] $$</p>
