@@ -74,7 +74,7 @@
 <meta property="og:image" content="https://i.loli.net/2019/05/07/5cd154720062c.png">
 <meta property="og:image" content="https://i.loli.net/2019/05/09/5cd300ff3b66e.png">
 <meta property="og:image" content="https://i.loli.net/2019/05/09/5cd303ee55ba1.png">
-<meta property="og:updated_time" content="2019-10-12T08:14:11.585Z">
+<meta property="og:updated_time" content="2019-10-12T10:07:51.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" 数字锁相环的FPGA实现(一)">
 <meta name="twitter:description" content="数字锁相环的FPGA实现(一)电赛著 开篇之前,感谢杜勇老师,和他所著的《数字通信同步技术的MATLAB与FPGA实现,Altera/Verilog版》">
@@ -277,7 +277,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 16:14:11" itemprop="dateModified" datetime="2019-10-12T16:14:11+08:00">2019-10-12</time>
+                <time title="修改时间：2019-10-12 18:07:51" itemprop="dateModified" datetime="2019-10-12T18:07:51+08:00">2019-10-12</time>
               </span>
             
           
@@ -317,8 +317,8 @@
 <p>说到锁相环,相信大家都熟悉.锁相环路(Phase Locked Loop,PLL)是一个闭环的相位控制系统.这博客分成两篇,第一篇讲锁相环的基本原理和参数设置,第二篇写实战.</p>
 <h2 id="锁相环的环路模型"><a href="#锁相环的环路模型" class="headerlink" title="锁相环的环路模型"></a>锁相环的环路模型</h2><p>可以先看锁相环的组成再跳回来看这里.</p>
 <p>假设输入信号和本地振荡器的输出信号是<br>$$<br>\begin{aligned} u_{\mathrm{i}}(t) &amp;=U_{\mathrm{i}} \sin \left[\omega_{\mathrm{i}} t+\theta_{\mathrm{i}}(t)\right] \ u_{\mathrm{o}}(t) &amp;=U_{\mathrm{o}} \cos \left[\omega_{\mathrm{o}} t+\theta_{\mathrm{o}}(t)\right] \end{aligned}<br>$$</p>
-<p>我们通过这个来得到他们的瞬时相差和瞬时频差:<br>$$<br>\begin{array}{c}{\theta_{\mathrm{c}}(t)=\left(\omega_{\mathrm{i}}-\omega_{\mathrm{o}}\right) t+\theta_{\mathrm{i}}(t)-\theta_{\mathrm{o}}(t)=\Delta \omega_{0} t+\theta_{\mathrm{i}}(t)-\theta_{\mathrm{o}}(t)} \ {\dot{\theta}<em>{\mathrm{e}}(t)=\left(\omega</em>{\mathrm{i}}-\omega_{\mathrm{o}}\right)+\dot{\theta}<em>{\mathrm{i}}(t)-\dot{\theta}</em>{\mathrm{o}}(t)=\Delta \omega_{0}+\dot{\theta}<em>{\mathrm{i}}(t)-\dot{\theta}</em>{\mathrm{o}}(t)}\end{array}<br>$$</p>
-<h3 id="锁定与跟踪"><a href="#锁定与跟踪" class="headerlink" title="锁定与跟踪"></a>锁定与跟踪</h3><p>总所周知,我们一般假设输入信号的频率和本地振荡器的初始频率(也叫作自由振荡频率)是不同的,也就是说在这种情况下两者会存在固定频差$\Delta\omega_0$,如果没有进行相位追踪的话,显然两信号的相差$\theta_e(t)$就会爆炸.如果我们可以控制固定频差在一个很小的范围,就能保证两个信号的相位差在$2n\pi$左右一个很小的范围震荡,这个就是锁相环路的捕获过程,如下:<br><img src="https://i.loli.net/2019/05/05/5cceaa751594b.png" alt><br>当瞬时相差$\theta_e(t)$稳定在$2n\pi$附近,频差接近为0的时候,称锁相环进入同步状态,或称为跟踪状态<br>所以我们可以定义同步态的定义为:<br>$$<br>\left|\dot{\theta}<em>{\mathrm{e}}(t)\right| \leqslant \varepsilon</em>{\Delta \omega}, \quad\left|\theta_{\mathrm{e}}(t)-2 n \pi\right| \leqslant \varepsilon_{\theta \mathrm{e}}<br>$$</p>
+<p>我们通过这个来得到他们的瞬时相差和瞬时频差:<br>$$\begin{array}{c}{\theta_{\mathrm{c}}(t)=\left(\omega_{\mathrm{i}}-\omega_{\mathrm{o}}\right) t+\theta_{\mathrm{i}}(t)-\theta_{\mathrm{o}}(t)=\Delta \omega_{0} t+\theta_{\mathrm{i}}(t)-\theta_{\mathrm{o}}(t)} \ {\dot{\theta}<em>{\mathrm{e}}(t)=\left(\omega</em>{\mathrm{i}}-\omega_{\mathrm{o}}\right)+\dot{\theta}<em>{\mathrm{i}}(t)-\dot{\theta}</em>{\mathrm{o}}(t)=\Delta \omega_{0}+\dot{\theta}<em>{\mathrm{i}}(t)-\dot{\theta}</em>{\mathrm{o}}(t)}\end{array}$$</p>
+<h3 id="锁定与跟踪"><a href="#锁定与跟踪" class="headerlink" title="锁定与跟踪"></a>锁定与跟踪</h3><p>总所周知,我们一般假设输入信号的频率和本地振荡器的初始频率(也叫作自由振荡频率)是不同的,也就是说在这种情况下两者会存在固定频差$\Delta\omega_0$,如果没有进行相位追踪的话,显然两信号的相差$\theta_e(t)$就会爆炸.如果我们可以控制固定频差在一个很小的范围,就能保证两个信号的相位差在$2n\pi$左右一个很小的范围震荡,这个就是锁相环路的捕获过程,如下:<br><img src="https://i.loli.net/2019/05/05/5cceaa751594b.png" alt><br>当瞬时相差$\theta_e(t)$稳定在$2n\pi$附近,频差接近为0的时候,称锁相环进入同步状态,或称为跟踪状态<br>所以我们可以定义同步态的定义为:<br>$$\left|\dot{\theta}<em>{\mathrm{e}}(t)\right| \leqslant \varepsilon</em>{\Delta \omega}, \quad\left|\theta_{\mathrm{e}}(t)-2 n \pi\right| \leqslant \varepsilon_{\theta \mathrm{e}}$$</p>
 <p>再定义两个锁相环的参量,捕获时间和捕获带<br><img src="https://i.loli.net/2019/05/05/5cceafd99ba22.png" alt="a"></p>
 <h3 id="环路的基本性能要求"><a href="#环路的基本性能要求" class="headerlink" title="环路的基本性能要求"></a>环路的基本性能要求</h3><p>如上所述,锁相环路存在两种状态,捕获状态和同步状态,就两种不同的工作状态下会有不同的性能参数:</p>
 <ol>
@@ -462,9 +462,13 @@
       
       <div class="site-state-item site-state-categories">
         
+          
+            <a href="/categories/">
+          
+        
         <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span>
-        
+        </a>
       </div>
     
   </nav>
@@ -559,7 +563,7 @@
   
     
   
-  <script color='0,0,255' opacity='0.7' zIndex='-1' count='199' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script color='0,0,0' opacity='0.7' zIndex='-1' count='199' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
