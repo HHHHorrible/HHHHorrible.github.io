@@ -25,7 +25,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="何伟宝的后花园">
 <meta property="og:description" content="vhdl入门(一)-vhdl的代码结构">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-12T06:36:01.196Z">
+<meta property="og:updated_time" content="2019-10-12T07:39:58.582Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vhdl入门(一)-vhdl的代码结构">
 <meta name="twitter:description" content="vhdl入门(一)-vhdl的代码结构">
@@ -243,7 +243,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 14:36:01" itemprop="dateModified" datetime="2019-10-12T14:36:01+08:00">2019-10-12</time>
+                <time title="修改时间：2019-10-12 15:39:58" itemprop="dateModified" datetime="2019-10-12T15:39:58+08:00">2019-10-12</time>
               </span>
             
           
@@ -286,6 +286,7 @@
 <figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--是注释,vhdl不区分大小写,教程一般是全部大写的,那我就全部小写吧</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">--首先是vhdl的库声明,有三个常用的库:</span></span><br><span class="line"><span class="keyword">library</span> ieee;</span><br><span class="line"><span class="keyword">use</span> ieee.std_logic_1164.<span class="keyword">all</span>;</span><br><span class="line"><span class="comment">--  库名 .包名           .引用部分</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--以下两个库在程序中都是默认"包含"的,所以可以不写</span></span><br><span class="line"><span class="keyword">library</span> standard;</span><br><span class="line"><span class="keyword">use</span> std.standard.<span class="keyword">all</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">library</span> work;</span><br><span class="line"><span class="keyword">use</span> work.<span class="keyword">all</span>;</span><br><span class="line"><span class="comment">--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">--接下来是实体(entity)声明,相当于verilog里面的module声明</span></span><br><span class="line"><span class="keyword">entity</span> D_NAND <span class="keyword">is</span> </span><br><span class="line">    <span class="keyword">port</span> (</span><br><span class="line">        a,b,clk : <span class="keyword">IN</span>  <span class="built_in">BIT</span>;</span><br><span class="line">        q       : <span class="keyword">OUT</span> <span class="built_in">BIT</span></span><br><span class="line">    );</span><br><span class="line"><span class="keyword">end</span> D_NAND;</span><br><span class="line"><span class="comment">--vhdl有些时候语法看起来就像是英语一样. </span></span><br><span class="line"><span class="comment">--里面涵盖的信息,相当于verilog里面的外部端口声明.</span></span><br><span class="line"><span class="comment">--可以看出有三个端口,ab是输入端口,c是输出端口,数据类型都是BIT.</span></span><br><span class="line"><span class="comment">--端口类型有四种:in(输入),out(输出),inout(双向引脚),buffer(反馈引脚)</span></span><br><span class="line"><span class="comment">--信号类型有比较多种,常见的有:BIT,STD_LOGIC,INTEGER等</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--接下来是结构体(architecture)部分,用来描述电路功能.</span></span><br><span class="line"><span class="comment">--多封装了一层architecture我个人觉得可以便捷地进行电路的版本管理吧,综合器只会选用一个结构体.</span></span><br><span class="line"><span class="keyword">architecture</span> d_a_b <span class="keyword">of</span> D_NAND <span class="keyword">is</span> </span><br><span class="line">    <span class="keyword">signal</span> temp : <span class="built_in">BIT</span> ;</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    temp &lt;= a <span class="keyword">nand</span> b ;</span><br><span class="line">    <span class="keyword">process</span> (clk)</span><br><span class="line">    <span class="keyword">begin</span> </span><br><span class="line">        <span class="keyword">if</span>(clk<span class="symbol">'event</span> <span class="keyword">and</span> clk = <span class="string">'1'</span>) </span><br><span class="line">            <span class="keyword">then</span> q &lt;= temp ;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">if</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">process</span>;</span><br><span class="line"><span class="keyword">end</span> d_a_b;</span><br><span class="line"><span class="comment">--d_a_b是architecture的名字</span></span><br><span class="line"><span class="comment">--注意: &lt;= 不再是verilog里面的阻塞赋值,在这里是信号的赋值而已</span></span><br><span class="line"><span class="comment">-- nand是RTL级电路描述,与非</span></span><br><span class="line"><span class="comment">-- process是顺序执行语句,括号里面是敏感信号,类比verilog里面always后面的括号</span></span><br><span class="line"><span class="comment">--程序中,除了process之外,其它的都是并行在走的.相当于always</span></span><br><span class="line"><span class="comment">--在vhdl里面会分清楚触发process的事件,如代码便表示在时钟上升沿时触发if</span></span><br><span class="line"><span class="comment">------------------------------------------------------------------------------</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>博学笃行,与时俱进</p>
+<p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你觉得有丶收获的话</a></p>
 
     </div>
 
@@ -376,7 +377,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -458,7 +459,7 @@
   <span class="post-meta-divider">|</span>
   <div class="theme-info">
       
-    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+    主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1
   </div>
 
         
@@ -485,7 +486,6 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 <script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
 <script src="/js/schemes/muse.js?v=7.4.1"></script>
-
 <script src="/js/next-boot.js?v=7.4.1"></script>
 
 
