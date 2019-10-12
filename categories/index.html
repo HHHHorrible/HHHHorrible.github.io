@@ -25,10 +25,10 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '7.4.1',
     exturl: false,
-    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="Tags尚未完善">
+  <meta name="description" content="认识到了自己的无知,才能真正认识世界">
 <meta name="keywords" content="FPGA ML">
 <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/tags/index.html">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/categories/index.html">
 <meta property="og:site_name" content="何伟宝的后花园">
-<meta property="og:description" content="Tags尚未完善">
+<meta property="og:description" content="认识到了自己的无知,才能真正认识世界">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-11T11:06:39.330Z">
+<meta property="og:updated_time" content="2019-10-12T07:56:44.588Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
-<meta name="twitter:description" content="Tags尚未完善">
-  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/tags/">
+<meta name="twitter:title" content="categories">
+<meta name="twitter:description" content="认识到了自己的无知,才能真正认识世界">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/categories/">
 
 
 <script id="page-configurations">
@@ -82,7 +82,7 @@
 </script>
 
   <title>
-      标签 | 何伟宝的后花园
+      categories | 何伟宝的后花园
     
   </title>
   
@@ -169,6 +169,19 @@
       
         
         
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
         <li class="menu-item menu-item-archives">
       
     
@@ -182,6 +195,9 @@
 
     
 
+  
+    
+    
   
     
     
@@ -215,7 +231,7 @@
     <div class="post-block" lang="zh-CN">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">标签
+<h1 class="post-title" itemprop="name headline">categories
   
 
 </h1>
@@ -231,12 +247,12 @@
       
       
       <div class="post-body">
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              暂无标签
+          <div class="category-all-page">
+            <div class="category-all-title">
+              目前共计 14 个分类
             </div>
-            <div class="tag-cloud-tags">
-              
+            <div class="category-all">
+              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DSP/">DSP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DSP-FPGA/">DSP FPGA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FPGA/">FPGA</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FPGA-DSP/">FPGA DSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FPGA-ZYNQ/">FPGA ZYNQ</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HSPICE/">HSPICE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LIFE/">LIFE</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MISC/">MISC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MISC-LIFE/">MISC LIFE</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MISC-SHELL/">MISC SHELL</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ZYNQ-FPGA/">ZYNQ FPGA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/汇编-MISC/">汇编 MISC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/电磁波/">电磁波</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通信原理/">通信原理</a><span class="category-list-count">7</span></li></ul>
             </div>
           </div>
         
@@ -284,8 +300,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tags"><span class="nav-number">1.</span> <span class="nav-text">Tags</span></a></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
@@ -309,9 +323,13 @@
       
       <div class="site-state-item site-state-categories">
         
+          
+            <a href="/categories/">
+          
+        
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span>
-        
+        </a>
       </div>
     
   </nav>
@@ -326,17 +344,6 @@
         
       
         <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-    
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
     
   </div>
@@ -382,7 +389,7 @@
   <span class="post-meta-divider">|</span>
   <div class="theme-info">
       
-    主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
   </div>
 
         
@@ -409,6 +416,7 @@
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 <script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
 <script src="/js/schemes/muse.js?v=7.4.1"></script>
+
 <script src="/js/next-boot.js?v=7.4.1"></script>
 
 
