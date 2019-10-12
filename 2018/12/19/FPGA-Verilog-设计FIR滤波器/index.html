@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="FPGA-Verilog 设计FIR滤波器">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA-Verilog 设计FIR滤波器">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/12/19/FPGA-Verilog-设计FIR滤波器/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="FPGA-Verilog 设计FIR滤波器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18a9b3b7496.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18ab34c3e9d.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18abbabc8fe.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c14cb5a8f.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c320c8578.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c80f32683.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c8d683b92.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c190762700cc.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c190a857f414.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/18/5c190bf6d8ef9.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/19/5c1919f8a21d5.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/19/5c192535701d0.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/19/5c1929c21afb4.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/19/5c192b35ec376.png">
+<meta property="og:image" content="https://i.loli.net/2018/12/19/5c192b557e904.png">
+<meta property="og:updated_time" content="2019-10-12T07:12:17.200Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FPGA-Verilog 设计FIR滤波器">
+<meta name="twitter:description" content="FPGA-Verilog 设计FIR滤波器">
+<meta name="twitter:image" content="https://i.loli.net/2018/12/18/5c18a9b3b7496.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/12/19/FPGA-Verilog-设计FIR滤波器/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>FPGA-Verilog 设计FIR滤波器 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/12/19/FPGA-Verilog-设计FIR滤波器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            FPGA-Verilog 设计FIR滤波器
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-19 01:50:03" itemprop="dateCreated datePublished" datetime="2018-12-19T01:50:03+08:00">2018-12-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:12:17" itemprop="dateModified" datetime="2019-10-12T15:12:17+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FPGA-DSP/" itemprop="url" rel="index">
+                    <span itemprop="name">FPGA DSP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">FPGA-Verilog 设计FIR滤波器</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="FPGA-Verilog-设计FIR滤波器"><a href="#FPGA-Verilog-设计FIR滤波器" class="headerlink" title="FPGA/Verilog 设计FIR滤波器"></a>FPGA/Verilog 设计FIR滤波器</h1><p>[TOC]</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这应该是第一次的FPGA(DSP方向)的实战(也算不上)分享.也算是小班教学的其中一节课吧.<br>话不多说,先给大家介绍一下这次要干啥先:学过信号与系统的可以直接跳过基础知识…<br>系统环境:</p>
+<blockquote>
+<p>matlab2018a<br>quartus16.0<br>Multisim<br>VScode<br>ubuntu18.04<br>EP4CE15F23C8</p>
+</blockquote>
+<h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><p>设计一个10阶的FIR低通滤波器,滤波器的通带截止频率是2MHz,阻带截止频率是4MHz. </p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="数字滤波器"><a href="#数字滤波器" class="headerlink" title="数字滤波器"></a>数字滤波器</h3><p>滤波器是一种对信号有处理作用的器件或电路,其主要作用是让有用信号尽可能无衰减地通过,对无用信号尽可能大地衰减.而数字滤波器就是一个按预定的<strong>有限精度</strong>算法实现的,将输入的数字信号转换为所要求的输出数字信号的<strong>线性时不变系统</strong>.<br>如果对上面加粗的莫得认识的话,那你就直接想成是用数字电路实现的滤波器得了.</p>
+<h3 id="FIR滤波器"><a href="#FIR滤波器" class="headerlink" title="FIR滤波器"></a>FIR滤波器</h3><p>FIR(Finite Impulse Response,FIR)滤波器,中文名叫有限<strong>冲激响应</strong>滤波器,在讲冲激响应之前,我们不妨预习/回顾一下信号与系统:<br><img src="https://i.loli.net/2018/12/18/5c18a9b3b7496.png" alt="1"></p>
+<p>就是一个输入信号,经过一个系统,每个系统会有他对应的系统函数来处理输入信号,最后得到输出信号.对常见的滤波器来说,他们的理想系统函数往往是这些:</p>
+<ol>
+<li>低通滤波器(红线部分),也是这篇blog要实现的东西<br><img src="https://i.loli.net/2018/12/18/5c18ab34c3e9d.png" alt="2"></li>
+<li>others<br><img src="https://i.loli.net/2018/12/18/5c18abbabc8fe.png" alt="3"></li>
+</ol>
+<p>注意看横坐标,我们可以看到,输入信号是时域进来的,但是系统函数是<strong>频域</strong>来的.而他们的命名也是跟频率有关系的.<br>这个时候我们就需要用到傅里叶变换了,至于详情,请看:<br><a href="https://zhuanlan.zhihu.com/p/19763358" target="_blank" rel="noopener">这是一个通俗易懂的傅里叶变换简介/教程</a></p>
+<p>我们可以看到频域上的乘积就是时域上的卷积:<br>$$ y(n) = x(n)h(n) = \sum^N_{k=0}h(k)x(n-k) $$<br>用Z变换来就是:<br>$$H(z) = \sum^{N-1}_{n=0}h(n)z^{-n}$$<br>突然想起并不是在教DSP,所以我们了解到这里就够了,也就是说,我们只要把h(k)求出来,然后知道他可以有滤波的效果就完事了.</p>
+<p>这里用的是FIR的横向结构:<br><img src="https://i.loli.net/2018/12/18/5c18c14cb5a8f.jpg" alt="3"></p>
+<p>我们可以看到主要有三个部分,<strong>第一部分是对输入信号的延时,第二部分是输入信号和抽头系数的相乘,第三部分是相乘结果的累加</strong>.这也是fpga的基本结构假设</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><h3 id="matlab-获取FIR抽头系数"><a href="#matlab-获取FIR抽头系数" class="headerlink" title="matlab-获取FIR抽头系数"></a>matlab-获取FIR抽头系数</h3><p>在matlab命令行窗口打入filterDesigner(善用tab键):<br><img src="https://i.loli.net/2018/12/18/5c18c320c8578.png" alt="4"><br>大家大概可以看见面板下面有很多东西,分别是:</p>
+<ol>
+<li>指定滤波器类型,是IIR还是FIR,用什么算法生成</li>
+<li>滤波器阶数,是特定阶数还是自动生成最小阶数的</li>
+<li>采样频率,信号频率,截止频率</li>
+<li>衰减倍数<br>当中的折衷关系不是这里的重点,根据设计要求,最后要改成这样:<br><img src="https://i.loli.net/2018/12/18/5c18c80f32683.png" alt="5"><br>记得按下方的design filter.</li>
+</ol>
+<p>右上的图就是系统函数的形状了.</p>
+<p>接下来点[file]-&gt;[Export]导出,快捷键ctrl+E,直接导出到workspace就可以了</p>
+<p>然后在命令行窗口打:round(Num*512),意思是放大512倍并取整,方便我们后面在fpga中做定点数乘法</p>
+<p><img src="https://i.loli.net/2018/12/18/5c18c8d683b92.png" alt="6"></p>
+<p>保存下来即可</p>
+<h3 id="matlab-产生波形数据"><a href="#matlab-产生波形数据" class="headerlink" title="matlab-产生波形数据"></a>matlab-产生波形数据</h3><p>因为懒得接信号源和写ad模块驱动,这次实验直接在fpga中用一个rom的ip核储存波形数据<br>matlab代码如下:</p>
+<ol>
+<li><p>生成波形</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%产生两个正弦信号sin(x)和sin(8x)叠加后的信号，取128个点，将信号放大，</span></span><br><span class="line"><span class="comment">%转换成无符号数据，存入ROM中作为信号源</span></span><br><span class="line">clear all</span><br><span class="line">clc</span><br><span class="line">depth = <span class="number">128</span>;</span><br><span class="line">width = <span class="number">16</span>;</span><br><span class="line">x = <span class="number">0</span> : <span class="number">2</span>*<span class="built_in">pi</span>/(depth<span class="number">-1</span>) :<span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">y = <span class="built_in">sin</span>(x)+<span class="built_in">sin</span>(<span class="number">8</span>*x);</span><br><span class="line"><span class="built_in">plot</span>(x,<span class="built_in">sin</span>(x),<span class="string">'r'</span>)	<span class="comment">%红色为sin(x)函数</span></span><br><span class="line"><span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,<span class="built_in">sin</span>(<span class="number">8</span>*x),<span class="string">'g'</span>)	<span class="comment">%绿色为sin(8x)函数</span></span><br><span class="line"><span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(x,y,<span class="string">'b'</span>)	<span class="comment">%蓝色为生成的混合信号</span></span><br><span class="line">grid</span><br><span class="line">y = (y/<span class="number">2</span>) * <span class="number">32768</span>;<span class="comment">%将信号放大32768倍</span></span><br><span class="line">b = signed2unsigned(y,width);  <span class="comment">%转换为无符号数输入</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%下面函数重新新建一个脚本文件</span></span><br><span class="line"><span class="comment">%需要调用了如下函数，将有符号数转换成无符号数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span> = <span class="title">signed2unsigned</span><span class="params">(a,wl)</span></span></span><br><span class="line"><span class="comment">%This function covert an signed integer number into an unsinged integer</span></span><br><span class="line"><span class="comment">%number. a is the input vector while wl means the width of input number;</span></span><br><span class="line"><span class="comment">%Example: a = [-2,-1,0,1];</span></span><br><span class="line"><span class="comment">%signed2unsigned(a,3); THEN return [2,3,0,1]</span></span><br><span class="line">k = <span class="number">2</span>^(wl)*(a&lt;<span class="number">0</span>);</span><br><span class="line">b = k + a;;</span><br><span class="line">b = <span class="built_in">fix</span>(b+<span class="number">0.5</span>);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">length</span>(a)</span><br><span class="line">    <span class="keyword">if</span> (b(<span class="built_in">i</span>) == <span class="number">65536</span>)</span><br><span class="line">        b(<span class="built_in">i</span>) = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写mif文件</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%编写mif文件</span></span><br><span class="line">fid = fopen(<span class="string">'sinx.mif'</span>,<span class="string">'wt'</span>); <span class="comment">%将信号写入一个.mif文件中</span></span><br><span class="line">fprintf(fid,<span class="string">'WIDTH=%d;\n'</span>,width);<span class="comment">%写入存储位宽8位</span></span><br><span class="line">fprintf(fid,<span class="string">'DEPTH=%d;\n'</span>,depth);<span class="comment">%写入存储深度1024</span></span><br><span class="line">fprintf(fid,<span class="string">'ADDRESS_RADIX=UNS;\n'</span>);<span class="comment">%写入地址类型为无符号整型</span></span><br><span class="line">fprintf(fid,<span class="string">'DATA_RADIX=UNS;'</span>);<span class="comment">%写入数据类型为无符号整型</span></span><br><span class="line">fprintf(fid,<span class="string">'CONTENT BEGIN\n'</span>);<span class="comment">%起始内容</span></span><br><span class="line"><span class="keyword">for</span> num=<span class="number">0</span> : <span class="number">127</span> </span><br><span class="line">fprintf(fid,<span class="string">'%d:%16.0f;\n'</span>,num,b(num+<span class="number">1</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">fclose(fid);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>运行整套代码我们也可以看见:<br><img src="https://i.loli.net/2018/12/18/5c190762700cc.png" alt="7"><br>红色是2MHz的正弦波,绿色是8MHz的正弦波,蓝色是混合信号.</p>
+<h3 id="FPGA-导入波形数据"><a href="#FPGA-导入波形数据" class="headerlink" title="FPGA-导入波形数据"></a>FPGA-导入波形数据</h3><p>这里我们需要例化一个ROM模块来在fpga上预存前面生成的波形文件,打开quartus,[Tools]-&gt;[IP Catalog]<br>查找ROM,会找到一个在[Basic Function]-&gt;[On Chip Memory]下面的<strong>ROM:1-PORT</strong>(其实只要看见这个名字就可以了)双击例化</p>
+<ol>
+<li><p>设置好位宽和数据长度<br><img src="https://i.loli.net/2018/12/18/5c190a857f414.png" alt="8"></p>
+</li>
+<li><p>由于对ROM没有别的要求,所以看直接next到下图这个位置:<br><img src="https://i.loli.net/2018/12/18/5c190bf6d8ef9.png" alt="9"><br>填进刚刚在matlab里面生成的数据文件.<br>然后直接finish就可以了</p>
+</li>
+<li><p>例化这个新建的ROM,顺便加时钟</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例化ROM模块</span></span><br><span class="line">data_rom 			ROM_Init</span><br><span class="line">(</span><br><span class="line">	<span class="variable">.address</span>			(address_rom		),	<span class="comment">//rom的地址端口</span></span><br><span class="line">	<span class="variable">.clock</span>	    		(CLK_50M			),	<span class="comment">//rom的时钟端口</span></span><br><span class="line">	<span class="variable">.q</span>					(data_rom	)	<span class="comment">//rom的数据端口</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">//时序电路,用来给rom_addr寄存器赋值</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="keyword">if</span>(!RST_N)								<span class="comment">//判断复位</span></span><br><span class="line">		address_rom &lt;= <span class="number">7'd0</span>;				<span class="comment">//初始化time_cnt值</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		address_rom &lt;= address_rom + <span class="number">2</span> ;			<span class="comment">//用来给time_cnt赋值</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">		<span class="comment">//这里为什么是   +2   后面再讨论</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>这样子,每一个时钟周期下面我们在data_rom下面都可以得到一个波形数据.</p>
+<ol start="4">
+<li>顺道把抽头系数定义一下<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">localparam</span> COEFF1     	=	<span class="number">63</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF2     	=	<span class="number">39</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF3     	=	<span class="number">48</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF4     	=	<span class="number">54</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF5     	=	<span class="number">59</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF6     	=	<span class="number">60</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF7     	=	<span class="number">59</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF8     	=	<span class="number">54</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF9     	=	<span class="number">48</span>;  </span><br><span class="line"><span class="keyword">localparam</span> COEFF10     	=	<span class="number">39</span>;  	</span><br><span class="line"><span class="keyword">localparam</span> COEFF11     	=	<span class="number">63</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="FPGA-FIR结构设计"><a href="#FPGA-FIR结构设计" class="headerlink" title="FPGA - FIR结构设计"></a>FPGA - FIR结构设计</h3><p>由前面我们讲过,FIR有三个部分,有三大部分,第一部分是对输入信号的延时,第二部分是输入信号和抽头系数的相乘,第三部分是相乘结果的累加.所以我们也可以分三部分来写这个东西</p>
+<h4 id="part1-移位寄存器"><a href="#part1-移位寄存器" class="headerlink" title="part1-移位寄存器"></a>part1-移位寄存器</h4><p>我们可以用移位寄存器来达到输入信号的延时.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//pipeline 1 </span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!RST_N)<span class="keyword">begin</span></span><br><span class="line">        data_shift[<span class="number">0</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">1</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">2</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">3</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">4</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">5</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">6</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">7</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">8</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">9</span>]  &lt;= <span class="number">0</span>;</span><br><span class="line">        data_shift[<span class="number">10</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        data_shift[<span class="number">10</span>]  &lt;= data_shift[<span class="number">9</span>];</span><br><span class="line">        data_shift[<span class="number">9</span>]  &lt;= data_shift[<span class="number">8</span>];</span><br><span class="line">        data_shift[<span class="number">8</span>]  &lt;= data_shift[<span class="number">7</span>];</span><br><span class="line">        data_shift[<span class="number">7</span>]  &lt;= data_shift[<span class="number">6</span>];   </span><br><span class="line">        data_shift[<span class="number">6</span>]  &lt;= data_shift[<span class="number">5</span>];   </span><br><span class="line">        data_shift[<span class="number">5</span>]  &lt;= data_shift[<span class="number">4</span>]; </span><br><span class="line">        data_shift[<span class="number">4</span>]  &lt;= data_shift[<span class="number">3</span>]; </span><br><span class="line">        data_shift[<span class="number">3</span>]  &lt;= data_shift[<span class="number">2</span>];</span><br><span class="line">        data_shift[<span class="number">2</span>]  &lt;= data_shift[<span class="number">1</span>];</span><br><span class="line">        data_shift[<span class="number">1</span>]  &lt;= data_shift[<span class="number">0</span>]; </span><br><span class="line">        data_shift[<span class="number">0</span>]  &lt;= data_rom;</span><br><span class="line">    <span class="keyword">end</span>                  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="part2-乘法器"><a href="#part2-乘法器" class="headerlink" title="part2-乘法器"></a>part2-乘法器</h4><p>这里本来想例化乘法器ip来写的,但是鉴于很懒,所以就直接在verilog上面的乘号来代替,将优化丢给了编译器.(所以下面的代码框架是别人家的)</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!RST_N)</span><br><span class="line">        mul_data[<span class="number">0</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        mul_data[<span class="number">0</span>]  &lt;= data_shift[<span class="number">0</span>]   *  COEFF1;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!RST_N)</span><br><span class="line">        mul_data[<span class="number">1</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        mul_data[<span class="number">1</span>]  &lt;= data_shift[<span class="number">1</span>]   *  COEFF2;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">………………………………………………………………………</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!RST_N)</span><br><span class="line">        mul_data[<span class="number">9</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        mul_data[<span class="number">9</span>]  &lt;= data_shift[<span class="number">9</span>]   *  COEFF10;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!RST_N)</span><br><span class="line">        mul_data[<span class="number">10</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">		 <span class="keyword">else</span></span><br><span class="line">        mul_data[<span class="number">10</span>]  &lt;= data_shift[<span class="number">10</span>]   *  COEFF11;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="part3-加法器"><a href="#part3-加法器" class="headerlink" title="part3-加法器"></a>part3-加法器</h4><p>这里给出两种写法,顺道说明一下fpga里面的些许技巧</p>
+<ol>
+<li><p>类c写法</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!RST_N)<span class="keyword">begin</span></span><br><span class="line">        dout_r &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        dout_r &lt;= mul_data[<span class="number">0</span>]+mul_data[<span class="number">1</span>]+mul_data[<span class="number">2</span>]+mul_data[<span class="number">3</span>]+mul_data[<span class="number">4</span>]+mul_data[<span class="number">5</span>]+mul_data[<span class="number">6</span>]+mul_data[<span class="number">7</span>]+mul_data[<span class="number">8</span>]+mul_data[<span class="number">9</span>]+mul_data[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例化ip写法<br>用的是parallel_add的ip,其实只要自己手动优化一下,也可以不用ip.因为他只能做8的倍数的,但是我的滤波器只有10阶.虽然有点浪费资源,但是简单演示的话,把其他位置0就完事了.例化过程较为简单,就不介绍了</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">19</span>:<span class="number">0</span>] add_result;</span><br><span class="line"> add unit_add(</span><br><span class="line">	<span class="variable">.clock</span>       (CLK_50M),</span><br><span class="line">	<span class="variable">.data0x</span>      (mul_data[<span class="number">0</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data10x</span>     (mul_data[<span class="number">1</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data11x</span>     (mul_data[<span class="number">2</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data12x</span>     (mul_data[<span class="number">3</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data13x</span>     (mul_data[<span class="number">4</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data14x</span>     (mul_data[<span class="number">5</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data15x</span>     (mul_data[<span class="number">6</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data1x</span>      (mul_data[<span class="number">7</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data2x</span>      (mul_data[<span class="number">8</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data3x</span>      (mul_data[<span class="number">9</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data4x</span>      (mul_data[<span class="number">10</span>][<span class="number">21</span>:<span class="number">6</span>]),</span><br><span class="line">	<span class="variable">.data5x</span>     (<span class="number">16'b0</span>),</span><br><span class="line">	<span class="variable">.data6x</span>     (<span class="number">16'b0</span>),</span><br><span class="line">	<span class="variable">.data7x</span>     (<span class="number">16'b0</span>),</span><br><span class="line">	<span class="variable">.data8x</span>     (<span class="number">16'b0</span>),</span><br><span class="line">	<span class="variable">.data9x</span>     (<span class="number">16'b0</span>),</span><br><span class="line">	<span class="variable">.result</span>     (add_result)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>至此,整个系统的各个关键部件就搭建完成了.</p>
+<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><h3 id="仿真波形"><a href="#仿真波形" class="headerlink" title="仿真波形"></a>仿真波形</h3><p><img src="https://i.loli.net/2018/12/19/5c1919f8a21d5.png" alt="10"><br>第一个波形是输入信号,<br>第二个波形是加法器的输出,<br>第三个波形是用上面第一种加法器写出来的波形,<br>第四个波形是用上面第二种加法器写出来的波形.</p>
+<p>可以看出基本有那么一点点的滤波的作用,然而噪声还是非常的大,其中最主要的原因就在于,这个FIR滤波器只有十阶,再加上FIR本身的滤波特性,<strong>莫得办法啦</strong></p>
+<p>而事实上由于阶数太少了,以至于滤波效果还没有收到字长效应的影响,这也是让我始料未及的…</p>
+<h3 id="方案对比"><a href="#方案对比" class="headerlink" title="方案对比"></a>方案对比</h3><p>写这个最主要的原因是为了回答一下那些说用类c写法来直接写fpga的大兄弟们…因为真的很多人学了之后都这样子…</p>
+<h4 id="方案一-类c写法"><a href="#方案一-类c写法" class="headerlink" title="方案一:类c写法"></a>方案一:类c写法</h4><p>我们来看一下他的资源占用和最高运行速率:<br><img src="https://i.loli.net/2018/12/19/5c192535701d0.png" alt="11"><br><img src="https://i.loli.net/2018/12/19/5c1929c21afb4.png" alt="12"></p>
+<p>总共用了857个逻辑单元,最高运行速率是59.2MHz</p>
+<h4 id="方案二-例化ip写法"><a href="#方案二-例化ip写法" class="headerlink" title="方案二:例化ip写法"></a>方案二:例化ip写法</h4><p><img src="https://i.loli.net/2018/12/19/5c192b35ec376.png" alt="13"><br><img src="https://i.loli.net/2018/12/19/5c192b557e904.png" alt="14"></p>
+<p>总共用了797个逻辑单元,最高运行速率是190.59MHz.<br>还千万不要忘记了,这个ip是16个输入位的,而我们只用了其中的11个!</p>
+<p>所以结果就是,我用的资源比你少,速度可以比你快,出来的波形还一样.虽然类C写法确实带来了不少的方便,但是他确实敌不过速度的制约,速度的制约出问题之后,显然时序约束就是天荒夜谈了.</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这一个应用或许是fpga在dsp上面较为简单的一个应用了,用fpga写dsp,还是要有扎扎实实的dsp基础才行.</p>
+<p>这个也志在跑通一个流程吧,FIR其实有很多东西,考虑到篇幅,我都没有写出来.不过也莫得关系了.</p>
+<p>期末愉快</p>
+<p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你觉得有丶收获的话</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/12/04/通信原理教程chapter5/" rel="next" title="通信原理教程chapter5">
+                  <i class="fa fa-chevron-left"></i> 通信原理教程chapter5
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/02/06/基于FPGA的简易频率计设计/" rel="prev" title="基于FPGA的简易频率计设计">
+                  基于FPGA的简易频率计设计 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FPGA-Verilog-设计FIR滤波器"><span class="nav-number">1.</span> <span class="nav-text">FPGA/Verilog 设计FIR滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计目标"><span class="nav-number">1.2.</span> <span class="nav-text">设计目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.3.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字滤波器"><span class="nav-number">1.3.1.</span> <span class="nav-text">数字滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIR滤波器"><span class="nav-number">1.3.2.</span> <span class="nav-text">FIR滤波器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">1.4.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#matlab-获取FIR抽头系数"><span class="nav-number">1.4.1.</span> <span class="nav-text">matlab-获取FIR抽头系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matlab-产生波形数据"><span class="nav-number">1.4.2.</span> <span class="nav-text">matlab-产生波形数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FPGA-导入波形数据"><span class="nav-number">1.4.3.</span> <span class="nav-text">FPGA-导入波形数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FPGA-FIR结构设计"><span class="nav-number">1.4.4.</span> <span class="nav-text">FPGA - FIR结构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#part1-移位寄存器"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">part1-移位寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#part2-乘法器"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">part2-乘法器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#part3-加法器"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">part3-加法器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真结果"><span class="nav-number">1.5.</span> <span class="nav-text">仿真结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#仿真波形"><span class="nav-number">1.5.1.</span> <span class="nav-text">仿真波形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案对比"><span class="nav-number">1.5.2.</span> <span class="nav-text">方案对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方案一-类c写法"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">方案一:类c写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案二-例化ip写法"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">方案二:例化ip写法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.6.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

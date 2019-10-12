@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="博弈论(一)–yale">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博弈论(一)–yale">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/09/08/正则表达式-二-常用正则表达式/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="博弈论(一)–yale">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/09/08/5b939e1f2382f.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/08/5b939f9b8f890.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/09/08/5b93a1a7a0564.jpg">
+<meta property="og:updated_time" content="2019-10-12T06:31:26.221Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="博弈论(一)–yale">
+<meta name="twitter:description" content="博弈论(一)–yale">
+<meta name="twitter:image" content="https://i.loli.net/2018/09/08/5b939e1f2382f.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/09/08/正则表达式-二-常用正则表达式/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>博弈论(一)–yale | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/09/08/正则表达式-二-常用正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            博弈论(一)–yale
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-08 18:54:11" itemprop="dateCreated datePublished" datetime="2018-09-08T18:54:11+08:00">2018-09-08</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:31:26" itemprop="dateModified" datetime="2019-10-12T14:31:26+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC-LIFE/" itemprop="url" rel="index">
+                    <span itemprop="name">MISC LIFE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">博弈论(一)–yale</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="正则表达式-二-–常用正则表达式"><a href="#正则表达式-二-–常用正则表达式" class="headerlink" title="正则表达式(二)–常用正则表达式"></a>正则表达式(二)–常用正则表达式</h1><p>[TOC]</p>
+<p>to完结正则表达式<br>承接上一篇正则的blog,这里给一点点练习讲解和常用正则</p>
+<h2 id="环境变更"><a href="#环境变更" class="headerlink" title="环境变更"></a>环境变更</h2><p>因为写上一篇博客的时候我还在window环境下,因为一直很焦虑双系统用哪个的问题,我一举把win10和ubuntu16都删掉了,装了个ubuntu18…所以验证的平台去到了:<br><a href="https://www.regexpal.com/" target="_blank" rel="noopener">regex</a></p>
+<h2 id="讲解练习"><a href="#讲解练习" class="headerlink" title="讲解练习"></a>讲解练习</h2><h3 id="电话号码的正则"><a href="#电话号码的正则" class="headerlink" title="电话号码的正则"></a>电话号码的正则</h3><p>电话号码由数字和“-”组成</p>
+<ol>
+<li>如果包含区号，那么区号为三位或四位，首位是0</li>
+<li>区号用“-”和其他数字分割</li>
+<li>除了区号，电话号码为7到8位</li>
+<li>手机号码为11位</li>
+<li>11位手机号码的前2位为“13”，“14”，“15”，“17”，“18”</li>
+</ol>
+<p><strong>小答案:</strong><br>1.固话:<br><img src="https://i.loli.net/2018/09/08/5b939e1f2382f.png" alt="电话"><br>2.手机号码:<br><img src="https://i.loli.net/2018/09/08/5b939f9b8f890.jpg" alt="手机"></p>
+<blockquote>
+<p>答案:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![all](https://i.loli.net/2018/09/08/5b939fefb8e20.jpg)</span><br><span class="line"></span><br><span class="line">### 身份证号码的正则</span><br><span class="line">1. 长度：15位或者18位</span><br><span class="line">2. 如果是15位，则都是数字</span><br><span class="line">3. 如果是18位，最后一位可能为数字或字母X</span><br><span class="line"></span><br><span class="line">这题简单:</span><br><span class="line">&gt;答案:```(^\d&#123;15&#125;$)|(^\d&#123;17&#125;(\d|X|x)$)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="https://i.loli.net/2018/09/08/5b93a1a7a0564.jpg" alt="b"></p>
+<h3 id="电子邮箱的正则"><a href="#电子邮箱的正则" class="headerlink" title="电子邮箱的正则"></a>电子邮箱的正则</h3><ol>
+<li>邮箱格式：用户名@网址.域名</li>
+<li>用户名：字母、数字、下划线组成</li>
+<li>网址：字母、数字</li>
+<li>域名：2-4位字母组成，1-2个域名</li>
+<li>不区分大小写</li>
+</ol>
+<p><strong>小答案</strong><br>先说明的是,这个东西为了严谨,有人写过一个几百行的正则….我这里就随意写一个符合规则的罢了<br>也是分成三部分考虑:(用户名)@(网址).(域名)这样子看就不难写了</p>
+<blockquote>
+<p>答案:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![an_3](https://i.loli.net/2018/09/08/5b93a4e838fb2.jpg)</span><br><span class="line"></span><br><span class="line">后两题太简单了,觉得没必要讲了.</span><br><span class="line"></span><br><span class="line">## 常用正则表达式</span><br><span class="line">放一些有特殊用途的,供大家思考思考(有很多我也没有验证过的)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 合法账号</span><br><span class="line">```c</span><br><span class="line">// 字母开头，允许5-16字节，允许字母数字下划线</span><br><span class="line">^[a-zA-Z]\w&#123;4,15&#125;$</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="合法密码"><a href="#合法密码" class="headerlink" title="合法密码"></a>合法密码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 至少八个字符，至少一个字母和一个数字：</span></span><br><span class="line">^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]&#123;<span class="number">8</span>,&#125;$</span><br><span class="line"></span><br><span class="line"><span class="comment">// 至少八个字符，至少一个字母，一个数字和一个特殊字符：</span></span><br><span class="line">^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&amp;])[A-Za-z\d$@$!%*#?&amp;]&#123;<span class="number">8</span>,&#125;$</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最少八个字符，至少一个大写字母，一个小写字母和一个数字</span></span><br><span class="line"><span class="string">"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]&#123;8,&#125;$"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 至少八个字符，至少一个大写字母，一个小写字母，一个数字和一个特殊字符：</span></span><br><span class="line"><span class="string">"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&amp;])[A-Za-z\d$@$!%*?&amp;]&#123;8,&#125;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 最少八个最多十个字符，至少一个大写字母，一个小写字母，一个数字和一个特殊字符：</span></span><br><span class="line"><span class="string">"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&amp;])[A-Za-z\d$@$!%*?&amp;]&#123;8,10&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="检验汉字"><a href="#检验汉字" class="headerlink" title="检验汉字"></a>检验汉字</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 汉字(编码)</span></span><br><span class="line">^[\u4e00-\u9fa5]&#123;<span class="number">0</span>,&#125;$</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用1"><a href="#常用1" class="headerlink" title="常用1"></a>常用1</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> xml文件：^([a-zA-Z]+-?)+[a-zA-Z0<span class="number">-9</span>]+\\.[x|X][m|M][l|L]$</span><br><span class="line"><span class="number">2.</span> 空白行的正则表达式：\n\s*\r    (可以用来删除空白行)</span><br><span class="line">3. HTML标记的正则表达式：&lt;(\S*?)[^&gt;]*&gt;.*?&lt;/\1&gt;|&lt;.*? /&gt;   </span><br><span class="line"><span class="number">4.</span> 首尾空白字符的正则表达式：^\s*|\s*$或(^\s*)|(\s*$)    (可以用来删除行首行尾的空白字符)</span><br><span class="line"><span class="number">5.</span> 腾讯QQ号：[<span class="number">1</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">4</span>,&#125;    (腾讯QQ号从<span class="number">10000</span>开始)</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用2"><a href="#常用2" class="headerlink" title="常用2"></a>常用2</h3><table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">正则表达式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">网址（URL）</td>
+<td align="center"><code>[a-zA-z]+://[^\s]*</code></td>
+</tr>
+<tr>
+<td align="center">IP地址(IP Address)</td>
+<td align="center"><code>((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)</code></td>
+</tr>
+<tr>
+<td align="center">日期(年-月-日)</td>
+<td align="center"><code>(\d{4}|\d{2})-((1[0-2])|(0?[1-9]))-(([12][0-9])|(3[01])|(0?[1-9]))</code></td>
+</tr>
+<tr>
+<td align="center">日期(月/日/年)</td>
+<td align="center"><code>((1[0-2])|(0?[1-9]))/(([12][0-9])|(3[01])|(0?[1-9]))/(\d{4}|\d{2})</code></td>
+</tr>
+<tr>
+<td align="center">时间(小时:分钟, 24小时制)</td>
+<td align="center"><code>((1|0?)[0-9]|2[0-3]):([0-5][0-9])</code></td>
+</tr>
+<tr>
+<td align="center">中文及全角标点符号(字符)</td>
+<td align="center"><code>[\u3000-\u301e\ufe10-\ufe19\ufe30-\ufe44\ufe50-\ufe6b\uff01-\uffee]</code></td>
+</tr>
+<tr>
+<td align="center">中国大陆邮政编码</td>
+<td align="center"><code>[1-9]\d{5}</code></td>
+</tr>
+<tr>
+<td align="center">整数</td>
+<td align="center"><code>-?\d+</code></td>
+</tr>
+<tr>
+<td align="center">小数</td>
+<td align="center"><code>(-?\d+)(\.\d+)?</code></td>
+</tr>
+<tr>
+<td align="center">不包含abc的单词</td>
+<td align="center"><code>\b((?!abc)\w)+\b</code></td>
+</tr>
+<tr>
+<td align="center">##参考文献</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><a href="https://blog.csdn.net/weixin_38071135/article/details/82121398">正则表达式入门</a></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><a href="https://jeffjade.com/2017/07/13/123-useful-regular-expression/" target="_blank" rel="noopener">晚晴幽草轩轩主</a></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><a href="http://www.cnblogs.com/zxin/archive/2013/01/26/2877765.html" target="_blank" rel="noopener">zxin</a></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><a href="http://wiki.jikexueyuan.com/project/regex/common-use.html" target="_blank" rel="noopener">极客学院wiki</a></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><a href="https://deerchao.net/tutorials/regex/common.htm" target="_blank" rel="noopener">deerchao </a></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/09/08/quartus16-1和modelsim-altera-for-linux的安装/" rel="next" title="quartus16.1和modelsim-altera for linux的安装">
+                  <i class="fa fa-chevron-left"></i> quartus16.1和modelsim-altera for linux的安装
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/09/12/quartus和modelsim之间的大坑/" rel="prev" title="quartus和modelsim之间的大坑">
+                  quartus和modelsim之间的大坑 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正则表达式-二-–常用正则表达式"><span class="nav-number">1.</span> <span class="nav-text">正则表达式(二)–常用正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境变更"><span class="nav-number">1.1.</span> <span class="nav-text">环境变更</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讲解练习"><span class="nav-number">1.2.</span> <span class="nav-text">讲解练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电话号码的正则"><span class="nav-number">1.2.1.</span> <span class="nav-text">电话号码的正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电子邮箱的正则"><span class="nav-number">1.2.2.</span> <span class="nav-text">电子邮箱的正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合法密码"><span class="nav-number">1.2.3.</span> <span class="nav-text">合法密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检验汉字"><span class="nav-number">1.2.4.</span> <span class="nav-text">检验汉字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用1"><span class="nav-number">1.2.5.</span> <span class="nav-text">常用1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用2"><span class="nav-number">1.2.6.</span> <span class="nav-text">常用2</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

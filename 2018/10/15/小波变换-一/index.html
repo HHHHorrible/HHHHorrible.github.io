@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="小波变换(一)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小波变换(一)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/10/15/小波变换-一/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="小波变换(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/10/15/5bc43d37e2aa1.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/15/5bc43f2337b63.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/15/5bc440f14709c.png">
+<meta property="og:updated_time" content="2019-10-12T06:57:52.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小波变换(一)">
+<meta name="twitter:description" content="小波变换(一)">
+<meta name="twitter:image" content="https://i.loli.net/2018/10/15/5bc43d37e2aa1.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/10/15/小波变换-一/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>小波变换(一) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/10/15/小波变换-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            小波变换(一)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-15 17:50:33" itemprop="dateCreated datePublished" datetime="2018-10-15T17:50:33+08:00">2018-10-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:57:52" itemprop="dateModified" datetime="2019-10-12T14:57:52+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DSP/" itemprop="url" rel="index">
+                    <span itemprop="name">DSP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">小波变换(一)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="小波变换-一"><a href="#小波变换-一" class="headerlink" title="小波变换(一)"></a>小波变换(一)</h1><p>由于项目可能会用到的原因,学一下,感觉已有的通俗易懂教程不够相应的学术性.</p>
+<p>教程:《数字信号处理》陈后金著<br>视频教程:<a href="http://www.icourse163.org/course/NJTU-1001950001" target="_blank" rel="noopener">中国大学mooc-数字信号处理</a></p>
+<p>[TOC] </p>
+<h2 id="傅里叶变换的局限性"><a href="#傅里叶变换的局限性" class="headerlink" title="傅里叶变换的局限性"></a>傅里叶变换的局限性</h2><p>在正式进入小波变换之前，我们不妨来讨论一下傅里叶变换的局限性和为什么我们需要引入小波变换。<br>回想傅里叶变换的公式<br>$$F(\omega) = \int^{\infty}_{-\infty}f(t)exp(-j\omega t)dt$$</p>
+<ul>
+<li><p>从积分的算式我们可以轻松知道,在积分式一结束的同时,<br>另外一个谱的信息就会<strong>完全</strong>消失,就是说,<strong>傅里叶变换的频域上不含有时间信息</strong></p>
+</li>
+<li><p>同时从积分的上下限我们也可以看到,当信号发生一些不平稳的变化的时候,傅里叶变换并不能很好的察觉到他的<strong>幅度和位置</strong>,因为从表达式可以看到,傅里叶变化对每一个时刻的值都是平等对待的,而且所有的突变值也会被积分区间所平分.所以我们可以看到傅里叶变换<strong>对窄带信号检测不敏感,不能处理非平稳信号</strong></p>
+</li>
+<li><p>从滤波的角度看,回想一下,当信号频谱和噪声频谱是相互分离的时候,我们总可以分离信号和噪声,通过一些加窗滤波的方法就可以了.但是如果<strong>信号和噪声的频谱是混在一起的</strong>,那么,这个时候傅里叶变换就无能为力了,也就是说,<strong>滤波靠的是信号域和噪声域在频谱上的分离</strong> </p>
+</li>
+</ul>
+<h2 id="短时傅里叶变换-STFT"><a href="#短时傅里叶变换-STFT" class="headerlink" title="短时傅里叶变换(STFT)"></a>短时傅里叶变换(STFT)</h2><p>怎么来解决以上的问题呢?有人提出了短时傅里叶变换来加以改善,我们先来看看短时傅里叶变换的表达式:<br>$$F(\omega,t) = \int^{\infty}_{-\infty}f(\tau)w(\tau -t)exp(-j\omega \tau)d\tau$$<br>$$ F[m,k] = \sum_nx[n]w[n-k]exp(-j\frac{2\pi}Nmn)\quad m=0,1,\cdots,N-1  $$<br>通过加入一个滑动的窗函数$w(\omega,t)$(长度为N),来弥补傅里叶变换的频谱上没有时间信息这个弊端</p>
+<p>其实原理很简单,就是原来一段的傅里叶变换,现在固定分成几段来分别进行傅里叶变换,那么分成的这几段,可以在时间上独立开来,就变成了<strong>具有时间信息的傅里叶变换</strong></p>
+<p>但当然,这个加窗对整个变换也是有影响的,这里不妨先介绍两个术语:</p>
+<h3 id="时间分辨率"><a href="#时间分辨率" class="headerlink" title="时间分辨率"></a>时间分辨率</h3><p>时间分辨率由时窗宽度$T_p$决定,<br>$$T_p =NT=\frac N{f_{sample}}$$<br>$T_p$越<strong>小</strong>,时间分辨率越高.</p>
+<h3 id="频谱分辨率"><a href="#频谱分辨率" class="headerlink" title="频谱分辨率"></a>频谱分辨率</h3><p>频谱分辨率是指分辩信号中相邻谱峰的能力<br>$$\triangle f_c = \frac1{T_p}$$<br>$\triangle f_c $越<strong>小</strong>,频谱分辨率越高。</p>
+<p>在对信号的时频分析中,我们希望时间分辨率和频谱分辨率都可以比较高,但是从定义式里面我们就知道,时<strong>间分辨率和频谱分辨率是相互制约的</strong>,同时也说明,我们没办法<strong>同时获得</strong>较高的时间分辨率和频谱分辨率.</p>
+<p>从这里我们可以再一步印证出,傅里叶变换(连续)具有无穷的频谱分辨率,而无时间分辨率.</p>
+<p>现在我们回来讨论短时傅里叶变换的窗函数$w[n-k]$的长度N,显然N如果变大,频谱分辨率肯定是越来越好的,时间分辨率确实便来越差的.同时N如果变小,频谱分辨率肯定是越来越差的,时间分辨率便是越来越差的.</p>
+<h3 id="我们到底想要什么东西"><a href="#我们到底想要什么东西" class="headerlink" title="我们到底想要什么东西"></a>我们到底想要什么东西</h3><p>既然上面说了时间分辨率和频谱分辨率已经是不可兼得的了,那么现在问题来了,<strong>我们到底想得到什么东西?</strong><br>回想一下:<br>傅里叶变换的缺点在他不能有效地处理非平稳信号,短时傅里叶变换的N是固定的,往两边变化都会有制约.</p>
+<p>那我们能不能在分析的过程中让这个N变起来?让他<strong>在信号变化快的时候窗变小一点</strong>,获得较高的时间分辨率,较低的频谱分辨率.<strong>在信号变化慢的时候窗变大一点</strong>,获得较低的时间分辨率,较高的频谱分辨率.</p>
+<p>这个时候就应该给大家引入小波变换了.大家可以先无道理地认为小波变换就是一个窗长度会变的傅里叶变换(虽然我一直不喜欢这个通俗的比喻…)</p>
+<h2 id="信号的正交表示"><a href="#信号的正交表示" class="headerlink" title="信号的正交表示"></a>信号的正交表示</h2><p>在正式讲小波变换前,需要先补充一些知识.</p>
+<p>在信号分析中,我们常将信号展开成一组信号的线性组合,即有<br>$$x(t) = \sum_n a_n \cdot \phi_n(t)$$</p>
+<p>其中,{$a_n;n\in Z$}为展开系数,{$\phi_n(t);n\in Z$}为展开函数<br>若展开式具有<strong>唯一性</strong>,即不同的信号对应不同的展开系数$a_n$ ,则该展开函数$\phi_n(t)$称为基(basis)。</p>
+<p>对基函数来说,若其内积满足:<br>$$&lt;\phi_l(t),\phi_k(t)&gt; = \int\phi_l(t)\cdot\phi_k(t)dt = \delta[k-l]$$<br>称此基函数为<strong>正交规范(orthonormal)</strong>基函数.正交在于其他内积等于0,规范在于系数是1</p>
+<p>在此基础上我们可以知道,由于每个基函数之间都是互相正交的,所以我们可以将x(t)和基函数$\phi_n(t)$进行内积计算,便可以得到相应的展开系数$a_n$,也就是:</p>
+<p>$$a_n = &lt;x(t),\phi_n(t)&gt; = \int x(t)\cdot\phi_n(t)dt$$</p>
+<p>稍微有点泛函常识的我们可以知道,这就是<strong>将信号往给定基函数元素所张成的内积空间里面投射</strong></p>
+<p>比较出名的就是傅里叶级数,将信号往以$e^{j\omega t}$为基函数的内积空间(无穷维空间)内投射,得到的相应正交基函数的特征值(也就是展开系数$a_n$)这里的$a_n$就是傅里叶级数里面的$C_n$.大家大可看看表达式,都是一模一样的.</p>
+<p>当然这个是反着来用的,根据每个维度的特征值来合成回x(t),也就是逆变换</p>
+<p>这里要注意的还有一点是,所谓的基函数,其实不仅仅是一个函数,而是一些有相同特征且相互正交的函数族.</p>
+<h2 id="小波展开与小波变换"><a href="#小波展开与小波变换" class="headerlink" title="小波展开与小波变换"></a>小波展开与小波变换</h2><h3 id="小波函数"><a href="#小波函数" class="headerlink" title="小波函数"></a>小波函数</h3><p>小波(wavelet)信号是一类衰减较快的波动信号,其能量有限,且相对集中在局部区域.<br>先来看看常用的小波函数:<br><img src="https://i.loli.net/2018/10/15/5bc43d37e2aa1.png" alt="xiaobo"><br>小波函数$\psi(t)$(也称为<strong>母小波</strong>)的基本特性:<br>$$\int^\infty_{-\infty}\psi(t)dt = 0$$<br><strong>小波函数$\psi(t)$通过展缩和平移得到</strong>小波函数族<strong>$\psi_{j,k}(t)$</strong><br><img src="https://i.loli.net/2018/10/15/5bc43f2337b63.png" alt="hanshuzu"><br>这里小波函数由于相对集中在局部区域,所以比傅里叶变换的基函数多了<strong>平移</strong>这一步.<br>小波函数族$\psi_{j,k}(t)$定义为:<br>$$\psi_{j,k}(t) = 2^{j/2}\psi(2^jt-k);\quad j,k\in Z$$</p>
+<h3 id="尺度函数"><a href="#尺度函数" class="headerlink" title="尺度函数"></a>尺度函数</h3><p>和小波变换相关的还有尺度函数(父小波)(Scaling Function)<br><img src="https://i.loli.net/2018/10/15/5bc440f14709c.png" alt="chidu"><br><strong>由尺度函数$\varphi(t)$通过展缩和平移得到</strong>尺度函数族<strong>$\varphi_{j,k}(t)$</strong></p>
+<p>尺度函数族$\varphi_{j,k}(t)$定义为:<br>$$\varphi_{j,k}(t) = 2^{j/2}\varphi(2^jt-k);\quad j,k\in Z$$</p>
+<p>小波函数族和尺度函数族前面的系数$2^j$是为了保持基函数的能量始终为1</p>
+<p>对于这两个后面会有更理性的认识,这里我们先直接介绍DWT和IDWT</p>
+<h3 id="离散小波变换-DWT"><a href="#离散小波变换-DWT" class="headerlink" title="离散小波变换 (DWT)"></a>离散小波变换 (DWT)</h3><p>有了小波函数和尺度函数,就相当于明确了我们的小波的基函数.<br>我们可以利用小波函数族$\psi_{j,k}(t)$,尺度函数族$\varphi_{j,k}(t)$,来将信号进行小波展开:<br>$$x(t) = \sum_nc_0[k]\varphi_{0,k}(t) + \sum_nd_0[k]\psi_{0,k}(t)  + \sum_nd_1[k]\psi_{1,k}(t) +\cdots $$<br>同时,上式也被称为<strong>离散小波逆变换 (IDWT)</strong></p>
+<p>相反地,由信号x(t)求解展开系数{$c_0[k],d_1[k],d_2[k]$}称为<strong>离散小波变换(Discrete Wavelet Transform, DWT)</strong></p>
+<p>我们常用$c_0$来表示信号的粗糙成分,$d_{j,k}$来表示信号的精细部分.详细内容会在下一篇博客继续阐述.</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>之前总有一段时间不想学小波,感觉这个名词有点高大上什么的,然后因为最近要涉及到相关的信息,所以不得不学一下.学完个基础之后不得不感叹的是,小波变换我觉得比傅里叶变换还要来得简单直接,演示的效果有时还蛮惊艳的.</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/22450818" target="_blank" rel="noopener">形象易懂讲解算法I——小波变换</a><br><a href="https://zhuanlan.zhihu.com/p/44215123" target="_blank" rel="noopener">小波变换完美通俗讲解系列之 （一）</a><br><a href="https://zhuanlan.zhihu.com/p/44217268" target="_blank" rel="noopener">小波变换完美通俗讲解系列之 （二   </a><br><a href="https://en.wikipedia.org/wiki/Discrete_wavelet_transform" target="_blank" rel="noopener">Wavelet transform - Wikipedia</a><br><a href="disp.ee.ntu.edu.tw/tutorial/WaveletTutorial.pdf">A Tutorial of the Wavelet Transform</a></p>
+<hr>
+<p>Ruch, David K. And Van Fleet, Patrick J.《Wavelet Theory：An elementary Approach With Applications》</p>
+<p>Wavelets in Engineering Applications  罗高涌 (<strong>这可是我们学院罗教授出的书喔</strong>)<br>购买链接如下:<br><a href="https://www.amazon.cn/dp/B00LHRN5P2/ref=sr_1_1?ie=UTF8&qid=1539596083" target="_blank" rel="noopener">Wavelets in Engineering Applications </a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/10/13/博客不易-生活艰难/" rel="next" title="博客不易,生活艰难">
+                  <i class="fa fa-chevron-left"></i> 博客不易,生活艰难
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/10/18/通信原理教程chapter3-模拟调制系统-高频电子线路/" rel="prev" title="通信原理chapter3-模拟调制系统+高频电子线路">
+                  通信原理chapter3-模拟调制系统+高频电子线路 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#小波变换-一"><span class="nav-number">1.</span> <span class="nav-text">小波变换(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#傅里叶变换的局限性"><span class="nav-number">1.1.</span> <span class="nav-text">傅里叶变换的局限性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#短时傅里叶变换-STFT"><span class="nav-number">1.2.</span> <span class="nav-text">短时傅里叶变换(STFT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间分辨率"><span class="nav-number">1.2.1.</span> <span class="nav-text">时间分辨率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#频谱分辨率"><span class="nav-number">1.2.2.</span> <span class="nav-text">频谱分辨率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我们到底想要什么东西"><span class="nav-number">1.2.3.</span> <span class="nav-text">我们到底想要什么东西</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号的正交表示"><span class="nav-number">1.3.</span> <span class="nav-text">信号的正交表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小波展开与小波变换"><span class="nav-number">1.4.</span> <span class="nav-text">小波展开与小波变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小波函数"><span class="nav-number">1.4.1.</span> <span class="nav-text">小波函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尺度函数"><span class="nav-number">1.4.2.</span> <span class="nav-text">尺度函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离散小波变换-DWT"><span class="nav-number">1.4.3.</span> <span class="nav-text">离散小波变换 (DWT)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.5.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.6.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

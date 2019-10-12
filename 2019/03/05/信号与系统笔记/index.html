@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="信号与系统笔记">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信号与系统笔记">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/03/05/信号与系统笔记/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="信号与系统笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7d294a187cd.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7d2c845d7c1.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7d2ce3427e7.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7d2dd674e9e.png">
+<meta property="og:updated_time" content="2019-10-12T07:15:24.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="信号与系统笔记">
+<meta name="twitter:description" content="信号与系统笔记">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/04/5c7d294a187cd.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/03/05/信号与系统笔记/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>信号与系统笔记 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/03/05/信号与系统笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            信号与系统笔记
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-05 18:46:26" itemprop="dateCreated datePublished" datetime="2019-03-05T18:46:26+08:00">2019-03-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:15:24" itemprop="dateModified" datetime="2019-10-12T15:15:24+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DSP/" itemprop="url" rel="index">
+                    <span itemprop="name">DSP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">信号与系统笔记</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="信号与系统笔记"><a href="#信号与系统笔记" class="headerlink" title="信号与系统笔记"></a>信号与系统笔记</h1><p>author:何伟宝</p>
+<p>[TOC]</p>
+<hr>
+<h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><hr>
+<h3 id="序列的表示5e-4"><a href="#序列的表示5e-4" class="headerlink" title="序列的表示5e                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   4"></a>序列的表示5e                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   4</h3><ol>
+<li><p>图形:<br><img src="https://i.loli.net/2019/03/04/5c7d294a187cd.png" alt="tu"></p>
+</li>
+<li><p>函数解析式:<br>$$ y[k] =  f_1[k]+f_2[k]+f_3[k]+ \cdots f_n[k] $$</p>
+</li>
+<li><p>列表表示:<br>$$ y[n] = {0,1,2,\bar{3},4,5,6,7,8,9} $$<br>其中取有箭头(下箭头)的为序列的起点(即n=0点)</p>
+</li>
+</ol>
+<h3 id="序列的变换"><a href="#序列的变换" class="headerlink" title="序列的变换"></a>序列的变换</h3><ol>
+<li>序列的平移<br><img src="https://i.loli.net/2019/03/04/5c7d2c845d7c1.png" alt="yanshi"></li>
+</ol>
+<p>用表达式的写法就是:<br>$$ y[n] = x[n-n_0] $$</p>
+<ol start="2">
+<li>序列的反转<br><img src="https://i.loli.net/2019/03/04/5c7d2ce3427e7.png" alt="fanzhuan"></li>
+</ol>
+<p>用表达式的写法就是:<br>$$ y[n] = x[-n] $$</p>
+<ol start="3">
+<li>序列的尺度变换<br><img src="https://i.loli.net/2019/03/04/5c7d2dd674e9e.png" alt="chidubianhuan"></li>
+</ol>
+<p>压缩时:<br>$$ y[n] = x[2n] $$<br>展宽时:<br>$$ y[n] = x[n/2] $$</p>
+<p>实际上,书本上在这里举例的时候用了模拟信号,因为在数字序列中,这个操作又名为:<strong>抽取和内插</strong>.</p>
+<h3 id="序列运算"><a href="#序列运算" class="headerlink" title="序列运算"></a>序列运算</h3><p>1.2.3. 翻转,位移,尺度变换见前</p>
+<ol start="4">
+<li><p>相加和相乘<br>$$ y[k] =  f_1[k]+f_2[k]+f_3[k]+ \cdots f_n[k] $$<br>$$ y[k] =  f_1[k]\cdot f_2[k]\cdot f_3[k] \cdots f_n[k] $$</p>
+</li>
+<li><p>差分<br>a.前向差分:<br>$$ \triangle f[k] = f[k+1] -f[k] $$<br>b.后向差分<br>$$ \triangledown  f[k] = f[k] - f[k-1] $$</p>
+</li>
+</ol>
+<ol start="6">
+<li><p>求和<br>$$ y[k] = \sum^{k}<em>{n=-\infty }f[n] $$<br>举个比较重要的例子:<br>$$ u[k] = \sum^{k}</em>{n=-\infty }\delta[n] $$</p>
+</li>
+<li><p>卷积和</p>
+</li>
+</ol>
+<p>连续上:<br>$$ y(t) = f(t)\ast h(t) = \int^{\infty}<em>{\infty}f(\tau)h(t-\tau) d\tau $$<br>离散上:<br>$$ y[n] = \sum^{+\infty}</em>{k=- \infty}x[k]h[n-k] $$<br>计算的步骤:<br>        1.翻转2. 平移3. 相乘4. 累加</p>
+<ol start="8">
+<li>相关<br>连续上:<br>$$ \phi_{xy}(t) = \int ^{\infty}<em>{-\infty} x(t+\tau) y(\tau)d \tau $$<br>离散上:<br>$$ r</em>{xy}[n] = \sum ^{\infty}<em>{-\infty} x[n] y[n + m]$$<br>举个较为简单的例子:周期函数的自相关函数<br>$$ r_x(m+N) = \frac1N\sum ^{N}</em>{n=0} x(n) x(n-m-N) = \frac1N\sum ^{N}_{n=0} x(n) x(n-m) = r_x(m) $$</li>
+</ol>
+<h2 id="几个较为重要的序列"><a href="#几个较为重要的序列" class="headerlink" title="几个较为重要的序列"></a>几个较为重要的序列</h2><h3 id="单位脉冲序列"><a href="#单位脉冲序列" class="headerlink" title="单位脉冲序列"></a>单位脉冲序列</h3><p>$$ \delta[n] = \begin{cases}  0, \quad n\neq 0 \1,\quad  n=0  \end{cases} $$</p>
+<h3 id="单位阶跃序列"><a href="#单位阶跃序列" class="headerlink" title="单位阶跃序列"></a>单位阶跃序列</h3><p>$$ u[n] = \begin{cases}  0, \quad n&lt; 0 \1,\quad  n\geq  0  \end{cases} $$</p>
+<p>上述两种序列的关系:<br>单位脉冲序列是单位阶跃序列的<strong>一次差分</strong>:<br>$$ \delta [n] = u[n] -u[n-1] $$</p>
+<p>单位阶跃序列是单位脉冲序列的<strong>求和函数</strong>:<br>$$ u [n] = \sum^n_{m=-\infty}\delta[m] $$</p>
+<p>值得一提的是,可以使用移位脉冲序列来描述任意一个序列中的一位:<br>$$ x[n] = \sum^{+\infty}_{k=- \infty}x[k]\delta[n-k] $$<br>当然,这也称为单位脉冲序列的<strong>筛选特性</strong>,当然,这也可以看成…</p>
+<h3 id="矩形序列"><a href="#矩形序列" class="headerlink" title="矩形序列"></a>矩形序列</h3><p>$$ R_N[k] = u[k] -u[k-n_0] $$</p>
+<h2 id="DTFT-Discrete-time-Fourier-Transform"><a href="#DTFT-Discrete-time-Fourier-Transform" class="headerlink" title="DTFT(Discrete-time Fourier Transform)"></a>DTFT(Discrete-time Fourier Transform)</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>DTFT:<br>$$ X(e^{j\Omega}) = \sum^{+\infty}<em>{n=- \infty} x[n] e^{-j\Omega n} $$<br>iDTFT:<br>$$ x[n] = \frac1{2\pi} \int</em>{2\pi } X(e^{j\omega})e^{j\Omega } d\Omega $$</p>
+<p>举个例子:考虑单边信号$x[n] = a^n u[n]$的DTFT:<br>$$ X(e^{j\Omega}) = \sum^{+\infty}_{n=- \infty} a^n u[n] e^{-j\Omega n} =  \sum^{+\infty}_0 (ae^{-j\Omega})^n = \frac{1}{1-ae^{-j\Omega}}$$</p>
+<p>最后一步由底数小于1的等比数列求和得到</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>较多,故不作证明</p>
+<ol>
+<li>周期性<br>$$ X(e^{j(\Omega+2\pi)}) = X(e^{j\Omega}) $$</li>
+<li>线性性质<br>$$ ax_1[n] +bx_2[n]  \stackrel{\mathcal{F}}{\longleftrightarrow} aX_1(e^{j\Omega})+bX_2(e^{j\Omega})$$</li>
+<li>时移与频移<br>$$ x[n-n_0] \stackrel{\mathcal{F}}{\longleftrightarrow} e^{-j\Omega n_0}X(e^{j\Omega})$$<br>$$ e^{-j\Omega_0 n}x[n] \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{j(\Omega-\Omega_0})$$</li>
+<li><strong>共轭与共轭对称性</strong><br>因为上课强调过,并且给了作业,就在这里详述一下</li>
+</ol>
+<p>如果有<br>$$ x[n]  \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{j\Omega}) $$<br>则序列的共轭有:<br>$$ x^{\ast}[n]  \stackrel{\mathcal{F}}{\longleftrightarrow} X^{\ast}(e^{-j\Omega}) $$<br>在这个情况下,如果x[n]是一个实序列,则虚部不存在,则有:<br>$$ X(e^{j\Omega}) = X^{\ast}(e^{-j\Omega})  $$<br>所以很容易就可以得到,他的DTFT的实部是偶函数,而他的虚部是奇函数.<br>同理易得,他的模是偶函数,他的相角是奇函数</p>
+<ol start="5">
+<li><p>差分与累加<br>$$ x[n] -x[n-1] \stackrel{\mathcal{F}}{\longleftrightarrow} (1 - e^{-j\Omega})X(e^{j\Omega}) $$<br>实际上,考虑信号:$y[n] = \sum^n_{m=-\infty}x[m]$<br>他的傅里叶变换,可以用上面的式子得出:<br>$$ y[n] = \sum^n_{m=-\infty}x[m] = \frac1{1 - e^{-j\Omega}}X(e^{j\Omega}) + \pi X(e^{j0})\sum^{+\infty}_{-\infty}\delta(\Omega-2\pi k) $$</p>
+</li>
+<li><p>时间反转<br>$$ x[-n]  \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{-j\Omega})  $$</p>
+</li>
+<li><p>时域扩展<br>$$x_{(k)}[n]  \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{jk\Omega}) $$</p>
+</li>
+<li><p>频域微分<br>$$ nx[n]  \stackrel{\mathcal{F}}{\longleftrightarrow} j\frac{X(e^{j\Omega})}{d\Omega} $$ </p>
+</li>
+<li><p>帕斯瓦尔定理<br>$$ \sum^{+\infty}<em>{n=-\infty} |x[n]|^2 = \frac1{2\pi}\int</em>{2\pi}|X(e^{j\Omega})|^2d\Omega$$</p>
+</li>
+<li><p>卷积性质相乘性质</p>
+</li>
+</ol>
+<p>对于$ y[n] = x[n]\ast h[n] =  \sum^{+\infty}_{k=- \infty}x[k]h[n-k] $有:<br>$$ Y(e^{j\Omega}) = X(e^{j\Omega}) H(e^{j\Omega})  $$</p>
+<p>当考虑$y[n] = x_1[n]x_2[n]$时,有:<br>$$ Y(e^{j\Omega}) = \frac1{2\pi}\int_{2\pi}X_1(e^{j\theta})X_2(e^{j(\Omega-\theta)})d\theta$$</p>
+<ol start="11">
+<li>对偶性<br>当然这是一个很重要的性质,但是这里更多的是理解,看书吧</li>
+</ol>
+<h2 id="Z变换"><a href="#Z变换" class="headerlink" title="Z变换"></a>Z变换</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>$$ X(z)  \triangleq \sum^{+\infty}_{n=- \infty} x[n] z^{-n}  $$<br>$$ x[n] = \frac1{2\pi j} \oint X(z)z^{n-1} dz $$</p>
+<h3 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h3><ol>
+<li><p>线性性质<br>$$ ax_1[n] +bx_2[n]  \stackrel{\mathcal{Z}}{\longleftrightarrow} aX_1(z)+bX_2(z)$$</p>
+</li>
+<li><p>时移性质<br>$$ x[n-n_0] \stackrel{\mathcal{Z}}{\longleftrightarrow} z^{-n_0}X(z)$$</p>
+</li>
+<li><p>z域尺度变换<br>$$ z_0^n x[n] \stackrel{\mathcal{Z}}{\longleftrightarrow} X(\frac z{z_0})$$</p>
+</li>
+<li><p>时间反转<br>$$ x[-n]  \stackrel{\mathcal{Z}}{\longleftrightarrow} X(\frac1z)  $$</p>
+</li>
+<li><p>时域扩展<br>$$x_{(k)}[n]  \stackrel{\mathcal{Z}}{\longleftrightarrow} X(z^k) $$</p>
+</li>
+<li><p>共轭<br>如果有<br>$$ x[n]  \stackrel{\mathcal{Z}}{\longleftrightarrow} X(z) $$<br>则序列的共轭有:<br>$$ x^{\ast}[n]  \stackrel{\mathcal{Z}}{\longleftrightarrow} X^{\ast}(z^{\ast}) $$</p>
+</li>
+<li><p>卷积性质</p>
+</li>
+</ol>
+<p>$$ x_1[n]\ast x_2[n] \stackrel{\mathcal{Z}}{\longleftrightarrow} X_1(z)X_2(z) $$<br>8. 频域微分<br>$$ nx[n]  \stackrel{\mathcal{Z}}{\longleftrightarrow} -z\frac{X(z)}{dz} $$<br>9. 初值定理<br>当n&lt;0时,x[n]=0,则<br>$$ x[0] = \lim_{z\rightarrow \infty} X(z) $$<br>10. z变换本身的性质(时间问题,只做简述)<br>a.稳定性:极点在单位圆里面<br>b.因果性:系统函数的收敛域在某个圆的外边,且包括<strong>无限远点</strong></p>
+<h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><p>在上面的基础上,这里就只做简述吧</p>
+<h3 id="系统的特性"><a href="#系统的特性" class="headerlink" title="系统的特性"></a>系统的特性</h3><p>针对线性移不变系统,其中线性有:</p>
+<ol>
+<li>其次性</li>
+<li>叠加性<br>移不动指的是,输入移一位,输出也跟着移一位,不会有什么妖魔鬼怪</li>
+<li>稳定性<br>$$ |h(t)|&lt;\infty $$</li>
+<li>因果性<br>$$ h(t)=0 ,t&lt;0 $$<br>相应用z变换判断的在上头<h3 id="系统的表示"><a href="#系统的表示" class="headerlink" title="系统的表示"></a>系统的表示</h3></li>
+<li>框图</li>
+<li>差分方程</li>
+<li>系统单位脉冲响应h[k]</li>
+<li>系统频率响应$H(j\omega)$</li>
+<li>系统函数H(z)</li>
+</ol>
+<p>相应的转换关系:</p>
+<ol>
+<li><p>差分方程to系统函数:<br>已知差分方程:<br>$$ \sum^n_{i=0} a_iy[k-i] = \sum_{j=0}^m b_jf[k-j] $$<br>对其求z变换得:<br>$$ \sum^n_{i=0} a_iz^{-i}Y_f(z)= \sum_{j=0}^m  b_j z^{-i} F[z] $$<br>所以系统函数为:<br>$$ H(z) = \frac{Y_f(z)}{F(z)}= \frac{\sum_{j=0}^m  b_j z^{-j}}{sum^n_{i=0} a_iz^{-i}}$$</p>
+</li>
+<li><p>系统函数to系统单位脉冲响应h[k]<br>$$H(z) = \frac{Y_f(z)}{F(z)} =\mathcal{Z}{ h[k] } $$</p>
+</li>
+<li><p>系统函数to系统频率响应<br>对<strong>因果系统</strong>,且系统<strong>稳定</strong>时:<br>$$ H(e^{j\Omega}) = H(z)|_{z=e^{j\Omega}} = |H(e^{j\Omega}) | e^{j\varphi (\Omega)} $$</p>
+</li>
+<li><p>系统函数to框图</p>
+<ol>
+<li>先将系统函数化成零极点形式</li>
+<li>按照零点系数和阶数画前馈通路</li>
+<li>按照极点系数和阶数画后馈通路</li>
+</ol>
+</li>
+</ol>
+<h2 id="已知未完善地方"><a href="#已知未完善地方" class="headerlink" title="已知未完善地方"></a>已知未完善地方</h2><ol>
+<li>z变换本身的性质写得不多</li>
+<li>没介绍模拟的奇异信号及其性质</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/02/06/基于FPGA的简易频率计设计/" rel="next" title="基于FPGA的简易频率计设计">
+                  <i class="fa fa-chevron-left"></i> 基于FPGA的简易频率计设计
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/03/17/ZigBee协议简介-一/" rel="prev" title="ZigBee协议简介(一)">
+                  ZigBee协议简介(一) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#信号与系统笔记"><span class="nav-number">1.</span> <span class="nav-text">信号与系统笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列"><span class="nav-number">1.1.</span> <span class="nav-text">序列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列的表示5e-4"><span class="nav-number">1.1.1.</span> <span class="nav-text">序列的表示5e                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列的变换"><span class="nav-number">1.1.2.</span> <span class="nav-text">序列的变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列运算"><span class="nav-number">1.1.3.</span> <span class="nav-text">序列运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个较为重要的序列"><span class="nav-number">1.2.</span> <span class="nav-text">几个较为重要的序列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单位脉冲序列"><span class="nav-number">1.2.1.</span> <span class="nav-text">单位脉冲序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单位阶跃序列"><span class="nav-number">1.2.2.</span> <span class="nav-text">单位阶跃序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩形序列"><span class="nav-number">1.2.3.</span> <span class="nav-text">矩形序列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DTFT-Discrete-time-Fourier-Transform"><span class="nav-number">1.3.</span> <span class="nav-text">DTFT(Discrete-time Fourier Transform)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质"><span class="nav-number">1.3.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z变换"><span class="nav-number">1.4.</span> <span class="nav-text">Z变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统"><span class="nav-number">1.5.</span> <span class="nav-text">系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统的特性"><span class="nav-number">1.5.1.</span> <span class="nav-text">系统的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统的表示"><span class="nav-number">1.5.2.</span> <span class="nav-text">系统的表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已知未完善地方"><span class="nav-number">1.6.</span> <span class="nav-text">已知未完善地方</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

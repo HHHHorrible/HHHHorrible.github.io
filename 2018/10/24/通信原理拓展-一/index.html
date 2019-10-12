@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="通信原理拓展(一)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通信原理拓展(一)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/10/24/通信原理拓展-一/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="通信原理拓展(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/10/24/5bd08432ba77d.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/10/24/5bd0798545815.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/24/5bd07b64e5d50.png">
+<meta property="og:updated_time" content="2019-10-12T06:59:10.797Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通信原理拓展(一)">
+<meta name="twitter:description" content="通信原理拓展(一)">
+<meta name="twitter:image" content="https://i.loli.net/2018/10/24/5bd08432ba77d.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/10/24/通信原理拓展-一/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>通信原理拓展(一) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/10/24/通信原理拓展-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            通信原理拓展(一)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-24 22:50:10" itemprop="dateCreated datePublished" datetime="2018-10-24T22:50:10+08:00">2018-10-24</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:59:10" itemprop="dateModified" datetime="2019-10-12T14:59:10+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/通信原理/" itemprop="url" rel="index">
+                    <span itemprop="name">通信原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">通信原理拓展(一)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="通信原理拓展-一"><a href="#通信原理拓展-一" class="headerlink" title="通信原理拓展(一)"></a>通信原理拓展(一)</h1><p>1024著</p>
+<p>教材用的是《通信原理教程》(第三版)–樊昌信著</p>
+<p>[TOC]</p>
+<p>这篇博客主要是上一篇博客高斯过程里面说的拓展知识.</p>
+<h2 id="概念拓展"><a href="#概念拓展" class="headerlink" title="概念拓展"></a>概念拓展</h2><h3 id="书本推荐"><a href="#书本推荐" class="headerlink" title="书本推荐"></a>书本推荐</h3><p>这里不上干货,给大家推荐一本贼牛逼的书:<br>《深入浅出通信原理》<br><img src="https://i.loli.net/2018/10/24/5bd08432ba77d.jpg" alt="3.jpg"></p>
+<p>重点是：<strong>概念清晰，图贼多！</strong><br><a href="http://product.dangdang.com/25217348.html" target="_blank" rel="noopener">购买链接</a></p>
+<h3 id="论坛推荐"><a href="#论坛推荐" class="headerlink" title="论坛推荐"></a>论坛推荐</h3><p>通信人家园</p>
+<p><a href="http://www.txrjy.com/thread-394879-1-1.html" target="_blank" rel="noopener">论坛地址</a><br>也是上面那个作者的帖子地址</p>
+<h2 id="数学拓展"><a href="#数学拓展" class="headerlink" title="数学拓展"></a>数学拓展</h2><p>这里先说一下,相位延迟与群响应,在上一篇博客有提到,但是顾及到他是数字信号处理的内容,大家还没相应的基础,讲之前要铺垫一些知识,所以,就干脆,咕了!</p>
+<h3 id="中心极限定理"><a href="#中心极限定理" class="headerlink" title="中心极限定理"></a>中心极限定理</h3><p>这个东西我们在概率论是学过的,由于最近机器学习的热潮又兴起了一波概率论的浪潮,这里介绍一下</p>
+<blockquote>
+<p>中心极限定理是概率论中的一组定理。中心极限定理说明，在适当的条件下，<strong>大量相互独立随机变量的均值经适当标准化后依分布收敛于正态分布</strong>。这组定理是数理统计学和误差分析的理论基础，指出了大量随机变量之和近似服从正态分布的条件。</p>
+</blockquote>
+<p>如果你有兴趣,想通俗再拓展一下的话:<br><a href="https://www.zhihu.com/question/22913867" target="_blank" rel="noopener">怎样理解和区分中心极限定理与大数定律？</a></p>
+<p>由于上一篇博客上面说过高斯过程,那么现在要再说一句:<strong>高斯分布，也称正态分布，又称常态分布。</strong><br>由于这个学过,所以这里不讲太多</p>
+<h3 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h3><p>其实就是一个在概率论里面拓展的概念,在概率论和统计学中用于<strong>衡量两(n)个变量的总体误差</strong>。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。<br>假设两个随机变量的数学期望:<br>$$E(X) = \mu \quad E(Y) = \nu$$<br>则协方差定义为:</p>
+<p>$$ \operatorname {cov} (X,Y)=\operatorname {E} ((X-\mu )(Y-\nu ))=\operatorname {E} (X\cdot Y)-\mu \nu $$</p>
+<p>这也是在机器学习所必须的概率论基础的一个重要的概念.</p>
+<p>如果你有兴趣,想通俗地再拓展一下的话:<br><a href="https://www.zhihu.com/question/20852004" target="_blank" rel="noopener">如何通俗易懂地解释「协方差」与「相关系数」的概念？</a></p>
+<h3 id="高斯过程"><a href="#高斯过程" class="headerlink" title="高斯过程"></a>高斯过程</h3><p><strong>书上写得清清楚楚!!!  P39-41</strong></p>
+<p>这里给出一些参考资料用作大家鼓励大家理解他在机器学习中有什么作用.</p>
+<p><a href="https://www.zhihu.com/question/46631426" target="_blank" rel="noopener">如何通俗易懂地介绍 Gaussian Process？</a><br><a href="https://zh.wikipedia.org/wiki/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B" target="_blank" rel="noopener">wiki-高斯过程</a><br><a href="https://zhuanlan.zhihu.com/p/27555501" target="_blank" rel="noopener">什么是Gaussian process? —— 说说高斯过程与高斯分布的关系</a></p>
+<h3 id="贝塞尔函数"><a href="#贝塞尔函数" class="headerlink" title="贝塞尔函数"></a>贝塞尔函数</h3><p>估计大家上学期的圆形波导被他折磨得不似人形,也是一个工程上应用较为常见的函数.</p>
+<p>大家如果在下面看见了可怕的公式,不要慌,其实作为一个解系,<strong>他一早就被归一化地解析出来了,我们只需要简单粗暴地根据公式系数查表,近似就可以了</strong></p>
+<blockquote>
+<p>内容高度参考wiki</p>
+</blockquote>
+<h4 id="贝塞尔方程"><a href="#贝塞尔方程" class="headerlink" title="贝塞尔方程"></a>贝塞尔方程</h4><p>实际上,贝塞尔函数就是一组二阶常微分方程的解,二阶常微分方程(也称为<strong>贝塞尔方程</strong>)长这样:<br>$$ x^2\frac{d^2y}{dx^2}+x\frac{dy}{dx}+(x^2-a^2)y=0 $$<br>这类方程的解是无法用初等函数系统地表示。</p>
+<p>由于贝塞尔方程的性质,我们把得到的解系,贝塞尔函数也称为柱谐函数、圆柱函数或圆柱谐波</p>
+<p>根据解法的不同,我们可以得到不同的解系,所以我们有:</p>
+<h4 id="第一类贝塞尔函数"><a href="#第一类贝塞尔函数" class="headerlink" title="第一类贝塞尔函数"></a>第一类贝塞尔函数</h4><p>第一类α阶贝塞尔函数Jα(x)是贝塞尔方程当α为整数或α非负时的解，须满足在x = 0 时有限。<br>$$ J_a(x) = \sum^{\infty}_{m=0}\frac{(-1)^m}{m!\Gamma(m+a+1)}(\frac x 2)^{2m+a} $$<br>图是这样的,估计大家很熟悉:<br><img src="https://i.loli.net/2018/10/24/5bd0798545815.png" alt="图1"></p>
+<p><strong>如果没有特地说明,一般指贝塞尔函数是指第一类贝塞尔函数</strong></p>
+<h4 id="第二类贝塞尔函数"><a href="#第二类贝塞尔函数" class="headerlink" title="第二类贝塞尔函数"></a>第二类贝塞尔函数</h4><p>第二类贝塞尔函数（Bessel function of the second kind），又称诺伊曼函数（Neumann function），下文中有时会简称为Y函数，记作Yα。第二类贝塞尔函数也许比第一类更为常用。 这种函数通常用Yα(x)表示，它们是贝塞尔方程的另一类解。x = 0 点是第二类贝塞尔函数的（无穷）奇点。<br><strong>Yα(x)又被称为诺依曼函数（Neumann function）</strong>，有时也记作Nα(x)。它和Jα(x)存在如下关系：<br>$$ Y_a(x) = \frac{J_a(x)cos(\alpha \pi ) -J_{-a} (x)}{sin(\alpha\pi)} $$<br> 图是这样的,估计大家也很熟悉:<br><img src="https://i.loli.net/2018/10/24/5bd07b64e5d50.png" alt="2.png"></p>
+<h4 id="第三类贝塞尔函数（汉克尔函数）"><a href="#第三类贝塞尔函数（汉克尔函数）" class="headerlink" title="第三类贝塞尔函数（汉克尔函数）"></a>第三类贝塞尔函数（汉克尔函数）</h4><p>贝塞尔方程的另外一对重要的线性无关解称为汉克尔函数（Hankel functions）Hα(1)(x)和Hα(2)(x)，分别定义为：<br>$$H_{\alpha }^{(1)}(x)=J_{\alpha }(x)+iY_{\alpha }(x)$$<br>$$ H_{\alpha }^{(2)}(x)=J_{\alpha }(x)-iY_{\alpha }(x) $$</p>
+<p>代入前两个的关系得:<br>$$H_{\alpha }^{(1)}(x)={\frac {J_{-\alpha }(x)-e^{-\alpha \pi i}J_{\alpha }(x)}{i\sin(\alpha \pi )}}$$<br>$$H_{\alpha }^{(2)}(x)={\frac {J_{-\alpha }(x)-e^{\alpha \pi i}J_{\alpha }(x)}{-i\sin(\alpha \pi )}} $$</p>
+<h4 id="修正贝塞尔函数"><a href="#修正贝塞尔函数" class="headerlink" title="修正贝塞尔函数"></a>修正贝塞尔函数</h4><p>由于贝塞尔函数在复数域上依然是正确的,所以对应输入x是纯虚数的时候,我们需要引入修正贝塞尔函数,他们被称为第一类修正贝塞尔函数（modified Bessel function of the first kind）和第二类修正贝塞尔函数（modified Bessel function of the second kind），或虚变量的贝塞尔函数（有时还称为双曲型贝塞尔函数）</p>
+<p>这里由于估计没人坚持的了,所以想看的同学可以看看wiki资料.<br><a href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%A1%9E%E5%B0%94%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">贝塞尔函数</a></p>
+<h3 id="莱斯分布"><a href="#莱斯分布" class="headerlink" title="莱斯分布"></a>莱斯分布</h3><p>在概率论与数理统计领域，莱斯分布（Rice distribution或Rician distribution）是一种连续概率分布，以美国科学家斯蒂芬·莱斯（en:Stephen O. Rice）的名字命名，其概率密度函数为：</p>
+<p>$${\displaystyle f(x|v,\sigma )=,} f(x|v,\sigma )=,<br>{\displaystyle {\frac {x}{\sigma ^{2}}}\exp \left({\frac {-(x^{2}+v^{2})}{2\sigma ^{2}}}\right)I_{0}\left({\frac {xv}{\sigma ^{2}}}\right)} $$<br>其中 $ I_{0}(z)$是修正的第一类零阶贝塞尔函数（Bessel function）。当  v=0时，莱斯分布退化为瑞利分布。</p>
+<h3 id="短时傅里叶变换"><a href="#短时傅里叶变换" class="headerlink" title="短时傅里叶变换"></a>短时傅里叶变换</h3><p>详见我的前一篇博客:<br><a href="https://blog.csdn.net/weixin_38071135/article/details/83062330">小波变换(一)</a></p>
+<h3 id="离散余弦变换"><a href="#离散余弦变换" class="headerlink" title="离散余弦变换"></a>离散余弦变换</h3><p>离散余弦变换（英语：discrete cosine transform, DCT）是与傅里叶变换相关的一种变换，类似于离散傅里叶变换，但是只使用实数。离散余弦变换相当于一个长度大概是它两倍的离散傅里叶变换，这个离散傅里叶变换是对一个实偶函数进行的（因为一个实偶函数的傅里叶变换仍然是一个实偶函数），在有些变形里面需要将输入或者输出的位置移动半个单位（DCT有8种标准类型，其中4种是常见的）。</p>
+<p>$$ F(\mu,\nu) = \frac1{\sqrt{NM}} \sum^{N-1}{x=0}\sum^{M-1}{y=0}f(x,y)e^{-\frac{2\pi i}N \mu x} e^{-\frac{2\pi i}M \mu y}  $$</p>
+<p>离散余弦变换介绍也是有目的的,因为其一般用作cv的有损图像压缩,所以你上google查的一般是二维的DCT</p>
+<p>至于为什么把他用来压缩呢?因为他和小波一样,具有比较强的能量集中特性,数学一点就是,变换出来的系数有效成分一般集中在某几个谐波,具有稀疏的特性.</p>
+<p>进一步了解可以看看:<br><a href="https://zhuanlan.zhihu.com/p/33845296" target="_blank" rel="noopener">概述·离散余弦变换（DCT）及其实现过程</a><br><a href="https://blog.csdn.net/newchenxf/article/details/51719597">JPEG压缩原理与DCT离散余弦变换</a></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>由于最近实习加上挑战杯加上专心研究,所以博客估计以后会更新得有点慢.大家谅解一下吧…</p>
+<p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你想请我吃个南五的话</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/10/18/通信原理教程chapter3-模拟调制系统-高频电子线路/" rel="next" title="通信原理chapter3-模拟调制系统+高频电子线路">
+                  <i class="fa fa-chevron-left"></i> 通信原理chapter3-模拟调制系统+高频电子线路
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/11/11/通信原理教程chapter4/" rel="prev" title="通信原理教程chapter4">
+                  通信原理教程chapter4 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通信原理拓展-一"><span class="nav-number">1.</span> <span class="nav-text">通信原理拓展(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念拓展"><span class="nav-number">1.1.</span> <span class="nav-text">概念拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#书本推荐"><span class="nav-number">1.1.1.</span> <span class="nav-text">书本推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#论坛推荐"><span class="nav-number">1.1.2.</span> <span class="nav-text">论坛推荐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学拓展"><span class="nav-number">1.2.</span> <span class="nav-text">数学拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中心极限定理"><span class="nav-number">1.2.1.</span> <span class="nav-text">中心极限定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协方差"><span class="nav-number">1.2.2.</span> <span class="nav-text">协方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯过程"><span class="nav-number">1.2.3.</span> <span class="nav-text">高斯过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝塞尔函数"><span class="nav-number">1.2.4.</span> <span class="nav-text">贝塞尔函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贝塞尔方程"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">贝塞尔方程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第一类贝塞尔函数"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">第一类贝塞尔函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二类贝塞尔函数"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">第二类贝塞尔函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三类贝塞尔函数（汉克尔函数）"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">第三类贝塞尔函数（汉克尔函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修正贝塞尔函数"><span class="nav-number">1.2.4.5.</span> <span class="nav-text">修正贝塞尔函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#莱斯分布"><span class="nav-number">1.2.5.</span> <span class="nav-text">莱斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#短时傅里叶变换"><span class="nav-number">1.2.6.</span> <span class="nav-text">短时傅里叶变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离散余弦变换"><span class="nav-number">1.2.7.</span> <span class="nav-text">离散余弦变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.3.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

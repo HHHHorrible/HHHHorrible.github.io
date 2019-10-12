@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="-– layout: post title:  “hspice for linux的命令行” description: 对Hspice的一个介绍 date:   2018-03-02 23:00:49 categories: HSPICE -– HSPICE for Linux 命令行用法@(study)[大学生活, markdown_study, LaTex_study, English_stu">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="何伟宝的后花园">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/10/12/HSPICE-for-Linux-命令行用法/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="-– layout: post title:  “hspice for linux的命令行” description: 对Hspice的一个介绍 date:   2018-03-02 23:00:49 categories: HSPICE -– HSPICE for Linux 命令行用法@(study)[大学生活, markdown_study, LaTex_study, English_stu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-11T07:45:08.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="何伟宝的后花园">
+<meta name="twitter:description" content="-– layout: post title:  “hspice for linux的命令行” description: 对Hspice的一个介绍 date:   2018-03-02 23:00:49 categories: HSPICE -– HSPICE for Linux 命令行用法@(study)[大学生活, markdown_study, LaTex_study, English_stu">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/10/12/HSPICE-for-Linux-命令行用法/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title> | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/10/12/HSPICE-for-Linux-命令行用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-12 15:26:52" itemprop="dateCreated datePublished" datetime="2019-10-12T15:26:52+08:00">2019-10-12</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-11 15:45:08" itemprop="dateModified" datetime="2019-10-11T15:45:08+08:00">2019-10-11</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>-–</p>
+<p>layout: post</p>
+<p>title:  “hspice for linux的命令行”</p>
+<p>description: 对Hspice的一个介绍</p>
+<p>date:   2018-03-02 23:00:49</p>
+<p>categories: HSPICE</p>
+<p>-–</p>
+<h1 id="HSPICE-for-Linux-命令行用法"><a href="#HSPICE-for-Linux-命令行用法" class="headerlink" title="HSPICE for Linux 命令行用法"></a>HSPICE for Linux 命令行用法</h1><p>@(study)[大学生活, markdown_study, LaTex_study, English_study]<br>由于这网上完全没有hspice for linux的用法介绍啊,</p>
+<p>特意翻译一下hspice  -h里面的内容给大家,因为最近也在搞这个.也会有一些使用时的小发现</p>
+<p>另外学习hspice的话,建议看一下百度文库的hsipce第一到十讲的ppt.</p>
+<p>网盘链接：<a href="https://pan.baidu.com/s/1jJFkMpg" target="_blank" rel="noopener">https://pan.baidu.com/s/1jJFkMpg</a> 密码：B0ah</p>
+<p>转载请通知并注明作者,谢谢</p>
+<p>Hspice的命令行下,大概包含以下几种模式</p>
+<p>1<em>.仿真模式:(最常用</em>)<br>    hspice         [-i] input_file             [-o [output_file]]        [-hpp]         [-mt #num]                        [-mp [#num]]<br>                         [-gz]                             [-n #num]                     [-d]             [-html [html_file]]            [-top]             [-case]<br>                         [-hdl filename]         [-hdlpath pathname] [-vamodel name]</p>
+<pre><code>中括号表示可选,可以看见,hspice一定要输入的东西只有input  file,也就是网表而已.    
+
+选项作用:
+
+                    -i         :指定输入网表文件名字                            (netlist,这个大家熟悉)
+
+                    -o        :指定输出文件        (如果不指定文件名的话,一般是命名为[输入文件字.ic+number]
+
+                    -hpp    :瞬态分析的高性能并行
+
+                    -mt #num :调用多线程和指定进程数(num)  (linux虽然效率上比window高一点,但是对于大型项目来说,还是慢)
+
+                    -mp [#num]:调用分布式处理模式,                    (应该也是指定进程数num)
+
+                    -gz        :在分析结果上生成压缩输出                  (就是帮你把仿真结果顺手压缩成.gz格式)
+
+                    -n    #num:指定输出数据文件修订的编号         (版本号,比如-n 7  就生成   .ic7    避免后一次仿真结果覆盖前一次)
+
+                    -d        :把仿真时的.st文件显示在屏幕上            (运行状态文件  .st ,里面有cpu频率,运行时间等关于机器的信息)
+
+                    -html :指定HTML输出名字[html_file]               (不写默认是[输入名字.html],有详尽的输出信息,不单单是仿真结果)
+
+                    -top       :指定子电路的名字从而有效地去掉:子电路的开始语句和对应的结束语句   
+
+                    -case      :使能区分大小写的仿真状态                    (在26个字母和下划线够用的情况下,不建议使用......)
+
+                    -hdl        :指定一个verilog模块[filename]            (下三为verilog,只用他来开发过fpga,知道意思,不知道怎么解释)
+
+                    -hdlpath    :指定verilog-A文件的搜寻路径           (应该是先找文件,再指定module)
+
+                    -vamodel   : 定义指定为Verilog-A cell name      </code></pre><p>二.分布式模式(我觉得,协同模式适合一点)<br>     根据经验,经过破解的东西,联网会有一点点问题,但是没试验过,应用面也应该很窄(这里(后面的也是)只做直译)</p>
+<pre><code> hspice             [-i] input_file         [-o [output_file]]                 -dp [#num] 
+
+                          [-dpconfig [dp_configuration_file]]                 [-dplocation [NFS|TMP]] [-merge]
+
+选项作用:
+
+                    -dp                    :   同上面的-mp ,但这个是必选项
+
+                    -dpconfig        :    指定分布式模式的配置文件
+
+                    -dplocation     :     指定协同者(dp worker)的输出直接到NFS ,还是先到/tmp   [NFS|TMP]   (NFS:网络文件系统)
+
+                    -merge             :    合并输出文件</code></pre><p>三.测量模式<br>      hspice     -meas         measure_file      -i             wavefile                  -o [output_file]     ((也是直译算了)</p>
+<pre><code>选项作用:               
+
+                  -meas               :重新调用之前的仿真结果去计算一个新的测量值(波形图)</code></pre><p>四.先进的服务器模式<br>       (一般如无意外,新特性都是会用advanced来彰显一下威风的)</p>
+<pre><code> Start the server:                                     hspice -CC [-share inc_file] [-port port_num]
+
+ Begin a simulation:                               hspice -CC input_file [-o output_file] [-port port_num]
+
+ Stop the server:                                      hspice -CC -K [-port port_num]
+
+选项作用:
+
+                   -CC                :    Advanced Client/Server Mode        (自己感受一下)
+
+                   -share           :    在-CC模式下,指定不同电路共享的公共文件名[inc_file]
+
+                   -port             :    指定端口    (不建议使用,一般会报错,建议直接-CC开始,用它帮开的port)
+
+                    -K                  :    关闭客户端/服务器</code></pre><p>五.交互模式<br>            不知道为什么,我的电脑直接-I进入后,输入转义字符(退格空格等)会显示乱码    (仅直译)</p>
+<pre><code>hspice -I [-L command.cmd]
+
+选项作用:
+
+                    -I        :    进入交互模式                                            (是大写的i哈)        
+
+                    -L       :     在命令文件中运行命令                            (先写好要干嘛(command.cmd),再运行)
+
+                    命令集如下(由于过于简单和直观,不翻译,也没用过):
+
+                   list [lineno]              input          edit           ls [directory]             load filename              run            
+                   pwd                           cd directory                timeout &lt;seconds&gt;                         info outflag   
+                   set outflag &lt;true/false&gt;                              save &lt;netlist/command&gt; filename             
+                   quit                           help           
+                   dc [...statement](like in the netlist)                                ac [...statmenet](like in the netlist)      
+
+                   tran [...statmenet](like in the netlist)                             op                                          
+
+                   measure [...statmenet](like in the netlist)                     print &lt;tran/ac/dc&gt; &lt;v/vm/vr/vi/vp/vdb&gt;</code></pre><p>六.帮助模式<br>    还行的帮助模式,不过还是觉得太繁杂了,     </p>
+<pre><code>hspice [-h] [-doc] [-help] [-v]
+
+ 选项作用:
+
+                    -h             :    输出这条命令行帮助信息(也就是本文的main)
+
+                    -doc         :    提供对PDF文档集用户手册的访问(超链接打不开,去文件系统找,吓我一跳,留作悬疑)
+
+                    -help        :    打开可搜索的命令和选项浏览器帮助系统(带index的详细使用手册,纯英,但墙裂推荐)
+
+                    -v              :    输出版本号
+
+
+
+
+
+           不写不知道,一写吓一跳,原来hspice还有这些功能.希望大家能得到帮助啦.希望大家把重点放在仿真模式上,那些乱七八糟的,有空再去玩玩吧,也欢迎和作者联系.
+
+                                                                                                                     本博客为本人原创作品,任何机构和个人转载请注明作品来源</code></pre><p>​                        </p>
+<p>​               </p>
+<p>​     </p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/11/hello-world/" rel="next" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/12/template/" rel="prev" title="       ">
+                          <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HSPICE-for-Linux-命令行用法"><span class="nav-number">1.</span> <span class="nav-text">HSPICE for Linux 命令行用法</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="正则表达式入门">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式入门">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/08/28/正则表达式入门/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="正则表达式入门">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/08/23/5b7db90fb62c9.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/27/5b8402c7875dc.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/23/5b7dc16d40536.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/27/5b8418b066a1f.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/27/5b841f46901ed.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/28/5b8424a8cdbb6.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/28/5b842b7fda901.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/28/5b842bfdb7aac.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/28/5b842a4540290.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/28/5b842aaf0a902.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/08/28/5b842e7e6f7aa.jpg">
+<meta property="og:updated_time" content="2019-10-12T06:29:48.491Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式入门">
+<meta name="twitter:description" content="正则表达式入门">
+<meta name="twitter:image" content="https://i.loli.net/2018/08/23/5b7db90fb62c9.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/08/28/正则表达式入门/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>正则表达式入门 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/08/28/正则表达式入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            正则表达式入门
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-28 01:13:14" itemprop="dateCreated datePublished" datetime="2018-08-28T01:13:14+08:00">2018-08-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:29:48" itemprop="dateModified" datetime="2019-10-12T14:29:48+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC-LIFE/" itemprop="url" rel="index">
+                    <span itemprop="name">MISC LIFE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">正则表达式入门</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>#正则表达式入门<br>@(study)[Maxe, markdown_study, LaTex_study]<br>花了一点时间看了一下想看很久的正则,水篇小blog</p>
+<p>[TOC]</p>
+<h2 id="正则神器"><a href="#正则神器" class="headerlink" title="正则神器"></a>正则神器</h2><p>首先来介绍一个神器,window下面有一款正则神器RegexBuddy<br><a href="https://pan.baidu.com/s/1SIh7gK0V7puUAJWDDvZTmA" target="_blank" rel="noopener">密码：fbs0</a><br>常用功能大概有:</p>
+<ol>
+<li>可以选定特定编程语言的正则表达式(不同语言对正则表达式的支持稍有差异)</li>
+<li>转换不同语言的正则(比如c#转成python3.4)</li>
+<li>实时验证正则表达式</li>
+<li>直接生成特定语言的调用正则代码</li>
+<li>大量正则表达式实例 </li>
+<li>记住历史正则表达式<br><img src="https://i.loli.net/2018/08/23/5b7db90fb62c9.jpg" alt="RegexBuddy"><br>天命圈已经画出来了,自己探索一下吧.   ALT+F1 可以看所有支持的语言(版本)</li>
+</ol>
+<h2 id="正则表达式是什么鬼东西"><a href="#正则表达式是什么鬼东西" class="headerlink" title="正则表达式是什么鬼东西?"></a>正则表达式是什么鬼东西?</h2><blockquote>
+<p>正则表达式（英语：Regular Expression，在代码中常简写为regex、regexp或RE），又称正规表示式、正規表示法、正規運算式、規則運算式、常規表示法，是计算机科学的一个概念。正则表达式使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器裡，正則表达式通常被用来检索、替换那些符合某个模式的文本。  –wiki</p>
+</blockquote>
+<blockquote>
+<p>正则表达式，又称规则表达式。（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本。   –某度</p>
+</blockquote>
+<h2 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h2><p>学习正则其实很简单,无非就是学习<strong>元字符</strong>和他们的<strong>相互关系</strong></p>
+<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>元字符包括五种字符:普通字符,标准字符,特殊字符,限定字符(又叫量词),定位字符(也叫边界字符)</p>
+<p>因为特殊字符的用途很广泛,分组间也很独立,所以我会在介绍其它字符的同时一点点地讲讲特殊字符,到最后汇总一下便好了.</p>
+<h3 id="普通字符"><a href="#普通字符" class="headerlink" title="普通字符"></a>普通字符</h3><p>包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号(包括汉字)<br>除了直接写之外,还可以用范围输入,比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[a-z]	[A-Z]	[<span class="number">0</span><span class="number">-9</span>]</span><br></pre></td></tr></table></figure>
+
+<p>比方说我们有这样一个正则(默认Regex后面的为正则)</p>
+<blockquote>
+<p>regex=Hello World </p>
+</blockquote>
+<p>就会有这样的匹配效果<br><img src="https://i.loli.net/2018/08/27/5b8402c7875dc.jpg" alt="helloworld"><br>根据例子来谈谈正则里面的一些规矩</p>
+<h3 id="贪婪模式和非贪婪模式"><a href="#贪婪模式和非贪婪模式" class="headerlink" title="贪婪模式和非贪婪模式"></a>贪婪模式和非贪婪模式</h3><ul>
+<li><p>贪婪模式，就是在整个表达式匹配成功的前提下，尽可能多的匹配，也就是所谓的“贪婪”，通俗点讲，就是看到想要的，有多少就捡多少，除非再也没有想要的了。</p>
+</li>
+<li><p>非贪婪模式，就是在整个表达式匹配成功的前提下，尽可能少的匹配，也就是所谓的“非贪婪”，通俗点讲，就是找到一个想要的捡起来就行了，至于还有没有没捡的就不管了。</p>
+</li>
+</ul>
+<p>正则默认是<strong>贪婪模式</strong> ,那怎么才能进入非贪婪模式呢?<br>但要是我想皮一下,一个字符我就想让他”贪婪”个3次,或者是就匹配几次以上,又或者是几次到几次,又要怎么实现了?</p>
+<h3 id="限定字符"><a href="#限定字符" class="headerlink" title="限定字符"></a>限定字符</h3><p>这个时候就要介绍一下限定字符了,这又称特殊字符,又称限定符,又称量词,·······</p>
+<p>万变不离其宗,先来看看他有哪些东西:<br>| 字符        |    含义 |<br>| :——–:  | :——–:|<br>| *          | 匹配前面的子表达式零次或多次 |<br>| +            | 匹配前面的子表达式一次或多次 |<br>| ?          | 匹配前面的子表达式零次或一次 |<br>| {n}        | 匹配确定的 n 次 |<br>| {n,}        | 至少匹配 n 次|<br>| {n,m}        | 最少匹配 n 次且最多匹配 m 次 | </p>
+<p>以上n,m为非负整数,且n &lt;= m.<br>这里的*和+都是贪婪模式,只有?是非贪婪模式,整体是否开启贪婪模式可以由编程决定.</p>
+<ul>
+<li>? 问号表示某个模式出现0次或1次，等同于{0，1}。</li>
+<li>* 星号表示某个模式出现0次或多次，等同于{0,}。</li>
+<li>+ 加号表示某个模式出现1次或多次，等同于{1,}。</li>
+</ul>
+<p>?的定义要记一下,记一下,记一下.埋个蛋</p>
+<p>至于为什么可以叫成量词呢?</p>
+<h3 id="标准字符"><a href="#标准字符" class="headerlink" title="标准字符"></a>标准字符</h3><p>标准字符其实就是将普通字符分类,所以大多能被等效<br><img src="https://i.loli.net/2018/08/23/5b7dc16d40536.jpg" alt="标准字符"><br>虽然很多,但是目前我们只要记住\d和\w就完事了.</p>
+<p>可以看到正则表达式的第一个取反的操作:<strong>改成大写</strong></p>
+<p>可以看到标准字符里面有很多都是<strong>一个</strong>了吗?这就是量词(限定字符)发挥作用的时候了.</p>
+<p>比如说匹配4位数字,我们可以这样写:</p>
+<blockquote>
+<p>方法一:Regex = /d/d/d/d<br>方法二:Regex = /d{4}<br>方法三:Regex = /d/d{3}</p>
+</blockquote>
+<p>注意方法三,并不是2乘3匹配6个,因为<strong>量词只对前一个字符起作用</strong></p>
+<h3 id="中期产品经理需求"><a href="#中期产品经理需求" class="headerlink" title="中期产品经理需求"></a>中期产品经理需求</h3><blockquote>
+<p>需求:检验6位中奖用户提交的6注6合彩是否正确 (以随机数个空格隔开)</p>
+</blockquote>
+<p>分析:</p>
+<ol>
+<li>虽说是6位用户,但是只要检验一个人的就可以了</li>
+<li>每个数字有6位</li>
+<li>有随机个空格</li>
+<li>这里不考虑六合彩的规则</li>
+</ol>
+<blockquote>
+<p>答案:Regex=^\d{6}\s<em>\d{6}\s</em>\d{6}\s<em>\d{6}\s</em>\d{6}\s*\d{6}<br><img src="https://i.loli.net/2018/08/27/5b8418b066a1f.jpg" alt="3"></p>
+</blockquote>
+<p>你可能会说:<strong>妈耶,你超纲了,’ ^ ‘是什么鬼?</strong></p>
+<blockquote>
+<p>这个需求很简单<br>怎么实现我不管<br>明天上线</p>
+</blockquote>
+<p>还有,检验完之后不提取的吗?</p>
+<h3 id="定位字符"><a href="#定位字符" class="headerlink" title="定位字符"></a>定位字符</h3><p>注意!<br>定位字符是<strong>零宽的</strong><br>毕竟他是用来标记,这里是开头,这里是结尾,这里是边界等这些信息的,标记匹配的<strong>不是字符</strong>而是符合某种条件的位置，所以定位字符是“零宽的”。<br>| 字符        |    含义 |<br>| :——–:  | :——–:|<br>| ^          | 匹配开头 |<br>| $            | 匹配结尾 |<br>| \b          | 匹配一个单词边界 | </p>
+<p>\b的单词边界指的是:<strong>前面的字符和后面的字符不全是\w</strong><br>比方说:</p>
+<blockquote>
+<p>Regex = IPHONE\b<br><img src="https://i.loli.net/2018/08/27/5b841f46901ed.jpg" alt="4"></p>
+</blockquote>
+<p>分析一下:因为 \b的左边是E,是一个\w字符,\b的单词边界指的是:<strong>前面的字符和后面的字符不全是\w</strong>,也就是说,只有在\b右边的字符不是\w的时候能被匹配,IPHONE1前面是E,后面是1,都是\w字符,所以不是单词边界.</p>
+<h3 id="选择符和分组"><a href="#选择符和分组" class="headerlink" title="选择符和分组"></a>选择符和分组</h3><p>这里开始介绍括号了,稍稍有点难度罢了.复制一下别人家的东西:<br><img src="https://i.loli.net/2018/08/28/5b8424a8cdbb6.jpg" alt="5"></p>
+<p>regex=x|y，匹配字符x或y。( )表示捕获组，( )的作用如下：</p>
+<ol>
+<li><p>括号中的表达式可以作为整体被修饰，用来表示匹配括号中表达式的次数，regex=(abc){2,3}，可以匹配连续的2个或3个abc</p>
+</li>
+<li><p>括号中的表达式匹配到的内容会存储起来，并<strong>获取到括号中表达式匹配到的内容</strong></p>
+</li>
+</ol>
+<p>划重点了,正则表达式所获取到的东西是括号中表达式匹配到的内容,由于正则存在着贪婪模式,所以返回的是一个array/list/group/map······</p>
+<p>每一个括号按照左括号的顺序自动编号,也是程序返回的编号.不仅决定了程序返回的编号,同时也可以通过<strong>反向引用(后向引用)</strong>来将获取到的组在匹配一次.但是这对入门就不太友好了,可以参考参考资料.</p>
+<p>(?:pattern)表示非捕获组，匹配括号中表达式匹配到的内容，但是不进行存储匹配到的内容。这在使用 “或” 字符?(|)?来组合一个正则的各个部分是很有用的。</p>
+<p>例如：匹配字符“story”或者“stories”，regex=stor(?:y|ies)就是一个比 regex=story|stories更简略的表达式。</p>
+<h3 id="预查"><a href="#预查" class="headerlink" title="预查"></a>预查</h3><p>又叫预搜索，又叫零宽断言，又叫环视,也是零宽的.相当于c语言里面的if()里面的(),也就是逻辑判别.<br>放个简单版的图:<br><img src="https://i.loli.net/2018/08/28/5b842b7fda901.png" alt="8"><br>字多一点的:<br><img src="https://i.loli.net/2018/08/28/5b842bfdb7aac.jpg" alt="9"></p>
+<h3 id="备考周产品经理需求"><a href="#备考周产品经理需求" class="headerlink" title="备考周产品经理需求"></a>备考周产品经理需求</h3><blockquote>
+<p>需求:通过一段英文探测男/女朋友爱不爱我 ,爱的话要求返回”want “</p>
+</blockquote>
+<p>分析:</p>
+<ol>
+<li>产品经理傻了</li>
+<li>假设英文是”I want XX”</li>
+<li>如果是”XX=you”的话表明爱</li>
+<li>如果是”XX=else”的话表明渣男/女</li>
+<li>“XX=jingjing”除外</li>
+</ol>
+<blockquote>
+<p>答案:Regex = want (?=you|jingjing)<br><img src="https://i.loli.net/2018/08/28/5b842a4540290.jpg" alt="6"><br><img src="https://i.loli.net/2018/08/28/5b842aaf0a902.jpg" alt="7"></p>
+</blockquote>
+<h3 id="自定义字符集合"><a href="#自定义字符集合" class="headerlink" title="自定义字符集合"></a>自定义字符集合</h3><p>方括号[ ]表示字符集合，即[ ]表示自定义集合，用[ ]可以匹配方括号里的<strong>任意</strong>一个字符。<strong>没有顺序没有顺序没有顺序</strong><br>所以你可以这样写:<br>[1-9a-zA-z]<br>[A-z1-9a-z]<br>[a-zA-z1-9]都是同一个意思,识别<strong>任意一个</strong>字母或者数字</p>
+<p>在自定义字符里面,只有小尖角”^”,中折号”-“和标准字符外,<strong>其它特殊符号皆失去特殊意义!</strong></p>
+<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><p>可见参考资料<br>之前也介绍得7788了,这里就放张常用的图.特殊字符唯一一个和其它字符不一样的一点就是:<strong>他很特殊</strong>………..<br><img src="https://i.loli.net/2018/08/28/5b842e7e6f7aa.jpg" alt="10"></p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="电话号码的正则"><a href="#电话号码的正则" class="headerlink" title="电话号码的正则"></a>电话号码的正则</h3><p>电话号码由数字和“-”组成</p>
+<ol>
+<li>如果包含区号，那么区号为三位或四位，首位是0</li>
+<li>区号用“-”和其他数字分割</li>
+<li>除了区号，电话号码为7到8位</li>
+<li>手机号码为11位</li>
+<li>11位手机号码的前2位为“13”，“14”，“15”，“17”，“18”<h3 id="身份证号码的正则"><a href="#身份证号码的正则" class="headerlink" title="身份证号码的正则"></a>身份证号码的正则</h3></li>
+<li>长度：15位或者18位</li>
+<li>如果是15位，则都是数字</li>
+<li>如果是18位，最后一位可能为数字或字母X</li>
+</ol>
+<h3 id="电子邮箱的正则"><a href="#电子邮箱的正则" class="headerlink" title="电子邮箱的正则"></a>电子邮箱的正则</h3><ol>
+<li>邮箱格式：用户名@网址.域名</li>
+<li>用户名：字母、数字、下划线组成</li>
+<li>网址：字母、数字</li>
+<li>域名：2-4位字母组成，1-2个域名</li>
+<li>不区分大小写</li>
+</ol>
+<h3 id="IP地址的正则"><a href="#IP地址的正则" class="headerlink" title="IP地址的正则"></a>IP地址的正则</h3><p>IP地址的格式：（1<del>255）.（0</del>255）.（0<del>255）.（0</del>255）</p>
+<h3 id="日期格式的正则"><a href="#日期格式的正则" class="headerlink" title="日期格式的正则"></a>日期格式的正则</h3><p>日期格式：yyyy-mm-dd</p>
+<p>这些题目摘自第二篇参考资料,可惜的是他的正则大部分是考虑不全面的….会另开一个正则例子来解答这些练习题和再补充一些常用正则</p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><ol>
+<li>正则表达式是个好东西,但是学会之后应用之前一定要查查自己熟悉的语言对正则表达式的支持到那种程度.不同语言的支持有时候差异还蛮大的</li>
+<li>正则需要多练,多练,多练.</li>
+<li>上面写的都是应用级的东西而已,如想仔细了解正则表达式,请看参考资料</li>
+</ol>
+<hr>
+<p>参考资料:<br>参考资料有些的例子是错的,又或者是考虑不完全的,大家斟酌看看<br><a href="http://www.runoob.com/regexp/regexp-syntax.html" target="_blank" rel="noopener">正则表达式 - 语法</a><br><a href="https://gitbook.cn/books/59f8110ef7eb5d44d8327fb0/index.html" target="_blank" rel="noopener">正则表达式从入门到实战_可能打不开…</a><br><a href="https://dailc.github.io/2017/07/06/regularExpressionGreedyAndLazy.html" target="_blank" rel="noopener">【正则表达式系列】贪婪与非贪婪模式</a><br><a href="https://blog.csdn.net/lxcnn/article/details/4756030">正则基础之——贪婪与非贪婪模式</a><br><a href="https://www.cnblogs.com/snandy/p/3650309.html" target="_blank" rel="noopener">正则表达式小括号的多义性</a><br><a href="https://www.cnblogs.com/snandy/p/3662423.html" target="_blank" rel="noopener">正则表达式中括号的多义性</a><br><a href="https://blog.csdn.net/bbc955625132551/article/details/72803630">正则表达式及其常用特殊符号和字符</a><br><a href="http://www.zsythink.net/archives/1952" target="_blank" rel="noopener">分组与后向引用</a><br><a href="https://blog.csdn.net/lxcnn/article/details/4476746">正则基础之——反向引用</a><br><a href="https://blog.csdn.net/raoshihong/article/details/17004641">正则表达式中的反向引用</a><br><a href="https://blog.csdn.net/websites/article/details/19902487">最常用的详细正则表达式大全</a><br><a href="www.baidu.com">不会的话就</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/08/13/ZYNQ入门-三-定时器中断/" rel="next" title="ZYNQ入门(三)-定时器中断">
+                  <i class="fa fa-chevron-left"></i> ZYNQ入门(三)-定时器中断
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/09/04/vhdl入门-一-vhdl的代码结构/" rel="prev" title="vhdl入门(一)-vhdl的代码结构">
+                  vhdl入门(一)-vhdl的代码结构 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则神器"><span class="nav-number">1.</span> <span class="nav-text">正则神器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式是什么鬼东西"><span class="nav-number">2.</span> <span class="nav-text">正则表达式是什么鬼东西?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式语法"><span class="nav-number">3.</span> <span class="nav-text">正则表达式语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元字符"><span class="nav-number">4.</span> <span class="nav-text">元字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通字符"><span class="nav-number">4.1.</span> <span class="nav-text">普通字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贪婪模式和非贪婪模式"><span class="nav-number">4.2.</span> <span class="nav-text">贪婪模式和非贪婪模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限定字符"><span class="nav-number">4.3.</span> <span class="nav-text">限定字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准字符"><span class="nav-number">4.4.</span> <span class="nav-text">标准字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中期产品经理需求"><span class="nav-number">4.5.</span> <span class="nav-text">中期产品经理需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位字符"><span class="nav-number">4.6.</span> <span class="nav-text">定位字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择符和分组"><span class="nav-number">4.7.</span> <span class="nav-text">选择符和分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预查"><span class="nav-number">4.8.</span> <span class="nav-text">预查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备考周产品经理需求"><span class="nav-number">4.9.</span> <span class="nav-text">备考周产品经理需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义字符集合"><span class="nav-number">4.10.</span> <span class="nav-text">自定义字符集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊字符"><span class="nav-number">4.11.</span> <span class="nav-text">特殊字符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习"><span class="nav-number">5.</span> <span class="nav-text">练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电话号码的正则"><span class="nav-number">5.1.</span> <span class="nav-text">电话号码的正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#身份证号码的正则"><span class="nav-number">5.2.</span> <span class="nav-text">身份证号码的正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电子邮箱的正则"><span class="nav-number">5.3.</span> <span class="nav-text">电子邮箱的正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP地址的正则"><span class="nav-number">5.4.</span> <span class="nav-text">IP地址的正则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期格式的正则"><span class="nav-number">5.5.</span> <span class="nav-text">日期格式的正则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后话"><span class="nav-number">6.</span> <span class="nav-text">后话</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

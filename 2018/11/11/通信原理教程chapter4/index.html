@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="通信原理教程chapter4">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通信原理教程chapter4">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/11/11/通信原理教程chapter4/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="通信原理教程chapter4">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be7263be9c21.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/20/5bcb458c8e770.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/10/20/5bcb45a20c03f.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/10/20/5bcb478803595.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/10/20/5bcb4794ec382.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be71da8afe13.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be7228f0e075.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be72368597b8.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be73352f13c0.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be72956d250a.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be72d276c1e0.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be72bcf1ec7a.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be73352f0de8.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be734bdb0aa0.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be7359ec7a05.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/11/5be7359ec7f50.png">
+<meta property="og:updated_time" content="2019-10-12T07:06:33.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通信原理教程chapter4">
+<meta name="twitter:description" content="通信原理教程chapter4">
+<meta name="twitter:image" content="https://i.loli.net/2018/11/11/5be7263be9c21.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/11/11/通信原理教程chapter4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>通信原理教程chapter4 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/11/11/通信原理教程chapter4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            通信原理教程chapter4
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-11 04:06:54" itemprop="dateCreated datePublished" datetime="2018-11-11T04:06:54+08:00">2018-11-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:06:33" itemprop="dateModified" datetime="2019-10-12T15:06:33+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/通信原理/" itemprop="url" rel="index">
+                    <span itemprop="name">通信原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">通信原理教程chapter4</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="通信原理教程chapter4"><a href="#通信原理教程chapter4" class="headerlink" title="通信原理教程chapter4"></a>通信原理教程chapter4</h1><p>感冒+繁忙著</p>
+<p>教材用的是《通信原理教程》(第三版)–樊昌信著</p>
+<p>第四章 模拟信号的数字化</p>
+<p>[toc]</p>
+<hr>
+<p> 模拟信号的数字化(AD转换)</p>
+<p>模电里面也说过,AD转换包括三个基本步骤:<strong>抽样,量化,编码</strong>,前两个在模电和信号与系统里面其实已经讲得7788了,这章的重点在于<strong>基带信号的编码</strong>.还有一些就是带通信号的抽样频率,抽样信号的非均匀量化这两个新一点的东西.</p>
+<p>这里我们顺便帮大家复习一下信号的分类,当初看见这个图的时候,对在写的这篇blog帮助很大.<strong>务必看到每个过程中的信号是连续还是离散的</strong><br><img src="https://i.loli.net/2018/11/11/5be7263be9c21.png" alt="4684"></p>
+<h2 id="抽样"><a href="#抽样" class="headerlink" title="抽样"></a>抽样</h2><h3 id="低通模拟信号的抽样"><a href="#低通模拟信号的抽样" class="headerlink" title="低通模拟信号的抽样"></a>低通模拟信号的抽样</h3><p>就是信号与系统学的抽样定理:<br>$$2f_H \leq f_s$$<br>其中,$f_s$被称为<strong>奈奎斯特(Nyquist)抽样速率</strong>,当$f_s$低于$2f_H$时,重建的信号会产生<strong>混叠失真</strong>.相关的证明可自行翻阅任意一本信号与系统教材.</p>
+<h3 id="带通抽样定理"><a href="#带通抽样定理" class="headerlink" title="带通抽样定理"></a>带通抽样定理</h3><p>当我们的输入信号为一个带通信号时,显然此时的抽样频率应与信号带宽有关,而不是简单粗暴地取上限频率的两倍,这里贴一个小教程:</p>
+<p>先从低频信号开始讲起:<br><img src="https://i.loli.net/2018/10/20/5bcb458c8e770.jpg" alt="1"><br><img src="https://i.loli.net/2018/10/20/5bcb45a20c03f.jpg" alt="2"></p>
+<p>在带通采样定理中,如果要将基带信号无失真重建,我们有(和教材稍稍有不同):<br>$$\frac{2f_H}{m} \leq f_s \leq \frac{2f_L}{m-1} $$</p>
+<p>所以下半部分的教程是:<br><img src="https://i.loli.net/2018/10/20/5bcb478803595.jpg" alt="3"></p>
+<p><img src="https://i.loli.net/2018/10/20/5bcb4794ec382.jpg" alt="4"></p>
+<p>在此基础上我们来推导一下定理和书上写的公式的不同:<br>书上写的是:<br>$$fs = 2B + \frac{2kB}{n} = 2B(1+\frac k n)$$<br>其中B为信号带宽,<br>$$n = \lfloor \frac {f_H}{B} \rfloor   \quad , \quad 0&lt;k&lt;1$$<br>书上考虑的是信号恰好不发生混叠的时候,就是定理两个等号取到的时候,下面分两种情况来证明:</p>
+<ol>
+<li>上限频率是带宽的整数倍$f_H = nB$<br>此时我们已知的条件有:<br>$$f_H = nB \quad ,\quad f_L=(n-1)B$$<br>只需回代定义式即可得:<br>$$f_s = 2B$$</li>
+<li>上限频率不是带宽的整数倍$f_H = nB + kB \quad , \quad 0&lt;k&lt;1$<br>此时我们已知的条件有:<br>$$f_H = nB(1 + \frac k n) \quad ,\quad f_L=f_H -B$$<br>同理带回公式可得:<br>$$ f_s = 2B(1 + \frac k n) $$</li>
+</ol>
+<p>所以我们可以把第一种情况并入到第二种情况,即k=0,所以有:<br>$$ f_s = 2B(1 + \frac k n)  \quad ,\quad  0\leq k &lt;1 $$</p>
+<p>在计算的时候,由于k也是一个变量,所以我们只需要联立:<br>$$\begin{cases}   f_s = 2B(1 + \frac k n)  \ f_H = nB(1+\frac k n) \ n = \lfloor \frac {f_H}{B} \rfloor \end{cases}$$<br>即可算出$f_s$</p>
+<h2 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h2><p>看第一张图,这个时候是讲幅值离散化.</p>
+<h3 id="均匀量化"><a href="#均匀量化" class="headerlink" title="均匀量化"></a>均匀量化</h3><p>这个概念大家应该都懂,这里介绍一下他的量化误差和相应的量噪比</p>
+<p>考虑量化电平的间隔,设取值范围为(a,b),量化电平数为M,则有量化间隔:<br>$$\triangle v = (b-a)/M$$<br>不妨取取值范围为(-a,a),量化电平为M位,考虑其量化误差:<br>$$N_q = E[(s_k - s_q)^2] = \int^a_{-a}f(s_k)ds_k =\sum^M_{i=1}\int^{m_i}_{m_i-1} (s_k - s_q)^2f(s_k)ds_k $$</p>
+<p>其中:<br>$N_q$为量化噪声功率的平均值<br>$s_k$为信号的抽样值,即s(kT)<br>$s_q$为量化信号值,即$s_q(kT)$<br>$f(s_k)$为信号抽样值$s_k$的概率密度<br>$$m_i = -a+i\triangle v \quad , \quad q_i=a+i\triangle v-\frac {\triangle v}2$$<br>不妨往下化简:<br>$$ N_q =\sum^M_{i=1}\int^{m_i}<em>{m_i-1} (s_k - s_q)^2f(s_k)ds_k \=\sum^M</em>{i=1}\int^{m_i}<em>{m</em>{i-1}}(s_k-q_i)^2(\frac1{2a})ds_k<br>\=\sum^M_{i=1}\int^{-a+i\triangle v}<em>{-a+(i-1)\triangle v}(s_k+a-i\triangle v+\frac{\triangle v}2)^2(\frac1{2a})ds_k<br>\ =\sum^M</em>{i=1}(\frac1{2a})(\frac{\triangle v^2}{12})=\frac{M(\triangle v)^3}{24a}$$</p>
+<p>由于$M\triangle v = 2a$,所以有:<br>$$ N_q = \frac{(\triangle v)^2}{12} $$</p>
+<p>另外,信号功率有:<br>$$S = E(s_k^2) = \int^a_{-a}s_k^2f(s_k)ds_k$$<br>代入即可以得到:<br>$$ S = \int^a_{-a} s_k^2(\frac1{2a})ds_k = \frac{M^2}{12}(\triangle v)^2 $$<br>不把他们合起来是为了计算信噪比:<br>$$ S/N_q = M^2 $$<br>$$ (S/N_q)_{dB} = 20\lg M $$</p>
+<p>这里结论需要知道.</p>
+<h3 id="非均匀量化"><a href="#非均匀量化" class="headerlink" title="非均匀量化"></a>非均匀量化</h3><p>显然,在均匀量化中,我们策略并不能很好的保存数据中的细节部分,我们最好做到信号抽样值小的时候,取小的量化间隔,在抽样值大的时候,量化间隔也变大.</p>
+<p>这里由于篇幅的原因就直接上结论了,对应书本P75,我们所需要知道的是,<strong>为了对不同信号强度保持信号量噪比恒定,在理论上要求压缩特性为对数特性</strong></p>
+<p>国际上有两种不同的对数压缩律及其对应的近似算法:</p>
+<ol>
+<li>A压缩律(13折线法),被大陆,欧洲,国际互联时使用</li>
+<li>$\mu$压缩律(15折线法),被北美,日韩等国家和地区使用</li>
+</ol>
+<p>上面的分区会一直看见的.</p>
+<p>下面来讲一下A压缩率和13折线法</p>
+<hr>
+<p>A压缩律是这样子的,相关为什么A压缩率可以使信号量噪比基本保持恒定的证明可以看书上.<br>$$y = \left{ \begin{array} { l l } { \frac { A x } { 1 + \ln A } } &amp; { 0 &lt; x \leqslant \frac { 1 } { A } } \ { \frac { 1 + \ln A x } { 1 + \ln A } } &amp; { \frac { 1 } { A } \leqslant x \leqslant 1 } \end{array} \right.$$<br><img src="https://i.loli.net/2018/11/11/5be71da8afe13.png" alt="1000"><br>图长这样.<br>在我国,<strong>A的值为87.6</strong></p>
+<hr>
+<p>  13折线率是A压缩律的一个近似算法,需要近似的原因很简单,因为A压缩律是一个连续的平滑曲线,所以他是很难用电路的方法表征出来的.<br>      13折线律就是以2为底的指数(0-1)取点来提供非均匀部分,<strong>每个段落之间取均匀量化</strong>.除了第一段和第二段的斜率一样之外,其余的以2为倍数变化.<br>      图长这样<br><img src="https://i.loli.net/2018/11/11/5be7228f0e075.png" alt="2999"></p>
+<p>和A压缩律的比较也在这里,注意看i和y的关系,后面讲到PCM编码的时候会回来这里</p>
+<p><img src="https://i.loli.net/2018/11/11/5be72368597b8.png" alt="3777"></p>
+<p>后面讲到PCM编码的时候会加深这里的理解,别慌.</p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>终于介绍到这里重点了,不过也是很简单的概念而已</p>
+<p>从开篇的第一张图我们就可以知道,编码其实就是将量化出来之后,他在时间上其实是连续的,这个时候我们需要对他编码的话,第一步就是要让他<strong>在时间上离散化</strong>,也就是<strong>抽样</strong>.第二部才是对抽样值进行编码</p>
+<h3 id="脉冲编码调制-PCM"><a href="#脉冲编码调制-PCM" class="headerlink" title="脉冲编码调制(PCM)"></a>脉冲编码调制(PCM)</h3><p>脉冲编码调制PCM(pulse code modulation),其实就是在量化的基础上直接加上抽样而已,用信号与系统的概念来讲就是,拿一个脉冲信号取采样量化信号而已.</p>
+<p>下面看编码方式之前,先有一个概念<br><img src="https://i.loli.net/2018/11/11/5be73352f13c0.png" alt="83214"></p>
+<h4 id="自然二进制码和折叠二进制码"><a href="#自然二进制码和折叠二进制码" class="headerlink" title="自然二进制码和折叠二进制码"></a>自然二进制码和折叠二进制码</h4><p>从实现来说,折叠二进制码其实就是自然二进制码的<strong>反码</strong>,我们可以把最高位看作符号位,将整体减8就可以用上面的方法理解了<br><img src="https://i.loli.net/2018/11/11/5be72956d250a.png" alt="55474"></p>
+<p>从定义上来看的话,其实很简单,他就相当于讲低8段折反,就相当于以7/8为0,向正负边拓展(因为0000和1000都是0,如果将最高位看成符号位的话),可以看出PCM对小信号的较为有利.</p>
+<h4 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h4><p>总的来说是这样的,具体方式见下下图</p>
+<p><img src="https://i.loli.net/2018/11/11/5be72d276c1e0.png" alt="74373"></p>
+<p><img src="https://i.loli.net/2018/11/11/5be72bcf1ec7a.png" alt="64848"></p>
+<p>这里在我们计算模拟值转成PCM的时候就不要翻回去看13折线是怎样的了,我们只要知道13折线是以2位底数选出来的,所以我们只要知道这个值在2的负几次幂之间,+8取小的就是他的段落码了,+8其实是因为前面说的i和y的关系导致的.又因为段内码是均匀量化的,所以我们只需要算一下比例取整就可以了,所以,流程如下:</p>
+<ol>
+<li><p>确定符号位,肉眼可见</p>
+</li>
+<li><p>确定模拟值的在2的负几次幂之间,比如:</p>
+</li>
+</ol>
+<p>$$x\in (2^{-8+M},2^{-8+(M+1)})$$<br>这个时候M就是段落码了(M+1是段落序号,小心)</p>
+<ol start="3">
+<li>对他取比例再量化成4位</li>
+</ol>
+<p>$$ n = [\frac{x-2^{-8+M}}{2^{-8+M}} * 2^4  ]   $$</p>
+<h4 id="量化噪声"><a href="#量化噪声" class="headerlink" title="量化噪声"></a>量化噪声</h4><p>这里不详细讲:<br>$$ S/N_q = 2^{2(B/f_H)} $$</p>
+<h3 id="差分脉冲编码调制DPCM"><a href="#差分脉冲编码调制DPCM" class="headerlink" title="差分脉冲编码调制DPCM"></a>差分脉冲编码调制DPCM</h3><p>差分脉冲编码调制DPCM(Differential PCM)其实就是用前几个的抽样值来线性预测后一个抽样值,由于收发两端的预测算法是一样的,得到的信息是一样的,所以解码出来的东西自然一样.</p>
+<p><img src="https://i.loli.net/2018/11/11/5be73352f0de8.png" alt="969060"></p>
+<p>  但是我觉得这里教材写得不伦不类,主要是预测器没有讲清楚,我总觉得这种用二进制来描述预测的东西总有点不太直观,而且线性预测也太鸡肋了,理论上应是用上自适应算法(那就变成ADPCM了,这里的A是adaptive)才会有理论应用价值.</p>
+<p>基于上面的原因,DPCM和后面的增量调制我都不太详细讲了.就简单介绍一下信噪比算了</p>
+<h4 id="DPCM的量噪比"><a href="#DPCM的量噪比" class="headerlink" title="DPCM的量噪比"></a>DPCM的量噪比</h4><p>$$ S/N_q = \frac{3N(M-1)^2}{8\pi^2}\cdot \frac{f_s^3}{f_0^2f_L} $$</p>
+<h3 id="增量调制"><a href="#增量调制" class="headerlink" title="增量调制"></a>增量调制</h3><p>如果说DPCM是自适应算法的话,其实增量调制就是自适应算法里面的LMS算法,也就是最简单的一个预测算法.</p>
+<p><img src="https://i.loli.net/2018/11/11/5be734bdb0aa0.png" alt="10606"></p>
+<p>相当于把预测的信息量只要1和0来描述你是比我高还是比我低,高我就加一,低我就减一,简单.</p>
+<p><img src="https://i.loli.net/2018/11/11/5be7359ec7a05.png" alt="115957"></p>
+<p>但是实际上会有一个问题就是不能处理非平稳信号,因为突变的频率太快或者幅度太大的话都不会被检测到,又或者根本就跟不上变化.</p>
+<p><img src="https://i.loli.net/2018/11/11/5be7359ec7f50.png" alt="124845"></p>
+<h4 id="增量调制的量噪比"><a href="#增量调制的量噪比" class="headerlink" title="增量调制的量噪比"></a>增量调制的量噪比</h4><p>不作介绍<br>$$ \frac{S_{max}}{N_q} = \frac3{8\pi^2} \cdot \frac{f_s^3}{f_0^2f_L}$$</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这篇博客的前半部分其实很早就写好了,但是后面因为太忙了一直没有写下去,过完这个双11又要开启更加繁忙的科研生活了,所以相应的进度是真的堪忧了哈哈哈哈哈哈哈哈哈哈哈,又或者要寻找一个同学合作才行了.</p>
+<p>本来是想时间太紧,45章合在一起写的.无奈写的时候觉得想讲的东西太多,但是又没有时间.所以没办法,只能把他们分开写了.</p>
+<p>然后这里的公式用了一个神器:mathpix来识别的,不用再自己一个一个敲了,大大节省了时间.</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/10/24/通信原理拓展-一/" rel="next" title="通信原理拓展(一)">
+                  <i class="fa fa-chevron-left"></i> 通信原理拓展(一)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/11/25/LaTex入门-一/" rel="prev" title="LaTex入门(一)">
+                  LaTex入门(一) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通信原理教程chapter4"><span class="nav-number">1.</span> <span class="nav-text">通信原理教程chapter4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#抽样"><span class="nav-number">1.1.</span> <span class="nav-text">抽样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#低通模拟信号的抽样"><span class="nav-number">1.1.1.</span> <span class="nav-text">低通模拟信号的抽样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带通抽样定理"><span class="nav-number">1.1.2.</span> <span class="nav-text">带通抽样定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#量化"><span class="nav-number">1.2.</span> <span class="nav-text">量化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#均匀量化"><span class="nav-number">1.2.1.</span> <span class="nav-text">均匀量化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非均匀量化"><span class="nav-number">1.2.2.</span> <span class="nav-text">非均匀量化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码"><span class="nav-number">1.3.</span> <span class="nav-text">编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#脉冲编码调制-PCM"><span class="nav-number">1.3.1.</span> <span class="nav-text">脉冲编码调制(PCM)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自然二进制码和折叠二进制码"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">自然二进制码和折叠二进制码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编码方式"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">编码方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#量化噪声"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">量化噪声</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#差分脉冲编码调制DPCM"><span class="nav-number">1.3.2.</span> <span class="nav-text">差分脉冲编码调制DPCM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DPCM的量噪比"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">DPCM的量噪比</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增量调制"><span class="nav-number">1.3.3.</span> <span class="nav-text">增量调制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#增量调制的量噪比"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">增量调制的量噪比</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.4.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="在ubuntu上搭建IC数模混合环境">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在ubuntu上搭建IC数模混合环境">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/10/10/在ubuntu上搭建IC数模混合环境/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="在ubuntu上搭建IC数模混合环境">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbcff5a02eba.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd01c165de2.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd03a988636.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd044eb6f3c.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd04c6b4911.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd075ac15ba.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd07249c9fb.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd09b58f799.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd13758e2c6.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd1ade1db37.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd1b1ccd62a.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd1b97a567a.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd1dc06ea74.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/10/5bbd1c7bb6f0a.png">
+<meta property="og:updated_time" content="2019-10-12T06:55:18.875Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在ubuntu上搭建IC数模混合环境">
+<meta name="twitter:description" content="在ubuntu上搭建IC数模混合环境">
+<meta name="twitter:image" content="https://i.loli.net/2018/10/10/5bbcff5a02eba.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/10/10/在ubuntu上搭建IC数模混合环境/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>在ubuntu上搭建IC数模混合环境 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/10/10/在ubuntu上搭建IC数模混合环境/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            在ubuntu上搭建IC数模混合环境
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-10 06:21:30" itemprop="dateCreated datePublished" datetime="2018-10-10T06:21:30+08:00">2018-10-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:55:18" itemprop="dateModified" datetime="2019-10-12T14:55:18+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC-SHELL/" itemprop="url" rel="index">
+                    <span itemprop="name">MISC SHELL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">在ubuntu上搭建IC数模混合环境</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="在ubuntu上搭建IC数模混合环境-0"><a href="#在ubuntu上搭建IC数模混合环境-0" class="headerlink" title="在ubuntu上搭建IC数模混合环境(0)"></a>在ubuntu上搭建IC数模混合环境(0)</h1><p>仅以这篇博客来纪念一下当年因搭环境而掉的头发</p>
+<p>装的环境是cadence全家桶.</p>
+<p>[toc]</p>
+<h2 id="对linux新手的一些搭环境常识补充"><a href="#对linux新手的一些搭环境常识补充" class="headerlink" title="对linux新手的一些搭环境常识补充"></a>对linux新手的一些搭环境常识补充</h2><h3 id="尽信书不如无书"><a href="#尽信书不如无书" class="headerlink" title="尽信书不如无书"></a>尽信书不如无书</h3><p>有一些教程其实作者的linux基础是很差的<del>比如我</del>,所以<strong>不要尽信教程!!!</strong></p>
+<h3 id="没有基础的劝退"><a href="#没有基础的劝退" class="headerlink" title="没有基础的劝退"></a>没有基础的劝退</h3><p>其实如果搭环境没有linux基础,没有对linux文件系统的有最基本的认识,没有对linux包管理,用户组,文件属性有一点了解的话.其实我建议还是现在虚拟机上学学吧,不然很容易心态爆炸,还会失去对linux的热情.</p>
+<p>特别是这个数模混合环境,加上安装包总共<strong>63.5G</strong>,个人PC的话一般不是双系统不会预留这么多空间,如果在虚拟机上跑的话也是极其浪费空间.如果遇坑的话重来太浪费时间了…</p>
+<p>当然,这篇博客也适用于只搭建模拟ic设计环境,总共空间大概<strong>20G</strong>,虚拟机大概可以接受,双系统美滋滋,ic617比ic5141还是有很多比较便利的功能的</p>
+<p>像我这样把windows卸掉的话就无所谓了,但是真的新手的话建议虚拟机,项目组的话可以用我搭好(现在还没)的服务器来进行设计,不建议双系统搞这个,弄不好连电脑就炸了</p>
+<h3 id="更改所有配置之前-先做备份"><a href="#更改所有配置之前-先做备份" class="headerlink" title="更改所有配置之前,先做备份!"></a>更改所有配置之前,<strong>先做备份</strong>!</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp xxx.rc xxx.rc.bk</span><br><span class="line">gedit xxx.rc</span><br></pre></td></tr></table></figure>
+
+<p>特别是,有关于系统的设置的,比如说在/etc里面的所有文件(其他配置文件也一定要备份)</p>
+<h3 id="回车前看看提示"><a href="#回车前看看提示" class="headerlink" title="回车前看看提示"></a>回车前<strong>看看提示</strong></h3><p>虽然可能提示是英文的,也大概看一下他在写什么,<strong>千万不要无脑回车</strong>,不要傻乎乎地别人把你linux内核卸载了都不知道.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm     -rf  /*    <span class="comment">##比如说这个</span></span><br><span class="line">chmod  777  *     <span class="comment">##还有这个</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="看任何教程留意发行版-版本号和几位的系统"><a href="#看任何教程留意发行版-版本号和几位的系统" class="headerlink" title="看任何教程留意发行版,版本号和几位的系统"></a>看任何教程留意<strong>发行版,版本号和几位的系统</strong></h3><p>如果教程和你在用的版本号不匹配,一定要<strong>万分警醒</strong>,你可以参考,但一定不要尽信!<br>比方说ubuntu的包管理工具是<strong>apt</strong>,centos的包管理工具是<strong>yum</strong>.如果你要安装一个软件,你用ubuntu,别人用centos,恰好别人要安装个依赖包:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install libstdc艹</span><br><span class="line"><span class="comment">##这时你用ubuntu的话会报错:</span></span><br><span class="line"></span><br><span class="line">-&gt;Command <span class="string">'yum'</span> not found, but can be installed with:</span><br><span class="line"></span><br><span class="line">-&gt;sudo apt install yum</span><br><span class="line"></span><br><span class="line"><span class="comment">##如果这个时候,你真的在命令行下敲下了:</span></span><br><span class="line">sudo apt install yum</span><br><span class="line"><span class="comment">##那...就准备天天报错吧...</span></span><br></pre></td></tr></table></figure>
+
+<p>还有一个就是有一些包是需要下32位的,因为默认是下载64位的,所以这个时候命令就要改成:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libabcd:i386</span><br></pre></td></tr></table></figure>
+
+<h3 id="尊重linux的用户组概念"><a href="#尊重linux的用户组概念" class="headerlink" title="尊重linux的用户组概念."></a>尊重linux的<strong>用户组</strong>概念.</h3><p>不得不肯定,<strong>一开始</strong>直接用root暴力安装一些东西确实很舒服,但是,我建议这样的话,你可以尝试在<strong>自己的虚拟机上这样做</strong>,反正<strong>迟早会炸的</strong>.当然了,安装在服务器上的<strong>另当别论</strong>,这里只是说对一般用户的平时用的软件的一些小建议.<br><del>所以本文是在个人用户heweibao下安装的</del></p>
+<h3 id="理解环境变量的概念"><a href="#理解环境变量的概念" class="headerlink" title="理解环境变量的概念"></a>理解环境变量的概念</h3><p>在linux下面,<strong>每个用户</strong>在他的<strong>主目录</strong>下面针对每一个命令解释器(通常都是bash啦),都会有一个<strong>环境配置文件</strong>叫做<strong>.bashrc</strong>是个隐藏文件,环境配置文件可以做一下的一些事:</p>
+<ol>
+<li><p>配置特定变量名称的路径(比如打开认证服务器)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LM_LICENSE_FILE=./CADENCE_HOME/license/license.dat</span><br><span class="line"><span class="comment">## . 是当前目录, .. 是上一级目录</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置$PATH,使终端能识别到特定的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##记得包含原有的PATH变量</span></span><br><span class="line">PATH=<span class="variable">$PAHT</span>:&lt;PATH 1&gt;:&lt;PATH 2&gt;:&lt;PATH 3&gt;:--------:&lt; PATH n &gt;</span><br><span class="line"><span class="built_in">export</span> PATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>别名一些命令组合(算是个小脚本吧)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> helloss = sslocal -c /home/heweibao/snap/shadowsocks/config.json &amp;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>这个一般用来准备运行程序前所需的环境<br>临时加载环境变量可以:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">. .bashrc</span><br><span class="line"><span class="comment">##也可以</span></span><br><span class="line"><span class="built_in">source</span> .bashrc</span><br></pre></td></tr></table></figure>
+
+<p>很多人一开始玩linux玩炸的一个原因就是,有一些教程很喜欢动不动就直接更改对<strong>所有用户都有效的环境变量配置文件</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/environment</span><br><span class="line">/etc/profile</span><br><span class="line">/etc/bash.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>还不做备份那种.<br>所以一般<strong>建议</strong>先自己写一个环境变量配置文件,在终端临时加载一下(临时加载之后仅在该终端生效),先看看<strong>有没有达到想要的效果</strong>,再看看<strong>有没有损坏系统环境配置</strong>,最后再加入<strong>用户的环境配置文件里面</strong>.</p>
+<h3 id="如果出错要干啥"><a href="#如果出错要干啥" class="headerlink" title="如果出错要干啥"></a>如果出错要干啥</h3><p>这个比较考验个人的linux基础,但是上面的几点是处理问题的基本原则.</p>
+<p>主要<strong>注意一下看报错信息</strong>是最重要的,不要因为很多时候是英语就原地爆炸,相信我,<strong>不少的报错都是自己的linux基础不好而导致的,还有就是对教程的过分依赖而导致的</strong>真正的玄学部分<del>还是不少的</del></p>
+<p>这里说一个小例子吧,比方说他提示你*<em>缺少了某个依赖包  libXp5.so.6 *</em><br>一般流程是这样的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. sudo apt-get install libXp5</span><br><span class="line"></span><br><span class="line"><span class="comment">##如果提示没有</span></span><br><span class="line">2. google : <span class="built_in">where</span> is libXp5(或者直接贴关键报错信息)</span><br><span class="line"><span class="comment">##如果提示包已被废弃</span></span><br><span class="line">3. 进https://packages.ubuntu.com(或是其他源)直接下下来</span><br><span class="line"></span><br><span class="line">4. 丢进一个/usr/lib 并创建一个软连接</span><br></pre></td></tr></table></figure>
+
+<p>当然了,每一步都可能有不一样的方案去更好地解决,比方说包的版本过高啊,bilibala一堆问题,这得靠积累了.甚至我还试过直接改cadence_ic的源码(为了让他默认首选仿真器是hspice而不是spectre ) <del>当然后面我才知道可以直接设置</del></p>
+<h2 id="cadence各种软件的安装"><a href="#cadence各种软件的安装" class="headerlink" title="cadence各种软件的安装"></a>cadence各种软件的安装</h2><h3 id="EDA版本说明"><a href="#EDA版本说明" class="headerlink" title="EDA版本说明"></a>EDA版本说明</h3><p>先说明一下我的EDA版本</p>
+<blockquote>
+<p>cadence ic 617  //模拟ic环境设计<br>INCISIV141       //数字ic设计<br>MMSIM15        //混合仿真</p>
+</blockquote>
+<p>因为用的软件全是14年以后的,所以,千万不要都装上IC617了,还装一个IUS9.2用来做数字块设计,在环境变量配置中也只有14年之后的软件..</p>
+<ol start="0">
+<li><p>这里因为主要针对实验室的人方便用和为了规避一些规则.<strong>不提供软件包和破解文件</strong>(当然我会给出外链,有找不到的包也可以私信我)</p>
+</li>
+<li><p>用的环境配置的eetop一个大神写的一个bashrc,可以自动连接起cadence家族里面的各个组件(当然要去适配自己的电脑)</p>
+</li>
+<li><p>用的license也是eetop一个大神理解了license之后写出来的破解文件,用了他的license可以一个license破解<strong>所有</strong>cadence软件的<strong>所有</strong>feature,并且加其他的feature也十分方便.</p>
+</li>
+<li><p>用的patch也是eetop一个大神所说的”测试证明是<strong>最佳的patch</strong>“</p>
+</li>
+<li><p>下载见参考资料.</p>
+</li>
+</ol>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>提前说明:</p>
+<ol>
+<li>所有的安装配置操作,使用绝对路径(还不要带中文,以防万一)</li>
+<li>如果想用用户组安装的话,尽量运行命令时避免用sudo(依赖包安装什么的除外)</li>
+</ol>
+<p>这个安装异常的简单,因为cadence专门写了一个<strong>InstallScape</strong>来辅助安装,在此之前你要做的是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">##解决依赖问题</span></span><br><span class="line">sudo apt-get install ksh         <span class="comment">##安装ksh的shell</span></span><br><span class="line">sudo apt-get install csh         <span class="comment">##安装csh的shell</span></span><br><span class="line">sudo apt-get install openjdk-8-jre openjdk-8-jdk    <span class="comment">##安装openjdk jre等</span></span><br><span class="line">sudo apt-get install xterm       <span class="comment">##安装xterm终端模拟器</span></span><br><span class="line">sudo apt-get install libncursesw5-dev    <span class="comment">##安装libncursesw动态链接库</span></span><br><span class="line">sudo apt-get install libxtst6:i386       </span><br><span class="line">sudo apt-get install libxi6:i386</span><br><span class="line"><span class="comment">##依赖关系是从别人的博客照过来的(可能有错,所以自己执生啦),openjdk一般有安装的,应该不用专门再去搞</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##基本操作</span></span><br><span class="line">mkdir ~/cadence</span><br><span class="line">mkdir ~/cadence/IScape</span><br><span class="line"><span class="comment">##把你下的Scape123456789lnx86.t.Z丢进~/cadence/IScape </span></span><br><span class="line">mv   xxxxxx/xxxx/xxx/Scape123456789lnx86.t.Z ~/cadence/IScape</span><br><span class="line">chmod 755 Scape123456789lnx86.t.Z</span><br><span class="line"><span class="comment">##解压</span></span><br><span class="line">zcat IScape04.23-s010lnx86.t.Z | tar -xvf-</span><br><span class="line"><span class="comment">##进入IScape</span></span><br><span class="line"><span class="built_in">cd</span> ~/cadence/IScape/iscape/bin</span><br><span class="line">sh iscape.sh 或者 ./iscape.sh</span><br></pre></td></tr></table></figure>
+
+<p>毫无意外就可以进入InstallScape了</p>
+<p><img src="https://i.loli.net/2018/10/10/5bbcff5a02eba.png" alt="init"></p>
+<p>选择~/Preferences/Directories<br><img src="https://i.loli.net/2018/10/10/5bbd01c165de2.png" alt="second"><br>这里主要修改的是安装路径,比如我是安装在自己用户目录下的,Install Directory就写(select好一点其实)<br><strong>/home/username/cadence</strong><br>然后点ok就完事了<br>接下来就是简单的安装了:</p>
+<ol>
+<li>选择Local directory/Media install/(那个光盘的图标)<br><img src="https://i.loli.net/2018/10/10/5bbd03a988636.png" alt="3"></li>
+<li>输入安装包的路径,建议先装INCISIVE(如果只装模拟环境的,直接装ic617就行了,不用安装INCISIVE141)</li>
+<li>确认软件名称版本<br><img src="https://i.loli.net/2018/10/10/5bbd044eb6f3c.png" alt="4"></li>
+<li>点击安装全选(建议所有都是,反正装多不吃亏,装少可能吃苦头)</li>
+<li>确定路径<br><img src="https://i.loli.net/2018/10/10/5bbd04c6b4911.png" alt="5"></li>
+<li>点start,冲鸭(因为我已经装好了,所以就没放这个图了)</li>
+<li>进入组件配置时间<br>这里的坑很多,但是有一个比较粗暴的处理方法</li>
+</ol>
+<blockquote>
+<p>除了oa的路径设置选n之外,其他回车就行</p>
+</blockquote>
+<p>当然,你最好还是看看他要你配置啥玩意…</p>
+<p>关于这个可以看看这位<a href="http://bbs.eetop.cn/thread-479940-1-1.html" target="_blank" rel="noopener">大神的博客</a></p>
+<ol start="8">
+<li><p>对于数模混合环境来说<br>在安装完INCISIVE141之后,再安装ic617的时候会有一个配置:<br><img src="https://i.loli.net/2018/10/10/5bbd075ac15ba.png" alt="888"><br><img src="https://i.loli.net/2018/10/10/5bbd07249c9fb.png" alt="999"><br>这样就可以实现连接ic617和INCISIVE,如果先安装ic617的时候这里直接退出就行了,后面再回来用IScape来reconfigure就行</p>
+</li>
+<li><p>同样的方法继续安装其他的软件就行</p>
+</li>
+</ol>
+<h3 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h3><ol>
+<li>解压patch文件到~/cadence下面(其实你解压到哪里都一样)<br><img src="https://i.loli.net/2018/10/10/5bbd09b58f799.png" alt="6"></li>
+<li>在此目录下打开终端<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##提权</span></span><br><span class="line">chmod 777 cadence.pat cadence_patch.sh sfk </span><br><span class="line"><span class="comment">##一个一个patch(一个一个来!)</span></span><br><span class="line">./cadence_patch.sh /home/heweibao/cadence/IC617</span><br><span class="line">./cadence_patch.sh /home/heweibao/cadence/INCISIVE141</span><br><span class="line">./cadence_patch.sh /home/heweibao/cadence/MMSIM151</span><br><span class="line"><span class="comment">##如果出现少量的error和warning是可以接受的,提示有一些文件不存在也是可以接受的,重点的一定要看见有changed</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="license"><a href="#license" class="headerlink" title="license"></a>license</h3><ol>
+<li>mkdir ~/cadence/license</li>
+<li>切到window下(如果是纯ubuntu环境的话可以装个virtual box,然后装一个window7的虚拟机)</li>
+<li>用大神的软件生成license.dat ,然后放回~/cadence/license/license.dat里面<br>注意:<br>生成license时需要两个东西,1是主机名 2是网卡号,可以在终端下这样来查:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##获取主机名</span></span><br><span class="line">hostname</span><br><span class="line"></span><br><span class="line"><span class="comment">##获取网卡号</span></span><br><span class="line">ifconfig</span><br><span class="line">找到网卡的ether那里的一串数字,把冒号去掉就ok了</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="配置环境变量文件"><a href="#配置环境变量文件" class="headerlink" title="配置环境变量文件"></a>配置环境变量文件</h3><p>   我的建议是,新建一个Project_cadence文件夹,然后把写好的环境配置文件放进去,每次启动cadence的时候去那里新建一个终端,加载环境变量,再启动cadence.</p>
+<p>如果想快捷启动的话可以自己写一个脚本(其实我已经写好了,后面会给出)</p>
+<p>下面提到的calibre是用来画模拟版图的,这篇教程没涉及,但是改了就对了</p>
+<ol>
+<li>下载大神的那个环境变量配置模板</li>
+<li>主要更改这几个东西:<ol>
+<li>@48行:  export CADHOME=/home/heweibao/cadence (就换到安装路径)</li>
+<li>@104行:export CDS_LIC_FILE=$CDS/license/license.dat</li>
+<li>@183行:删除LM_LICENSE_FILE这个环境变量,因为会和hspice冲撞,而且cadence不需要</li>
+<li>@357行:export CALIBRE_HOME=/home/heweibao/calibre/aoi_cal_2015.2_36.27(calibre的安装目录)</li>
+<li>@387行:export MGC_CALIBRE_SCHEMATIC_SERVER=hostname:9199(更换主机名)</li>
+<li>@388行:export MGC_CALIBRE_LAYOUT_SERVER=hostname:9189</li>
+<li>将所有INCISIVE142替换成INCISIVE141</li>
+<li>完成之后搜索一下opt,看一下有没有漏改一下路径</li>
+</ol>
+</li>
+</ol>
+<h3 id="写脚本快速启动"><a href="#写脚本快速启动" class="headerlink" title="写脚本快速启动"></a>写脚本快速启动</h3><p>毕竟总是用临时加载环境变量虽然习惯好,但是这一点都不<strong>酷</strong>,而且很烦<br>这里给个小源码,抛砖引玉一波<br>先在终端: gedit hellocadence 然后输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"hello cadence"</span></span><br><span class="line"><span class="built_in">export</span> cadence_home=/home/heweibao/Project_cadence</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$cadence_home</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$cadence_home</span>/.bashrc </span><br><span class="line">virtuoso &amp;</span><br></pre></td></tr></table></figure>
+
+<p>最后在终端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 hellocadence</span><br><span class="line">cp /home/heweibao/Project_cadence/hellocadence /usr/bin/hellocadence</span><br></pre></td></tr></table></figure>
+
+<p>差不多是这样,如果懂一点shell,自己diy一下再加点什么都行.</p>
+<p>然后就可以愉快地在终端输入: hellocadence 进入了</p>
+<h3 id="写桌面快捷方式"><a href="#写桌面快捷方式" class="headerlink" title="写桌面快捷方式"></a>写桌面快捷方式</h3><p>…没错,我确实是懒出天际了,这里也给出源码给大家参考一下:<br>先在终端: gedit cadence.desktop 然后输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Comment=cadence_ic</span><br><span class="line">Comment[zh_CN]=脱发必备</span><br><span class="line">Exec=/home/heweibao/Project_cadence/hellocadence</span><br><span class="line">GenericName=cadence_ic</span><br><span class="line">GenericName[zh_CN]=cadence_ic617</span><br><span class="line">Name=cadence_ic</span><br><span class="line">Name[zh_CN]=cadence_ic617</span><br><span class="line">StartupNotify=<span class="literal">false</span></span><br><span class="line">Terminal=<span class="literal">false</span></span><br><span class="line">Type=Application</span><br><span class="line">Icon=/home/heweibao/misc/selfbin/pic_icon/logo-cadence-newsroom.png</span><br></pre></td></tr></table></figure>
+
+<p>最后在终端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 cadence.desktop</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以愉快地双击打开:<img src="https://i.loli.net/2018/10/10/5bbd13758e2c6.png" alt="哈哈哈"></p>
+<p>##转换工艺库<br>###cdb2oa<br>因为IC5141用的工艺库是cdb格式的,而IC617用的工艺库是oa格式的,所以在导入之前我们需要转换一下库的格式.</p>
+<ol>
+<li>tools下选Conversion toolbox<br><img src="https://i.loli.net/2018/10/10/5bbd1ade1db37.png" alt="rukou"></li>
+<li>然后点CDB to OpenAccess Translator<br><img src="https://i.loli.net/2018/10/10/5bbd1b1ccd62a.png" alt="sss"></li>
+<li>点browse,找到pdk下面的cds.lib<br><img src="https://i.loli.net/2018/10/10/5bbd1b97a567a.png" alt="cds"></li>
+<li>点ok,看到他检索出来的库<br><img src="https://i.loli.net/2018/10/10/5bbd1dc06ea74.png" alt="fwfwfw"></li>
+<li>然后点ok,稍微等一下如果看见类似的message,就ok了<br><img src="https://i.loli.net/2018/10/10/5bbd1c7bb6f0a.png" alt="finish"><h2 id="已知bug修复"><a href="#已知bug修复" class="headerlink" title="已知bug修复"></a>已知bug修复</h2><h3 id="libXp-so-6-2-0"><a href="#libXp-so-6-2-0" class="headerlink" title="libXp.so.6.2.0"></a>libXp.so.6.2.0</h3>启动ams混合信号仿真界面时会提示<br>缺失libXp.so.6.2.0<br>这个包是没有办法用apt去直接下载的,不用尝试说下载libXp5什么的了.</li>
+</ol>
+<p>因为这个包的安全问题,被各大发行版在更新的时候废弃掉了,所以我们要去debian(或者ubuntu)的旧包下载的地方下下来然后丢进/usr/lib<br><a href="https://packages.debian.org/search?lang=hu&suite=jessie&arch=any&mode=exactfilename&searchon=contents&keywords=libXp.so.6" target="_blank" rel="noopener">搜索地址</a></p>
+<p>因为它提示的是libXp.so.6.2.0,下下来的是libXp.so.6,所以在放进/usr/lib之前要这样做:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##提权</span></span><br><span class="line">chmod 755 libXp.so.6</span><br><span class="line"><span class="comment">##复制</span></span><br><span class="line">cp libXp.so.6 libXp.so.6.2.0</span><br></pre></td></tr></table></figure>
+
+<p>后面听说matlab也有一些功能受到这个bug的影响,所以移的时候我把两个都一进去了</p>
+<p>为了舒服起见,我下了一个64位(amd64)版本的放在/usr/lib和/usr/lib64.下了一个32位(i386)的放在了/usr/lib32那里,总之bug被解决了,然后我并不知道哪一个在起作用(无所谓啦)</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>如果说我的word基础是在校会的时候写东西培训出来的,那么,我的linux基础,就肯定是搭环境搭出来的.</p>
+<p>如果大家有什么问题的话,可以评论提问(项目组的私聊问就行了).如果问题过多我再多开一篇博客说明吧.</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://bbs.eetop.cn/thread-479940-1-1.html" target="_blank" rel="noopener">bashrc文件,内容看一下也行,重点是里面的百度云地址</a><br><a href="http://bbs.eetop.cn/thread-470308-1-1.html" target="_blank" rel="noopener">license文件,内容看一下也行,重点是里面的百度云地址</a><br><a href="http://bbs.eetop.cn/thread-452284-1-1.html" target="_blank" rel="noopener">patch文件,内容看一下也行,重点是里面的百度云地址</a><br><a href="https://blog.csdn.net/m0_37891201/article/details/79081947">一步步教你用Ubuntu 16.04安装Cadence IC617</a><br><a href="https://zhuanlan.zhihu.com/p/37507603" target="_blank" rel="noopener">Cadence IC617设计环境安装全过程</a><br><a href="http://bbs.eetop.cn/thread-662814-1-1.html" target="_blank" rel="noopener">IC617+MMSIM+calibre</a><br><a href="http://bbs.eetop.cn/viewthread.php?tid=476811&amp" target="_blank" rel="noopener">INCISIV14.1</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/10/07/8051汇编指令系统整理篇/" rel="next" title="8051汇编指令系统整理篇">
+                  <i class="fa fa-chevron-left"></i> 8051汇编指令系统整理篇
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/10/13/博客不易-生活艰难/" rel="prev" title="博客不易,生活艰难">
+                  博客不易,生活艰难 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在ubuntu上搭建IC数模混合环境-0"><span class="nav-number">1.</span> <span class="nav-text">在ubuntu上搭建IC数模混合环境(0)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对linux新手的一些搭环境常识补充"><span class="nav-number">1.1.</span> <span class="nav-text">对linux新手的一些搭环境常识补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#尽信书不如无书"><span class="nav-number">1.1.1.</span> <span class="nav-text">尽信书不如无书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有基础的劝退"><span class="nav-number">1.1.2.</span> <span class="nav-text">没有基础的劝退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改所有配置之前-先做备份"><span class="nav-number">1.1.3.</span> <span class="nav-text">更改所有配置之前,先做备份!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回车前看看提示"><span class="nav-number">1.1.4.</span> <span class="nav-text">回车前看看提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#看任何教程留意发行版-版本号和几位的系统"><span class="nav-number">1.1.5.</span> <span class="nav-text">看任何教程留意发行版,版本号和几位的系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尊重linux的用户组概念"><span class="nav-number">1.1.6.</span> <span class="nav-text">尊重linux的用户组概念.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解环境变量的概念"><span class="nav-number">1.1.7.</span> <span class="nav-text">理解环境变量的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果出错要干啥"><span class="nav-number">1.1.8.</span> <span class="nav-text">如果出错要干啥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cadence各种软件的安装"><span class="nav-number">1.2.</span> <span class="nav-text">cadence各种软件的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EDA版本说明"><span class="nav-number">1.2.1.</span> <span class="nav-text">EDA版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#patch"><span class="nav-number">1.2.3.</span> <span class="nav-text">patch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#license"><span class="nav-number">1.2.4.</span> <span class="nav-text">license</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量文件"><span class="nav-number">1.2.5.</span> <span class="nav-text">配置环境变量文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写脚本快速启动"><span class="nav-number">1.2.6.</span> <span class="nav-text">写脚本快速启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写桌面快捷方式"><span class="nav-number">1.2.7.</span> <span class="nav-text">写桌面快捷方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已知bug修复"><span class="nav-number">1.3.</span> <span class="nav-text">已知bug修复</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#libXp-so-6-2-0"><span class="nav-number">1.3.1.</span> <span class="nav-text">libXp.so.6.2.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.4.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.5.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

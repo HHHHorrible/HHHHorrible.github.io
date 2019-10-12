@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="LMS自适应滤波的FPGA实现(一)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LMS自适应滤波的FPGA实现(一)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-一/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="LMS自适应滤波的FPGA实现(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/07/23/5d368cb4aa23d23721.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/07/23/5d368d9c3385c22422.png">
+<meta property="og:image" content="https://i.loli.net/2019/07/23/5d36c2a3e996e63814.png">
+<meta property="og:updated_time" content="2019-10-12T07:24:49.543Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LMS自适应滤波的FPGA实现(一)">
+<meta name="twitter:description" content="LMS自适应滤波的FPGA实现(一)">
+<meta name="twitter:image" content="https://i.loli.net/2019/07/23/5d368cb4aa23d23721.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-一/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>LMS自适应滤波的FPGA实现(一) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            LMS自适应滤波的FPGA实现(一)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-26 18:28:00" itemprop="dateCreated datePublished" datetime="2019-07-26T18:28:00+08:00">2019-07-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:24:49" itemprop="dateModified" datetime="2019-10-12T15:24:49+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FPGA-DSP/" itemprop="url" rel="index">
+                    <span itemprop="name">FPGA DSP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">LMS自适应滤波的FPGA实现(一)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="LMS自适应滤波的FPGA实现-一"><a href="#LMS自适应滤波的FPGA实现-一" class="headerlink" title="LMS自适应滤波的FPGA实现(一)"></a>LMS自适应滤波的FPGA实现(一)</h1><p>真的是准备电赛到不知道还要准备什么了 著</p>
+<p>可以选择文末点个赞</p>
+<p><img src="https://i.loli.net/2019/07/23/5d368cb4aa23d23721.jpg" alt="from百度百科"></p>
+<p>本文较长,建议使用电脑端+简书目录配置使用</p>
+<p>[TOC]</p>
+<h2 id="原理-最优估计技术"><a href="#原理-最优估计技术" class="headerlink" title="原理-最优估计技术"></a>原理-最优估计技术</h2><p>这一部分是建议大家看完后面的在跳回来.</p>
+<h3 id="术语-模型定义和基本假设"><a href="#术语-模型定义和基本假设" class="headerlink" title="术语/模型定义和基本假设"></a>术语/模型定义和基本假设</h3><p>在立论之前,我们先定义一下相关信号量和系统模型,这次的系统大概是这个样子的:<br><img src="https://i.loli.net/2019/07/23/5d368d9c3385c22422.png" alt="网上找的,参考参考就行"></p>
+<p>有几个会反复提及到的参量:</p>
+<blockquote>
+<p>x=自适应系统的输入<br>y=自适应系统 的输出<br>d=(自适应系统的)期望响应<br>e=d-y=估计误差</p>
+</blockquote>
+<p>而且我们在这里还需要对信号的特性进行假设,我们假设信号是满足广义稳态(Wide Sense Stationary)的.并不需要严格平稳或者是各态历经.也就是说信号具有一下特性:<br>对均值有:<br>$$ \eta =E{x} = \lim_{N\to \infty} \frac1N \sum_{N=0}^{N-1}x[n]$$<br>对方差有:<br>$$ \sigma^2 = E{(x-n)^2} = \frac1N \sum_{N=0}^{N-1}(x[n]-\eta)^2 $$<br>对自相关函数:<br>$$ r[\tau] = E{x[t_1]x[t_2]} = E{x[t+\tau]x[t]} =  \lim_{N\to \infty}  \frac1N \sum_{N=0}^{N-1}x[n]x[n+\tau]$$<br>特别地:<br>$$ r[0] = E{x[t]x[t]} = E{   | x[t]|^2 } $$</p>
+<h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><p>这个又是现在机器学习er喜见乐闻的定义了,</p>
+<p>我们在这里定义误差函数为: $ e[n]=d[n]-y[n] $<br>其中d[n]是要估计的随机变量,y[n]是通过自适应滤波计算的估计点</p>
+<p>我们在里用最小均方(也称最小二乘法)(也称平方误差代价函数)来定义代价函数:<br>$$ J= E{e^2[n]} = \overline{(d[n]-y[n])^2} $$</p>
+<h3 id="最优维纳估计"><a href="#最优维纳估计" class="headerlink" title="最优维纳估计"></a>最优维纳估计</h3><p>这里推导的目的在于如何从理论上得到最佳的h[k] (下称$f_k$)</p>
+<p>假设我们使用FIR滤波器来解决问题,则输出的响应为:<br>$$ y[n] = \sum_{k=0}^{L-1}f_k x[n-k] $$<br>不妨使用向量来表达上式:<br>$$ y[n] = \vec{x^T}[n]\vec{f} = f^T \vec{x}[n] $$<br>所以我们可以更新e[n]:<br>$$ e[n] = d[n]-y[n] = d[n] - f^T \vec{x}[n]  $$<br>进着,我们可以求解代价函数:<br>$$ J =   E{e^2[n]}  = E{ d[n]-y[n] }^2 = E{d[n] - f^T \vec{x}[n]}^2 \<br>                = E{(d[n] - f^T \vec{x}[n])(d[n] - f \vec{x^T}[n])} \<br>                =E{d[n]^2 -2d[n]f^T \vec{x}[n] + \vec{f^T}x[n]x^T[n]\vec{f} } $$</p>
+<p>在latex写向量是在太麻烦了,下省</p>
+<p>大家可以回想一下梯度下降法,后面才会真正介绍,这里想进一步减少代价函数的话,只要对$f$求偏导就可以了<br>$$ \nabla = \frac{\partial J}{\partial f^T} = E{ -2d[n]x[n] +2x[n]x^T[n]f_{opt}   }  =0 $$<br>假设滤波器的权重向量f和信号向量x[n]是不相关的,则有:<br>$$ E{ d[n]x[n] } = E{ x[n] x^T[n] }f_{opt} $$</p>
+<p>所以结果就呼之欲出了:<br>$$ \vec{f_{opt}} = E{ \vec{x}[n] \vec{x^T}[n] }^{-1} E{ d[n]\vec{x}[n] } $$<br>一定要注意这里的x[n]是一个列向量,列向量,列向量<br>所以其实结果已经非常明显了,下面还是分开讲讲:</p>
+<ol>
+<li>$  E{ \vec{x}[n] \vec{x^T}[n] }$<br> 很显然这个就是自相关矩阵,其中的矩阵形式是这样的:<br> $$\begin{bmatrix}<br> {x[n]x[n]} &amp; {x[n]x[n-1]} &amp; \cdots &amp; x[n]x[n-(L-1)] \<br> x[n-1]x[n] &amp; x[n-1]x[n-1] &amp; \cdots \<br> \vdots &amp; &amp; \ddots  &amp;\vdots \<br> x[n-(L-1)]x[n] &amp; \cdots &amp; \cdots \end{bmatrix}\quad$$</li>
+</ol>
+<p>=<br>   $$\begin{bmatrix}<br>    {r[0]} &amp; r[1] &amp; \cdots &amp; r[L-1] \<br>    r[1] &amp; r[0] &amp; \cdots &amp; r[L-2] \<br>    \vdots &amp; &amp; \ddots  &amp;\vdots \<br>    r[L-1] &amp; r[L-2] &amp; \cdots &amp;r[0]\end{bmatrix}\quad<br>    $$</p>
+<ol start="2">
+<li>$ E{ d[n]\vec{x}[n] }$<br>这里因为d[n]是一个标量,所以这个矩阵就是一个互相关函数的列向量而已</li>
+</ol>
+<p>所以我们可以将f改写成:<br>$$ f_{opt} = \vec{R_{xx}}^{-1}\vec{r_{dx}} $$</p>
+<p>从公式我们可以看到,如果$f_{opt}$存在的一个前提在于,$R_{xx}$的逆必须存在,也就是说$R_{xx}$必须是非奇异矩阵,所以这才是我们前提所假设的广义平稳需要,因为对于广义平稳信号来说,他的$R_{xx}$就是一个非奇异矩阵,并且存在逆矩阵</p>
+<p>回代到代价函数,我们可以得到估计的标准误差,这里不给出过程了(懒)<br>$$ J_{opt} = r_{dd}[0] -f^T_{opt}r_{dx} $$</p>
+<h2 id="实践-维纳-霍夫算法"><a href="#实践-维纳-霍夫算法" class="headerlink" title="实践-维纳-霍夫算法"></a>实践-维纳-霍夫算法</h2><p>也就是上面所说的算法,现在我们假设输入是一个由曼彻斯特编码的信号m[n],幅值B=10,外加两个噪声:</p>
+<ol>
+<li>高斯白噪声5dbm吧 2. 电力线噪声,幅值A=50 频率60Hz</li>
+</ol>
+<p>现假设采样频率是电网噪声的4倍,即240Hz,我们用一个二抽头的FIR滤波器来解决这个问题</p>
+<p>所以现在的d[n]为:<br>$$d[n] = Acos[\pi n/2] +Bm[n] +\sigma^2 n[n] $$<br>自适应滤波的输入的基准信号x[n]为:<br>$$ x[n] = cos[n\pi /2 + \phi] $$<br>其中$\phi = \pi/6$是一个角度偏移量.所以系统的输出是:<br>$$ y[n] = f_0 cos[n\pi/2 +\phi ] + f_1 cos[(n-1) \pi/2 +\phi ] $$</p>
+<p>所以:<br>对于自相关函数:<br>$$ r_{xx}[0] = E{ (cos[n\pi /2 + \phi] )^2 } = \frac12 $$<br>$$  r_{xx}[1] = E{ cos[n\pi /2 + \phi] sin[n\pi /2 + \phi] } = 0$$</p>
+<p>对于互相关函数:<br>$$ r_{dx}[0] = E{ (Acos[\pi n/2] +Bm[n] +\sigma^2 n[n]) cos[n\pi/2 +\phi ] } = \frac A2 cos(\phi) = 12.5\sqrt{3}$$<br>$$ r_{dx}[1] = E{ (Acos[\pi n/2] +Bm[n] +\sigma^2 n[n]) sin[n\pi/2 +\phi ] } = \frac A2 cos(\phi-\pi) = 12.5$$</p>
+<p>所以下矩阵为:<br>$$ f_{opt} = \vec{R_{xx}}^{-1}\vec{r_{dx}} =<br> \begin{bmatrix}<br>    {r_{xx}[0]} &amp; r_{xx}[1] \<br>    r_{xx}[1] &amp; r_{xx}[0]<br>    \end{bmatrix}^{-1}<br>    \begin{bmatrix} {r_{dx}[0]}\r_{dx}[1]  \end{bmatrix}  \<br>    = \begin{bmatrix} {2} &amp; 0 \0 &amp; 2\end{bmatrix}^{-1}     \begin{bmatrix} 12.5\sqrt{3}\ 12.5 \end{bmatrix}  \<br>    = \begin{bmatrix} {2} &amp; 0 \0 &amp; 2\end{bmatrix}    \begin{bmatrix} 12.5\sqrt{3}\ 12.5 \end{bmatrix}<br>    = \begin{bmatrix} 25\sqrt{3}\ 25 \end{bmatrix}$$</p>
+<h3 id="matlab仿真结果"><a href="#matlab仿真结果" class="headerlink" title="matlab仿真结果"></a>matlab仿真结果</h3><p>现在给出matlab仿真结果:<br><img src="https://i.loli.net/2019/07/23/5d36c2a3e996e63814.png" alt="源码可联系作者获取"></p>
+<h2 id="Widrow-Hoff最小二乘算法"><a href="#Widrow-Hoff最小二乘算法" class="headerlink" title="Widrow-Hoff最小二乘算法"></a>Widrow-Hoff最小二乘算法</h2><p>从上面的最优维纳估计我们可以知道,实际上这种方法是理论不可实现的,因为自相关矩阵当系统规模变大的时候后变得极其的庞大和冗余,而且计算时间也极其长,所以我们需要一种方法来得到新的$R_{xx}^{-1}$</p>
+<p>Widrow-Hoff最小二乘(LMS)算法是一种实时近似逼近$R_{xx}^{-1}$的实用方法,而且在后面的讨论中我们会发现他有较好的性能.而且公式极其对机器学习有基础的同学友好.</p>
+<h3 id="原理推导"><a href="#原理推导" class="headerlink" title="原理推导"></a>原理推导</h3><p>实际上我们可以放弃对$f_{opt}$一次性求解,进而变成逐次按梯度逼近,也就是:<br>$$ f[n+1] = f[n] -\frac{\mu}2\nabla [n] $$<br>这条公式相信学过梯度下降的同学都很熟吧…</p>
+<p>所以现在我们对误差的估计就变成了对误差方向的估计,而用梯度下降的思想来考虑这个问题的话,我们就需要让误差的均值向每一个$f$进行求导,即:</p>
+<p>$$ \nabla [n] = \begin{bmatrix} \frac{\partial E{e[n]^2}}{\partial f_0}&amp; \frac{\partial E{e[n]^2}}{\partial f_1} &amp;\cdots &amp;\frac{\partial E{e[n]^2}}{\partial f_{L-1}}\end{bmatrix}^T $$</p>
+<p>实际上我们总不可能在FPGA上算误差的均值吧,所以这里要取真的误差值作为估计值:<br>$$ \hat\nabla [n] = \begin{bmatrix} \frac{\partial e[n]^2}{\partial f_0}&amp; \frac{\partial e[n]^2}{\partial f_1} &amp;\cdots &amp;\frac{\partial e[n]^2}{\partial f_{L-1}}\end{bmatrix}^T = 2e[n]\begin{bmatrix} \frac{\partial e[n]}{\partial f_0}&amp; \frac{\partial e[n]}{\partial f_1} &amp;\cdots &amp;\frac{\partial e[n]}{\partial f_{L-1}}\end{bmatrix}^T $$</p>
+<p>所以实际上:<br>$$ \hat\nabla [n] = -2e[n]\frac{\partial e[n]}{\partial \vec{f}} = -2e[n]x[n] $$</p>
+<p>回代到最初的起点,得:<br>$$ f[n+1] = f[n] -\mu e[n]x[n] $$<br>请记住,这条是最为重要的公式.</p>
+<h3 id="参数限定"><a href="#参数限定" class="headerlink" title="参数限定"></a>参数限定</h3><p>这里唯一要注意的参数就是这个每次迭代的$\mu$,在这里我们不展开,大家学过机器学习的可以迁移思考一下梯度下降的学习率(learning rate)过大或者过小对算法的影响</p>
+<h2 id="最后的一些碎碎念"><a href="#最后的一些碎碎念" class="headerlink" title="最后的一些碎碎念"></a>最后的一些碎碎念</h2><p>实际上这篇博客我是不太想写的,因为其实这个工作是大二上学期的时候做的了.但是最近看机器学习的时候看到梯度下降的时候想了一下,还是决定写一下.</p>
+<p>其实如果大家有修过高等代数或者吴恩达的机器学习的话,实际上你可以看到,前半部分的最优估计技术其实就是正规方程法,后半部分的Widrow-Hoff最小二乘算法就是通用的梯度下降法<br>再者,如果大家有修过凸优化理论的内点法的话,其实这个就是内点法里面的牛顿法…</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这就是我们要用FPGA实现的算法了,其实算法已经写完很久了,但是因为最近电赛的原因就重写一次吧…<br>但是因为这篇博客的公式实在是太多了,我都不好意思再写FPGA的结构设计了,就留待明天更新吧.</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.csdn.net/gather_21/MtzaEg2sNjQxLWJsb2cO0O0O.html" target="_blank" rel="noopener">高斯白噪声的产生</a><br><a href="https://jingyan.baidu.com/article/f3e34a128c53aef5ea653542.html" target="_blank" rel="noopener">latex画矩阵</a><br><a href="https://www.cnblogs.com/void0/p/4197337.html" target="_blank" rel="noopener">LMS算法自适应滤波器</a><br><a href="https://blog.csdn.net/linj_m/article/details/14107763">自适应滤波器及LMS自适应算法的理解</a><br>通信原理教程(第三版) –樊昌信著</p>
+<p><a href="http://product.dangdang.com/25077957.html" target="_blank" rel="noopener">数字信号处理的FPGA实现</a></p>
+<p><a href="https://www.jianshu.com/p/057dc2895ca0" target="_blank" rel="noopener">想我尽早更新的方法之一</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/05/关于DDS的正弦波ROM裁剪问题/" rel="next" title="关于DDS的正弦波ROM裁剪问题">
+                  <i class="fa fa-chevron-left"></i> 关于DDS的正弦波ROM裁剪问题
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/26/LMS自适应滤波的FPGA实现-二/" rel="prev" title="LMS自适应滤波的FPGA实现(二)">
+                  LMS自适应滤波的FPGA实现(二) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LMS自适应滤波的FPGA实现-一"><span class="nav-number">1.</span> <span class="nav-text">LMS自适应滤波的FPGA实现(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理-最优估计技术"><span class="nav-number">1.1.</span> <span class="nav-text">原理-最优估计技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#术语-模型定义和基本假设"><span class="nav-number">1.1.1.</span> <span class="nav-text">术语/模型定义和基本假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最优维纳估计"><span class="nav-number">1.1.3.</span> <span class="nav-text">最优维纳估计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实践-维纳-霍夫算法"><span class="nav-number">1.2.</span> <span class="nav-text">实践-维纳-霍夫算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#matlab仿真结果"><span class="nav-number">1.2.1.</span> <span class="nav-text">matlab仿真结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Widrow-Hoff最小二乘算法"><span class="nav-number">1.3.</span> <span class="nav-text">Widrow-Hoff最小二乘算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理推导"><span class="nav-number">1.3.1.</span> <span class="nav-text">原理推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数限定"><span class="nav-number">1.3.2.</span> <span class="nav-text">参数限定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后的一些碎碎念"><span class="nav-number">1.4.</span> <span class="nav-text">最后的一些碎碎念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.5.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.6.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

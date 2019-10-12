@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="ZYNQ入门(二)-PS(programmable system)端的开发流程">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZYNQ入门(二)-PS(programmable system)端的开发流程">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/07/18/ZYNQ入门-二-PS-programmable-system-端的开发流程/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="ZYNQ入门(二)-PS(programmable system)端的开发流程">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4df7a3a2d56.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4df8f2946a5.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4df91d5f8da.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4dfcb6b480a.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4edb57ab23d.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4e03bf41ed9.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4e05ee033a1.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4e07ed11d72.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4e087f03ef0.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/17/5b4e099e8c194.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4e1743163f1.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4ebe88ce79c.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4ebeedd18a7.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4ec621dec91.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4ecf277c4b0.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/18/5b4ed9dd5b560.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/21/5b52e455f13a9.jpg">
+<meta property="og:updated_time" content="2019-10-12T06:19:58.367Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZYNQ入门(二)-PS(programmable system)端的开发流程">
+<meta name="twitter:description" content="ZYNQ入门(二)-PS(programmable system)端的开发流程">
+<meta name="twitter:image" content="https://i.loli.net/2018/07/17/5b4df7a3a2d56.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/07/18/ZYNQ入门-二-PS-programmable-system-端的开发流程/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>ZYNQ入门(二)-PS(programmable system)端的开发流程 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/07/18/ZYNQ入门-二-PS-programmable-system-端的开发流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            ZYNQ入门(二)-PS(programmable system)端的开发流程
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-18 14:19:34" itemprop="dateCreated datePublished" datetime="2018-07-18T14:19:34+08:00">2018-07-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:19:58" itemprop="dateModified" datetime="2019-10-12T14:19:58+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ZYNQ-FPGA/" itemprop="url" rel="index">
+                    <span itemprop="name">ZYNQ FPGA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">ZYNQ入门(二)-PS(programmable system)端的开发流程</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>#ZYNQ_PS(programmable system)端的开发流程</p>
+<p>[TOC]</p>
+<h2 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h2><p>同PL端,选好芯片型号就ok</p>
+<h2 id="添加system的ip-core"><a href="#添加system的ip-core" class="headerlink" title="添加system的ip-core"></a>添加system的ip-core</h2><p>所庆幸的是,xilinx的PS端的所有外围都用block的形式来封装起来,然后再打包成一个大的ip核–zynq7 Processing System,大大减少开发时间,添加外设会使用自动布线的方式,外设可以是自己定义的IP.也就是联合了PL端做整个系统的布置</p>
+<h3 id="添加zynq7-Processing-System-ip"><a href="#添加zynq7-Processing-System-ip" class="headerlink" title="添加zynq7 Processing System ip"></a>添加zynq7 Processing System ip</h3><p><img src="https://i.loli.net/2018/07/17/5b4df7a3a2d56.jpg" alt="ip_core"></p>
+<p><img src="https://i.loli.net/2018/07/17/5b4df8f2946a5.jpg" alt="ip2"></p>
+<p><img src="https://i.loli.net/2018/07/17/5b4df91d5f8da.jpg" alt="ip3"></p>
+<p>双击IP核,得到配置窗口</p>
+<h2 id="配置窗口介绍"><a href="#配置窗口介绍" class="headerlink" title="配置窗口介绍"></a>配置窗口介绍</h2><p><img src="https://i.loli.net/2018/07/17/5b4dfcb6b480a.jpg" alt="zynq_ipcore_com"></p>
+<h3 id="peripheral-I-O-Pins"><a href="#peripheral-I-O-Pins" class="headerlink" title="peripheral I/O Pins"></a>peripheral I/O Pins</h3><p>看见这个图就好像当初学stm32,学完之后发现有st官方出的io口自动配置那个软件一样..完美介绍了端口复用和解决复用冲突问题,左边的box可以直接使能一些外设,点一下便变成绿色.<br><img src="https://i.loli.net/2018/07/18/5b4edb57ab23d.jpg" alt="ioconfig"><br>不过要注意板子的端口要对应好.</p>
+<p>然后就可以在</p>
+<h3 id="PS-PL-configuration"><a href="#PS-PL-configuration" class="headerlink" title="PS-PL configuration"></a>PS-PL configuration</h3><p>看见所选中的外设,比如串口就在General目录下面</p>
+<p>这里主要处理的是PS和PL端的连接问题,之前说过,也就是AXI总线问题,所以可以看到看到有ACP,HP,GP,DMA(主要是DMA是共用的),还有触发接口(trigger interface),GP使能(enablement)的设置,可以看出主要是<strong>PS-PL端的联动,AXI总线的设置</strong></p>
+<p><strong>不用PL端逻辑最好把使能给去掉</strong></p>
+<h3 id="Clock-configuration"><a href="#Clock-configuration" class="headerlink" title="Clock configuration"></a>Clock configuration</h3><p>和一些嵌入式处理器(stm32等)一样,也是有时钟树的,不一样的是,他这里的时钟是可以实时改的(这可能就是做fpga公司的牛逼之处吧)<br><img src="https://i.loli.net/2018/07/17/5b4e03bf41ed9.jpg" alt="clock"></p>
+<p>可以看到,他这里的CPU/DDR（Double Data Rate SDRAM）/IO外设/PL端的时钟/Debug时钟/计时器的时钟都是可以设置的……..</p>
+<p><strong>PL端没有用到的时候要把PL端的去掉</strong>,因为即使PL端没有用到,但是如果PL端是有编程的,如果有时钟信号的话,可能会有不可预期的后果!</p>
+<h3 id="DDR-configuration"><a href="#DDR-configuration" class="headerlink" title="DDR configuration"></a>DDR configuration</h3><p>DDR（Double Data Rate SDRAM）<br>这里要设置DDR的型号和规格</p>
+<p>AX7010 黑金版:MT41J128M16 HA-125</p>
+<p>##生成MCU<br><img src="https://i.loli.net/2018/07/17/5b4e05ee033a1.jpg" alt="up"><br>点击ok即可</p>
+<p>现在可以发现,已经在Block automation 了,或许你会问,PS端的开发不是用C语言吗?为什么会纠缠在这里这么久</p>
+<p>因为选择外设,初始化时钟<del>~</del>到建立起系统是一个从下往上的系统设计过程,那么下一步做的就应该是<strong>封装</strong>和<strong>抽象</strong></p>
+<ol>
+<li><p>类似TCP/IP协议的话,第一个封装应该是网络接口层<br><img src="https://i.loli.net/2018/07/17/5b4e07ed11d72.jpg" alt="product"><br>点generate就行<br>这一步做的大概是把选通的各个模块的ip核的端口定义封装出来,就像是这样:<br><img src="https://i.loli.net/2018/07/17/5b4e087f03ef0.jpg" alt="verilog"><br>这可能需要一点点verilog语法基础,蓝色标起来的是ip核的名称</p>
+</li>
+<li><p>第二个就应该系统打包,相当于物理层和应用层的隔绝<br><img src="https://i.loli.net/2018/07/17/5b4e099e8c194.jpg" alt="wrapper">,点让vivado自动布线<br>从wrapper就可以看到这封装的意思了吧…<br>所以就生成了一个system_wrapper的<strong>顶层模块</strong> </p>
+</li>
+</ol>
+<p>可以看到这个顶层模块(wrapper.v)和接口层(system.v)的内容是大致相同的,但是他们在结构上的意义是不一样的,system.v描述的是这个系统的信息,而wrapper.v是这个工程的顶层模块,在verilog语法中,只会综合顶层模块,也就是说在wrapper.v产生之后,这个系统就可以落地变成芯片了(在fpga上是自动布线)</p>
+<p>也就是说,这一步就标记着,<strong>自己的 MCU(Micro controller unit)</strong>就这样诞生了</p>
+<p>##怎么写C语言呢?</p>
+<p>###进入SDK<br>MCU已经生成,那怎么写程序呢?<br>这时候就要把MCU带入到SDK(软件开发工具包 Software Development Kit, SDK)里面去了.就好像是stm32的MDK一样.</p>
+<p>File-&gt;Export-&gt;Export Hardware<br>File-&gt;Launch SDK</p>
+<p><img src="https://i.loli.net/2018/07/18/5b4e1743163f1.jpg" alt="sdk"></p>
+<p>可以看见SDK里面有很多硬件设置,约束(<em>.c *.h  *.tcl)和配置查询(</em>.hdf),然后ps7_init.html是详尽地介绍了所有的配置</p>
+<blockquote>
+<p>HDF（英语：Hierarchical Data Format）<br>TCL    (Tool Command Language,脚本语言),在quartus里面作管脚约束文件</p>
+</blockquote>
+<p>###New Application Project<br>File -&gt; New -&gt; Application Project<br><img src="https://i.loli.net/2018/07/18/5b4ebe88ce79c.jpg" alt="66_c"><br>-&gt;Next-&gt;<br><img src="https://i.loli.net/2018/07/18/5b4ebeedd18a7.jpg" alt="Hello"><br>这里选择的是工程模板,就好像开发stm32会选择找原子哥的template那样…</p>
+<p>直接用hello world就可以了,后面会看到,是一个模块对应一段程序,</p>
+<p>可以发现现在多了两个东西,一个是Helloworld文件夹,存的是我们的工程文件</p>
+<p>另外一个是 helloworld_bsp  (Board Support Package )<br>里面提供了一系列犹如stm32的库函数版本的函数供使用<br>这里不得不赞叹xilinx的文件做得是真的齐全,可以通过system.mss快速看到设计的外设并且都有相应的doc说明!</p>
+<p>在工程模板下的/src里面有一个lscript.ld,里面可以设置各个程序或者数据是存储在内部的RAM还是外部的ROM中</p>
+<p><img src="https://i.loli.net/2018/07/18/5b4ec621dec91.jpg" alt="xiu"></p>
+<p>这里就和mdk/keil的开发流程差不多了,只要工程下右键Bulid Project 一下就完事了</p>
+<p>###Run</p>
+<p>工程右键 /Run As  -&gt; 1 Launch on Hardware 就可以烧程序啦</p>
+<p><img src="https://i.loli.net/2018/07/18/5b4ecf277c4b0.jpg" alt="Get Result"></p>
+<p>附上赛灵思的sdk和debugger的文档<br><a href="https://forums.xilinx.com/xlnx/attachments/xlnx/EDK/30867/1/Chapter2.pdf" target="_blank" rel="noopener">SDK_DEBUG_DOCS</a><br>再附上一个标记好的ZYNQ Block Design 图<br><img src="https://i.loli.net/2018/07/18/5b4ed9dd5b560.jpg" alt="666"><br>完结撒花</p>
+<p>###PL端协同简介<br>同前面的思想,只要在画图的时候加入一个已经设计好的IP核,然后用block的形式添加,编写管教约束文件之后整体编译成bit再导入sdk就行了,这里重点是在sdk中烧录fpga的bit文件<br><img src="https://i.loli.net/2018/07/21/5b52e455f13a9.jpg" alt="yes"></p>
+<p>再添加刚刚编译的fpga的bit文件路径,收工!</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/07/12/ZYNQ入门-一-AXI总线/" rel="next" title="ZYNQ入门(一)-AXI总线">
+                  <i class="fa fa-chevron-left"></i> ZYNQ入门(一)-AXI总线
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/08/11/博弈论基础-一/" rel="prev" title="博弈论基础(一)">
+                  博弈论基础(一) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新建工程"><span class="nav-number">1.</span> <span class="nav-text">新建工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加system的ip-core"><span class="nav-number">2.</span> <span class="nav-text">添加system的ip-core</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加zynq7-Processing-System-ip"><span class="nav-number">2.1.</span> <span class="nav-text">添加zynq7 Processing System ip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置窗口介绍"><span class="nav-number">3.</span> <span class="nav-text">配置窗口介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#peripheral-I-O-Pins"><span class="nav-number">3.1.</span> <span class="nav-text">peripheral I/O Pins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PS-PL-configuration"><span class="nav-number">3.2.</span> <span class="nav-text">PS-PL configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clock-configuration"><span class="nav-number">3.3.</span> <span class="nav-text">Clock configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDR-configuration"><span class="nav-number">3.4.</span> <span class="nav-text">DDR configuration</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

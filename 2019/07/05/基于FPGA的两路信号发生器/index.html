@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="基于FPGA的两路信号发生器">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于FPGA的两路信号发生器">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/07/05/基于FPGA的两路信号发生器/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="基于FPGA的两路信号发生器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/07/04/5d1dce15df26347383.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/07/04/5d1dd5f24eae963269.png">
+<meta property="og:image" content="https://i.loli.net/2019/07/05/5d1ef1fb113fa44541.png">
+<meta property="og:updated_time" content="2019-10-12T07:23:06.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于FPGA的两路信号发生器">
+<meta name="twitter:description" content="基于FPGA的两路信号发生器">
+<meta name="twitter:image" content="https://i.loli.net/2019/07/04/5d1dce15df26347383.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/07/05/基于FPGA的两路信号发生器/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>基于FPGA的两路信号发生器 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/07/05/基于FPGA的两路信号发生器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            基于FPGA的两路信号发生器
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-05 14:59:14" itemprop="dateCreated datePublished" datetime="2019-07-05T14:59:14+08:00">2019-07-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:23:06" itemprop="dateModified" datetime="2019-10-12T15:23:06+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DSP-FPGA/" itemprop="url" rel="index">
+                    <span itemprop="name">DSP FPGA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">基于FPGA的两路信号发生器</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基于FPGA的两路信号发生器"><a href="#基于FPGA的两路信号发生器" class="headerlink" title="基于FPGA的两路信号发生器"></a>基于FPGA的两路信号发生器</h1><p>生产实习著blog2</p>
+<p>这个的基本实现是一般新手就可以实现的了.整篇博客所需数学基础大概在初三水平</p>
+<p>release : 2019-07-05 修正正弦波ROM裁剪问题<br>                著有另一篇博客说明</p>
+<p>[TOC]</p>
+<h2 id="DDS-Direct-Digital-Synthesizer"><a href="#DDS-Direct-Digital-Synthesizer" class="headerlink" title="DDS(Direct Digital Synthesizer)"></a>DDS(Direct Digital Synthesizer)</h2><blockquote>
+<p>DDS是直接数字式频率合成器的英文缩写。直接数字合成器除了具有最基本的频率合成（Frequency Synthesis）功能，还是一个灵活的多用途数字式信号调制与信号合成发生器，具有频率分辨率高、频率切换时间短、输出频率带宽大、可输出任意波形等特点，已经成为通信和雷达系统中的关键单元。  –百度百科</p>
+</blockquote>
+<h2 id="整体系统框图"><a href="#整体系统框图" class="headerlink" title="整体系统框图"></a>整体系统框图</h2><p>先上一个dds理论图:<br><img src="https://i.loli.net/2019/07/04/5d1dce15df26347383.jpg" alt="aaa"></p>
+<p>有几点需要注意:</p>
+<ol>
+<li>整个系统框图是非常简单的,就是做一个查找表,然后去用时钟去查表就完事了</li>
+<li>对特定波形,ROM表定制性会很高,比如正弦波只需要$\frac14$段就够用了,方波锯齿波可以不用ROM等</li>
+<li>框图在DAC后面少了一个低通滤波器,其实相当于信号重建滤波器,十分重要!</li>
+</ol>
+<p>这里做的指标是这样的:</p>
+<ol>
+<li>频率相位定点可控,其实可以做连续可控,但是因为想了个新想法估计要做专利,就换掉了.</li>
+<li>只是做了正弦,但是不同波形用matlab生成,然后fpga加个选通就完事了.</li>
+<li>做了14位的8192点的,主要考虑到电赛用的DAC和fpga的ROM资源</li>
+</ol>
+<p>所以整体的FPGA框图是这样的:<br><img src="https://i.loli.net/2019/07/04/5d1dd5f24eae963269.png" alt="baa"></p>
+<h2 id="MATLAB生成查找表"><a href="#MATLAB生成查找表" class="headerlink" title="MATLAB生成查找表"></a>MATLAB生成查找表</h2><p>这次我们直接生成mif文件,免得产生格式问题:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">depth = <span class="number">8192</span>;</span><br><span class="line">width = <span class="number">14</span>;</span><br><span class="line">x = <span class="number">0</span> : <span class="number">2</span>*<span class="built_in">pi</span>/(depth<span class="number">-1</span>) :<span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">y = <span class="built_in">sin</span>(x);</span><br><span class="line"></span><br><span class="line">y=(y+<span class="number">1</span>)/<span class="number">2</span>*(<span class="number">2</span>^width <span class="number">-1</span> )/(<span class="number">2</span>^width);      <span class="comment">%转正,防溢出</span></span><br><span class="line"><span class="built_in">disp</span>(y);</span><br><span class="line">y_qua = <span class="built_in">round</span>(y*<span class="number">2</span>^width);</span><br><span class="line"></span><br><span class="line"><span class="comment">%编写mif文件</span></span><br><span class="line">fid = fopen(<span class="string">'/home/heweibao/project_matlab/fpga_dds/sin.mif'</span>,<span class="string">'wt'</span>); <span class="comment">%将信号写入一个.mif文件中</span></span><br><span class="line">fprintf(fid,<span class="string">'WIDTH=%d;\n'</span>,width);<span class="comment">%写入存储位宽</span></span><br><span class="line">fprintf(fid,<span class="string">'DEPTH=%d;\n'</span>,depth);<span class="comment">%写入存储深度</span></span><br><span class="line">fprintf(fid,<span class="string">'ADDRESS_RADIX=UNS;\n'</span>);<span class="comment">%写入地址类型为无符号整型</span></span><br><span class="line">fprintf(fid,<span class="string">'DATA_RADIX=UNS;\n'</span>);<span class="comment">%写入数据类型为无符号整型</span></span><br><span class="line">fprintf(fid,<span class="string">'CONTENT BEGIN\n'</span>);<span class="comment">%起始内容</span></span><br><span class="line"><span class="keyword">for</span> num=<span class="number">0</span> : (depth<span class="number">-1</span>) </span><br><span class="line">fprintf(fid,<span class="string">'%d:%14.0f;\n'</span>,num,y_qua(num+<span class="number">1</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">fclose(fid);</span><br><span class="line"><span class="built_in">plot</span>(x,y_qua);</span><br></pre></td></tr></table></figure>
+
+<p>简单,有一些小技巧大家可以看一看,我这里为了偷懒还是直接生成一个周期,没有节省空间</p>
+<h2 id="频率和相位计算"><a href="#频率和相位计算" class="headerlink" title="频率和相位计算"></a>频率和相位计算</h2><p>在介绍调频和调相之前,我们需要对相应的一些参数计算做点说明</p>
+<h3 id="最高频率-f-max"><a href="#最高频率-f-max" class="headerlink" title="最高频率$f_{max}$"></a>最高频率$f_{max}$</h3><p>设系统时钟为$f_{clk}$,总的点数为N,则最高输出频率为:<br>$$ f_{max} = \frac{f_{clk}}{N} $$<br>当然了,如果对一个给定的ROM表,而我们又想要一个高一点的输出频率的话,可以在相位累加器那里进行抽取,比如进行基2抽取后,8192点就相当于减半到4096点,即有:<br>$$ f_{max2} = \frac{f_{clk}}{N/2} = 2f_{max} $$</p>
+<h3 id="频率分辨率-Delta-f"><a href="#频率分辨率-Delta-f" class="headerlink" title="频率分辨率$\Delta f$"></a>频率分辨率$\Delta f$</h3><p>设系统时钟为1Hz,则频率分辨率为:<br>$$\Delta f = \frac1N (Hz)$$ </p>
+<h3 id="最小步进相移-P-min"><a href="#最小步进相移-P-min" class="headerlink" title="最小步进相移$ P_{min} $"></a>最小步进相移$ P_{min} $</h3><p>这个主要取决于相位累加器的位数,但是由于这里我取的是一个周期,所以总的相位就限制为$2\pi$:<br>$$ P_{min}  = \frac{2\pi}{N} $$<br>我个人比较喜欢用角度制(信号发生器嘛):<br>$$ P_{min}  = \frac{360}{N} $$</p>
+<p>自然,这个视ROM表存储的不同而不同,这里仅仅介绍个最简单的应用</p>
+<h2 id="调相位"><a href="#调相位" class="headerlink" title="调相位"></a>调相位</h2><p>实际上,为了实现两路信号的相位差,我们只要设计两个相位累加器的初值不一样就完事了,所以大家会看见我的框图中存在一条soft_rst线用来进行调相之后的软复位.</p>
+<ol>
+<li>比如假设我们想产生90度的相差,设总点数为8192点,则:<br>$$ \Delta N = \frac{90}{\frac1{8192}*360} $$</li>
+<li>180度:<br>$$ \Delta N = \frac{180}{\frac1{8192}*360} $$</li>
+</ol>
+<p>当然,在调相这方面,存在连续调相和定点调相两种方法,通过公式对比大家可以发现,连续调相相位差越调越大,定点调相相位越大误差越小,那怎么克服这一点呢?就在这里给大家留下一个博后习题了.</p>
+<h2 id="调频率"><a href="#调频率" class="headerlink" title="调频率"></a>调频率</h2><p>这个就特别简单了,在前面说过,我们调频的范围在$DC-f_{max}$,所以只要做一个程控分频器就完事了,程序中我为了测试FPGA的极限参数,使用PLL例化了450M的时钟.输出频率其实跟上面的最高频率计算方法一样</p>
+<p>这个就没什么连续和定点的区别了,比较简单</p>
+<h2 id="FPGA实现简单DDS"><a href="#FPGA实现简单DDS" class="headerlink" title="FPGA实现简单DDS"></a>FPGA实现简单DDS</h2><p>这里由于做一个简单应用,所以调频调相模块我没有放上来,有兴趣的朋友可以私信博主获取源码</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> read_data_rom(</span><br><span class="line">	<span class="keyword">input</span> clk,rst_n,</span><br><span class="line">	<span class="keyword">input</span> soft_rst,</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">12</span>:<span class="number">0</span>] phase_control,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">wire</span> [<span class="number">13</span>:<span class="number">0</span>] data_out</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">12</span>:<span class="number">0</span>] address_reg;</span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)	<span class="comment">//相位累加器</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="keyword">if</span>(!rst_n)</span><br><span class="line">		address_reg &lt;= <span class="number">13'b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (soft_rst)</span><br><span class="line">		address_reg &lt;= phase_control;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		address_reg &lt;= address_reg + <span class="number">1'b1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sin_data	sin_data_inst (				<span class="comment">//调用的一个小ROM</span></span><br><span class="line">	<span class="variable">.address</span> ( address_reg ),</span><br><span class="line">	<span class="variable">.clock</span> ( clk ),</span><br><span class="line">	<span class="variable">.q</span> ( data_out )</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><p><img src="https://i.loli.net/2019/07/05/5d1ef1fb113fa44541.png" alt="c"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>其实这里还是有很多东西可以讲的,但是真的不慎研究了几天写了一个小算法,发现之前的人没有想过这个思路,就去找个弟弟写专利去了,在这里没法详述,等以后申请了之后再给大家细细聊聊怎么优化这个粗糙得一匹的信号发生器</p>
+<p>欢迎大家有什么新想法(无论是DDS还是有什么算法想用FPGA实现的)都可以私信我大家聊一聊喔</p>
+<p>下一篇应该就是用FPGA实现各种通信编码,大家无妨投一个关注</p>
+<p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你觉得有丶收获的话</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/06/26/IIR滤波器的FPGA实现/" rel="next" title="IIR滤波器的FPGA实现">
+                  <i class="fa fa-chevron-left"></i> IIR滤波器的FPGA实现
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/05/关于DDS的正弦波ROM裁剪问题/" rel="prev" title="关于DDS的正弦波ROM裁剪问题">
+                  关于DDS的正弦波ROM裁剪问题 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于FPGA的两路信号发生器"><span class="nav-number">1.</span> <span class="nav-text">基于FPGA的两路信号发生器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DDS-Direct-Digital-Synthesizer"><span class="nav-number">1.1.</span> <span class="nav-text">DDS(Direct Digital Synthesizer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整体系统框图"><span class="nav-number">1.2.</span> <span class="nav-text">整体系统框图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MATLAB生成查找表"><span class="nav-number">1.3.</span> <span class="nav-text">MATLAB生成查找表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#频率和相位计算"><span class="nav-number">1.4.</span> <span class="nav-text">频率和相位计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最高频率-f-max"><span class="nav-number">1.4.1.</span> <span class="nav-text">最高频率$f_{max}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#频率分辨率-Delta-f"><span class="nav-number">1.4.2.</span> <span class="nav-text">频率分辨率$\Delta f$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小步进相移-P-min"><span class="nav-number">1.4.3.</span> <span class="nav-text">最小步进相移$ P_{min} $</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调相位"><span class="nav-number">1.5.</span> <span class="nav-text">调相位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调频率"><span class="nav-number">1.6.</span> <span class="nav-text">调频率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FPGA实现简单DDS"><span class="nav-number">1.7.</span> <span class="nav-text">FPGA实现简单DDS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真结果"><span class="nav-number">1.8.</span> <span class="nav-text">仿真结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.9.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

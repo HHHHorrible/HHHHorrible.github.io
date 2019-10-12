@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="ZigBee协议简介(一)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZigBee协议简介(一)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/03/17/ZigBee协议简介-一/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="ZigBee协议简介(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c862793f2039.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c862793f268f.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c8627942a2d4.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c86279413d82.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c8627941255c.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c862793d7561.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c862794167d3.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c8627942d761.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/11/5c86279462bbd.png">
+<meta property="og:updated_time" content="2019-10-12T07:16:34.521Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZigBee协议简介(一)">
+<meta name="twitter:description" content="ZigBee协议简介(一)">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/11/5c862793f2039.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/03/17/ZigBee协议简介-一/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>ZigBee协议简介(一) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/03/17/ZigBee协议简介-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            ZigBee协议简介(一)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-17 23:19:06" itemprop="dateCreated datePublished" datetime="2019-03-17T23:19:06+08:00">2019-03-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:16:34" itemprop="dateModified" datetime="2019-10-12T15:16:34+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MISC/" itemprop="url" rel="index">
+                    <span itemprop="name">MISC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">ZigBee协议简介(一)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="ZigBee协议简介"><a href="#ZigBee协议简介" class="headerlink" title="ZigBee协议简介"></a>ZigBee协议简介</h1><p><strong>注意：在没有确切把握的情况下，不要试图去改变这些网络参数</strong></p>
+<p>[TOC]</p>
+<p>今天来讲讲久违的ZigBee</p>
+<p><img src="https://i.loli.net/2019/03/11/5c862793f2039.jpg" alt></p>
+<p>ZigBee的名字源自蜜蜂八字舞，蜜蜂（Bee）依靠嗡嗡（Zip）和同伴传递方位信息，依靠同伴接力形成通信网络。ZigBee的网络层可以说就是通过这个来定义的。</p>
+<p><img src="https://i.loli.net/2019/03/11/5c862793f268f.jpg" alt></p>
+<p>从上图我们可以看见，其实IEEE只确定了ZigBee的物理层和MAC层，就是只定义了物理通信上要用到的通信协议和通信频段。剩下的都是由ZigBee联盟来确定的。我们由下图来详解一下<br><img src="https://i.loli.net/2019/03/11/5c8627942a2d4.jpg" alt></p>
+<h2 id="物理层（PHY）"><a href="#物理层（PHY）" class="headerlink" title="物理层（PHY）"></a>物理层（PHY）</h2><h3 id="规定了什么"><a href="#规定了什么" class="headerlink" title="规定了什么"></a>规定了什么</h3><ol>
+<li>频段：868MHz（欧洲），915MHz（美国），2495MHz（Global）使用直接序列扩频（DSSS）</li>
+<li>信道：27个，分别分为：868MHz（k=0），915MHz（k=1-10），2495MHz（k=11-26）</li>
+<li>速度：868MHz（20kb），915MHz（40kb），2495MHz（250kb+）</li>
+<li>物理层协议数据单元（PHY Protocol Data Unit ,PPDU ） 分为同步头，物理帧头和物理帧负载（PSDU）<h3 id="能用来干嘛"><a href="#能用来干嘛" class="headerlink" title="能用来干嘛"></a>能用来干嘛</h3></li>
+<li>激活和休眠射频收发器</li>
+<li>信道能量检测</li>
+<li>检测接收数据包的链路质量指示（Link Quality Indication ，LQI）</li>
+<li>空闲信道评估（Clear Channel Assessment ，CCA）</li>
+<li>收发数据</li>
+</ol>
+<p>在概念上，物理层的收发数据还包括了数据服务和管理（维护）服务，和MAC层分别的接口叫做物理层数据服务接入点（PHY Data - Service Access Point ， PD-SAP）和物理层管理实体服务接入点（PHY Data - Service Access Point ， PD-SAP）和物理层管理实体服务接入点（Physical Layer Management Entity Service Access Point ， PLME-SAP）</p>
+<h2 id="MAC层（媒体接入控制层）"><a href="#MAC层（媒体接入控制层）" class="headerlink" title="MAC层（媒体接入控制层）"></a>MAC层（媒体接入控制层）</h2><h3 id="规定了什么-1"><a href="#规定了什么-1" class="headerlink" title="规定了什么"></a>规定了什么</h3><ol>
+<li>规定了4种帧结构：信标帧<br><img src="https://i.loli.net/2019/03/11/5c86279413d82.png" alt><br>数据帧<br><img src="https://i.loli.net/2019/03/11/5c8627941255c.png" alt><br>确认帧<br><img src="https://i.loli.net/2019/03/11/5c862793d7561.png" alt><br>和MAC命令帧<br><img src="https://i.loli.net/2019/03/11/5c862794167d3.png" alt></li>
+</ol>
+<p>详见[MAC协议层详解]（<a href="https://www.cnblogs.com/hzl6255/p/9846764.html）" target="_blank" rel="noopener">https://www.cnblogs.com/hzl6255/p/9846764.html）</a></p>
+<ol start="2">
+<li>使用CSMA-CA机制访问物理信道</li>
+<li>如果设备是协调器，需要产生网络信标</li>
+<li>支持时槽保障（Guaranteed Time Slot ，GTS）机制<h3 id="能用来干嘛-1"><a href="#能用来干嘛-1" class="headerlink" title="能用来干嘛"></a>能用来干嘛</h3></li>
+<li>协调器产生并发送信标，普通设备根据协调器的信标帧与协调器同步</li>
+<li>保证信道的通信安全</li>
+<li>支持PAN（个域网络）的关联和取消关联</li>
+</ol>
+<p>概念上，MAC层也像物理层一样具有MAC层管理实体（MLME），他和网络层之间的数据交换便是（MLME-SAP），当然在MLME中，交换的是管理MAC层信息。在MAC层还有一个MAC公共部分子层（MCPS）来与网络层进行数据交换（MCPS-SAP）</p>
+<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><p>网络层负责拓扑结构的建立和维护，命名和绑定服务，从而协同地完成寻址，路由，传送数据以及安全等不可或缺的任务，所以网络层是ZigBee的核心部分。</p>
+<h3 id="组网拓扑结构"><a href="#组网拓扑结构" class="headerlink" title="组网拓扑结构"></a>组网拓扑结构</h3><p>在ZigBee中有三种角色-协调器，路由器和末端节点，分别对应着蜂群的蜂后，雄峰和工蜂。协调器在MAC层就已经提及过了，用来提供整个网络的同步问题（不进行数据交换，和蜂群一般）。而路由器则负责联系自己周围的末端节点，并协调他们进行通信。</p>
+<p>ZigBee中支持星状，树状和网状的拓扑结构，这个可以在硬件中直接设置。<br><a href="https://blog.csdn.net/baidu_31437863/article/details/82491090">ZigBee网络架构详解</a></p>
+<h3 id="网络层规范"><a href="#网络层规范" class="headerlink" title="网络层规范"></a>网络层规范</h3><p>正如物理层和MAC层，我们可以看到整个ZigBee的协议中在每一层都存在数据实体和管理实体，在网络层也不例外。ZigBee协议的网络层划分为网络层数据实体（Network Layer Data Entity , NLDE）和网络层管理实体（Network Layer Manage Entity ,NLME）都还有相关的数据交换（管理）的SAP服务。</p>
+<p>正如其名，他们相关的功能如下：<br>NLDE：</p>
+<ol>
+<li>产生网络层协议数据单元（NPDU）</li>
+<li>提供基于拓扑结构的路由策略</li>
+</ol>
+<p>NLME：</p>
+<ol>
+<li>配置新设备</li>
+<li>建立网络</li>
+<li>加入和离开网络</li>
+<li>寻址</li>
+<li>邻居发现</li>
+<li>路由发现</li>
+<li>接受控制</li>
+</ol>
+<p>对应地，他们也对应着网络层的两种帧结构：数据帧和命令帧。因为这是课堂上做的，找图不太方便，还请大家自己找图了解。</p>
+<h3 id="能用来干嘛-2"><a href="#能用来干嘛-2" class="headerlink" title="能用来干嘛"></a>能用来干嘛</h3><ol>
+<li>通过添加不同的协议头能够从应用层生产网络层的PDU，即NPDU</li>
+<li>确定网络的拓扑结构</li>
+<li>配置一个新的设备，可以是拓扑结构中的各个角色</li>
+<li>建立并启动网络</li>
+<li>加入或离开网络</li>
+<li>ZigBee的协调器和路由器能为加入网络的设备分配空间</li>
+<li>发现并记录邻居表，路由表</li>
+<li>信息的接受控制，同步MAC子层或直接接收信息</li>
+</ol>
+<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><p>ZigBee应用层有三个组成部分：应用支持子层（Application Support Sub-Layer,<strong>APS</strong>）,应用框架（Application Framework ,AF）和ZigBee设备对象（ZigBee Device Object ，ZDO）</p>
+<h3 id="应用支持子层APS"><a href="#应用支持子层APS" class="headerlink" title="应用支持子层APS"></a>应用支持子层APS</h3><p>跟之前提的一样，APS子层包含，APS数据实体（APSDE）和相应的服务接入点（APSDE-SAP）还有APS管理实体（APSME）和相应的服务接入点（APSME-SAP）。APS主要是用来应用层和网络层的接口用的，APSDE提供在同一网络应用实体之间的数据传输机制，APSME提供多种服务给应用对象。</p>
+<h3 id="应用框架AF"><a href="#应用框架AF" class="headerlink" title="应用框架AF"></a>应用框架AF</h3><p>在ZigBee应用中，AF提供了两种标准服务类型。一种是键值对（Key Valve Pair ，KVP）和报文（mesage，MSG）。相应地里面还涉及到较多的属性，我们在Z-stack中再继续介绍</p>
+<h3 id="ZigBee设备对象ZDO"><a href="#ZigBee设备对象ZDO" class="headerlink" title="ZigBee设备对象ZDO"></a>ZigBee设备对象ZDO</h3><p>其实就是高度抽象的网络端点，主要功能集中在网络管理和维护上，里面包含了整个端点，网络的全部信息可供查询。</p>
+<h2 id="硬件平台TI-CC2530"><a href="#硬件平台TI-CC2530" class="headerlink" title="硬件平台TI-CC2530"></a>硬件平台TI-CC2530</h2><ol>
+<li>劳烦自查百度及datasheet，不背书</li>
+<li>硬件资源可见下图</li>
+</ol>
+<p><img src="https://i.loli.net/2019/03/11/5c8627942d761.jpg" alt></p>
+<h2 id="Z-Stack"><a href="#Z-Stack" class="headerlink" title="Z-Stack"></a>Z-Stack</h2><p>显然，Z-stack是TI公司开放的ZigBee协议栈，那么现在问题来了，这么好的协议栈，要怎么来使用呢？<br>这里先放一张好图，详情且听下回分解</p>
+<p><img src="https://i.loli.net/2019/03/11/5c86279462bbd.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>写得不是很深入，后面会写代码的时候我们再来，在刀锋上认识ZigBee</p>
+<p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你觉得有丶收获的话</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/03/05/信号与系统笔记/" rel="next" title="信号与系统笔记">
+                  <i class="fa fa-chevron-left"></i> 信号与系统笔记
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/05/03/离散小波变换的FPGA-Verilog实现/" rel="prev" title="离散小波变换的FPGA-Verilog实现">
+                  离散小波变换的FPGA-Verilog实现 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZigBee协议简介"><span class="nav-number">1.</span> <span class="nav-text">ZigBee协议简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理层（PHY）"><span class="nav-number">1.1.</span> <span class="nav-text">物理层（PHY）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规定了什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">规定了什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能用来干嘛"><span class="nav-number">1.1.2.</span> <span class="nav-text">能用来干嘛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC层（媒体接入控制层）"><span class="nav-number">1.2.</span> <span class="nav-text">MAC层（媒体接入控制层）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规定了什么-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">规定了什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能用来干嘛-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">能用来干嘛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络层"><span class="nav-number">1.3.</span> <span class="nav-text">网络层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组网拓扑结构"><span class="nav-number">1.3.1.</span> <span class="nav-text">组网拓扑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络层规范"><span class="nav-number">1.3.2.</span> <span class="nav-text">网络层规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能用来干嘛-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">能用来干嘛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用层"><span class="nav-number">1.4.</span> <span class="nav-text">应用层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用支持子层APS"><span class="nav-number">1.4.1.</span> <span class="nav-text">应用支持子层APS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用框架AF"><span class="nav-number">1.4.2.</span> <span class="nav-text">应用框架AF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZigBee设备对象ZDO"><span class="nav-number">1.4.3.</span> <span class="nav-text">ZigBee设备对象ZDO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬件平台TI-CC2530"><span class="nav-number">1.5.</span> <span class="nav-text">硬件平台TI-CC2530</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-Stack"><span class="nav-number">1.6.</span> <span class="nav-text">Z-Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

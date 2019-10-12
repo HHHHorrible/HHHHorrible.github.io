@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="关于DDS的正弦波ROM裁剪问题">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于DDS的正弦波ROM裁剪问题">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/07/05/关于DDS的正弦波ROM裁剪问题/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="关于DDS的正弦波ROM裁剪问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/07/05/5d1f5716773e753013.png">
+<meta property="og:image" content="https://i.loli.net/2019/07/05/5d1f5a6d7909b88287.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/07/05/5d1f5e80cfb4575537.png">
+<meta property="og:updated_time" content="2019-10-12T07:24:00.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于DDS的正弦波ROM裁剪问题">
+<meta name="twitter:description" content="关于DDS的正弦波ROM裁剪问题">
+<meta name="twitter:image" content="https://i.loli.net/2019/07/05/5d1f5716773e753013.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/07/05/关于DDS的正弦波ROM裁剪问题/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>关于DDS的正弦波ROM裁剪问题 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/07/05/关于DDS的正弦波ROM裁剪问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            关于DDS的正弦波ROM裁剪问题
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-05 22:40:20" itemprop="dateCreated datePublished" datetime="2019-07-05T22:40:20+08:00">2019-07-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:24:00" itemprop="dateModified" datetime="2019-10-12T15:24:00+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FPGA-DSP/" itemprop="url" rel="index">
+                    <span itemprop="name">FPGA DSP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">关于DDS的正弦波ROM裁剪问题</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="关于DDS的正弦波ROM裁剪问题"><a href="#关于DDS的正弦波ROM裁剪问题" class="headerlink" title="关于DDS的正弦波ROM裁剪问题"></a>关于DDS的正弦波ROM裁剪问题</h1><p>质疑著<br>在这里感谢电子森林的苏老师对上一篇博客提出的质疑</p>
+<p>[TOC]</p>
+<h2 id="问题是这样的"><a href="#问题是这样的" class="headerlink" title="问题是这样的"></a>问题是这样的</h2><p>在上一篇博客中我曾经写到:</p>
+<blockquote>
+<p><img src="https://i.loli.net/2019/07/05/5d1f5716773e753013.png" alt="a"><br>$\frac18$是在一个别人写的专利交底书的里面看到的,当时心理想了想觉得是可以的,没有实际地操作过</p>
+</blockquote>
+<p>然后我把博客分享到朋友圈后收到了电子森林苏老师的一些质疑,其中一个便是这个应该是$\frac14$还是$\frac18$的问题,当时年少轻狂的我说着应该是$\frac18$,结果吃完饭想着实验一下,便发现,这错的离谱了。。。史称秒打脸,故作此篇实地操作一下这个$\frac14$的ROM表压缩,也算是对自己的一个小警示..</p>
+<h2 id="MATLAB生成1-4的ROM表"><a href="#MATLAB生成1-4的ROM表" class="headerlink" title="MATLAB生成1/4的ROM表"></a>MATLAB生成1/4的ROM表</h2><p>这里本来应该是8192个点的,因为我中途意识到自己的错误的时候,为了偷懒不重新配置ROM,所以就把这里改成了4096个点,其他的唯一改动就在于在文件写入操作的时候只写了前$\frac14$个点,和修复了以前mif文件没有自动加END;结尾的BUG.</p>
+<p>这并不是很重要</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">depth = <span class="number">4096</span>;</span><br><span class="line">width = <span class="number">14</span>;</span><br><span class="line">x = <span class="number">0</span> : <span class="number">2</span>*<span class="built_in">pi</span>/(depth<span class="number">-1</span>) :<span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">y = <span class="built_in">sin</span>(x);</span><br><span class="line"></span><br><span class="line">y=(y+<span class="number">1</span>)/<span class="number">2</span>*<span class="number">16383</span>/<span class="number">16384</span>;      <span class="comment">%转正</span></span><br><span class="line"><span class="built_in">disp</span>(y);</span><br><span class="line">y_qua = <span class="built_in">round</span>(y*<span class="number">2</span>^width);</span><br><span class="line"></span><br><span class="line"><span class="comment">%编写mif文件</span></span><br><span class="line">fid = fopen(<span class="string">'/home/heweibao/project_matlab/fpga_dds/sindiv8.mif'</span>,<span class="string">'wt'</span>); <span class="comment">%将信号写入一个.mif文件中</span></span><br><span class="line">fprintf(fid,<span class="string">'WIDTH=%d;\n'</span>,width);<span class="comment">%写入存储位宽</span></span><br><span class="line">fprintf(fid,<span class="string">'DEPTH=%d;\n'</span>,depth/<span class="number">4</span>);<span class="comment">%写入存储深度</span></span><br><span class="line">fprintf(fid,<span class="string">'ADDRESS_RADIX=UNS;\n'</span>);<span class="comment">%写入地址类型为无符号整型</span></span><br><span class="line">fprintf(fid,<span class="string">'DATA_RADIX=UNS;\n'</span>);<span class="comment">%写入数据类型为无符号整型</span></span><br><span class="line">fprintf(fid,<span class="string">'CONTENT BEGIN\n'</span>);<span class="comment">%起始内容</span></span><br><span class="line"><span class="keyword">for</span> num=<span class="number">0</span> : (depth<span class="number">-1</span>)/<span class="number">4</span> </span><br><span class="line">fprintf(fid,<span class="string">'%d:%14.0f;\n'</span>,num,y_qua(num+<span class="number">1</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">fprintf(fid,<span class="string">'END;'</span>);</span><br><span class="line">fclose(fid);</span><br><span class="line"></span><br><span class="line"><span class="built_in">plot</span>(x,y_qua);</span><br></pre></td></tr></table></figure>
+
+<h2 id="FPGA状态机控制地址和加减"><a href="#FPGA状态机控制地址和加减" class="headerlink" title="FPGA状态机控制地址和加减"></a>FPGA状态机控制地址和加减</h2><p>这里直接上图看一个周期:<br><img src="https://i.loli.net/2019/07/05/5d1f5a6d7909b88287.jpg" alt="bb"><br>至于为什么是这样,大家可以从导数的角度自己理解一下,所以写出来的状态机是这样的:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> fsm_control(</span><br><span class="line">	<span class="keyword">input</span> clk,rst_n,</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> oper_add_sub,	<span class="comment">// 0 for add ,1 for sub </span></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">9</span>:<span class="number">0</span>] phase_address</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">parameter</span> s0 = <span class="number">2'b00</span>,</span><br><span class="line">			 s1 = <span class="number">2'b01</span>,</span><br><span class="line">			 s2 = <span class="number">2'b10</span>,</span><br><span class="line">			 s3 = <span class="number">2'b11</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] now_state;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)</span><br><span class="line"><span class="keyword">begin</span> </span><br><span class="line">	<span class="keyword">if</span>(!rst_n)</span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			now_state &lt;= s0;</span><br><span class="line">			phase_address &lt;= <span class="number">10'd0</span>;</span><br><span class="line">			oper_add_sub &lt;= <span class="number">1'b0</span>;</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">case</span>(now_state)</span><br><span class="line">			</span><br><span class="line">			s0:<span class="keyword">begin</span>			</span><br><span class="line">					phase_address &lt;= phase_address + <span class="number">1'b1</span>;</span><br><span class="line">					oper_add_sub  &lt;= <span class="number">1'b0</span>;</span><br><span class="line">					</span><br><span class="line">					<span class="keyword">if</span>(phase_address == <span class="number">10'd1023</span>) </span><br><span class="line">						<span class="keyword">begin</span> </span><br><span class="line">						   phase_address &lt;= <span class="number">10'd1023</span>;</span><br><span class="line">							now_state	&lt;= s1;</span><br><span class="line">						<span class="keyword">end</span></span><br><span class="line">					<span class="keyword">else</span>	now_state &lt;= s0;</span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">				</span><br><span class="line">				</span><br><span class="line">				</span><br><span class="line">			s1:<span class="keyword">begin</span>	</span><br><span class="line">					phase_address &lt;= phase_address - <span class="number">1'b1</span>;</span><br><span class="line">					oper_add_sub  &lt;= <span class="number">1'b1</span>;</span><br><span class="line">					</span><br><span class="line">					<span class="keyword">if</span>(phase_address == <span class="number">10'd0</span>) </span><br><span class="line">						<span class="keyword">begin</span> </span><br><span class="line">							phase_address &lt;= <span class="number">10'd0</span>;</span><br><span class="line">							now_state	&lt;= s2;</span><br><span class="line">						<span class="keyword">end</span></span><br><span class="line">					<span class="keyword">else</span>	now_state &lt;= s1;</span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">				</span><br><span class="line">			s2:<span class="keyword">begin</span>	</span><br><span class="line">					phase_address &lt;= phase_address + <span class="number">1'b1</span>;</span><br><span class="line">					oper_add_sub  &lt;= <span class="number">1'b1</span>;</span><br><span class="line">					</span><br><span class="line">					<span class="keyword">if</span>(phase_address == <span class="number">10'd1023</span> ) </span><br><span class="line">						<span class="keyword">begin</span> </span><br><span class="line">						   phase_address &lt;= <span class="number">10'd1023</span>;</span><br><span class="line">							now_state	&lt;= s3;</span><br><span class="line">						<span class="keyword">end</span></span><br><span class="line">					<span class="keyword">else</span>	now_state &lt;= s2;</span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">			s3:<span class="keyword">begin</span>	</span><br><span class="line">					phase_address &lt;= phase_address - <span class="number">1'b1</span>;</span><br><span class="line">					oper_add_sub  &lt;= <span class="number">1'b0</span>;</span><br><span class="line">					</span><br><span class="line">					<span class="keyword">if</span>(phase_address == <span class="number">10'd0</span> ) </span><br><span class="line">						<span class="keyword">begin</span> </span><br><span class="line">							phase_address &lt;= <span class="number">10'd0</span>;</span><br><span class="line">							now_state	&lt;= s0;</span><br><span class="line">						<span class="keyword">end</span></span><br><span class="line">					<span class="keyword">else</span>	now_state &lt;= s3;</span><br><span class="line">				<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ROM操作端"><a href="#ROM操作端" class="headerlink" title="ROM操作端"></a>ROM操作端</h2><p>这里要考虑就是我的数据是没有符号位的,所以取加减的时候需要求出变化量的绝对值,而且变化量要防止因为状态切换而突然变大导致波形失真,要做一个阈值判断.最后就是初始值给最大值的一半.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> data_process(</span><br><span class="line">	<span class="keyword">input</span> clk,rst_n,</span><br><span class="line">	<span class="keyword">input</span> oper_add_sub,	<span class="comment">// 0 for add ,1 for sub </span></span><br><span class="line">	<span class="keyword">input</span> [<span class="number">9</span>:<span class="number">0</span>] phase_address,</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">wire</span> [<span class="number">13</span>:<span class="number">0</span>] data_out</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">wire</span> [<span class="number">13</span>:<span class="number">0</span>] rom_data_out;</span><br><span class="line"></span><br><span class="line">rom_sin_8	rom_sin_8_inst (</span><br><span class="line">	<span class="variable">.address</span> ( phase_address ),</span><br><span class="line">	<span class="variable">.clock</span> ( clk ),</span><br><span class="line">	<span class="variable">.q</span> ( rom_data_out )</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">13</span>:<span class="number">0</span>] data_shift ,data_shift_pre;</span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)</span><br><span class="line"><span class="keyword">begin</span> </span><br><span class="line">	<span class="keyword">if</span>(!rst_n)</span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			data_shift &lt;= <span class="number">14'd0</span>;</span><br><span class="line">			data_shift_pre &lt;= <span class="number">14'd0</span>;</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">begin</span> </span><br><span class="line">			data_shift &lt;= data_shift_pre;</span><br><span class="line">			data_shift_pre &lt;= rom_data_out;</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">wire</span> [<span class="number">13</span>:<span class="number">0</span>] delta_data;</span><br><span class="line"><span class="keyword">assign</span>	delta_data_pre = data_shift&lt;data_shift_pre ? (data_shift_pre - data_shift) :</span><br><span class="line">													 (data_shift-data_shift_pre);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">13</span>:<span class="number">0</span>] out_data;</span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)</span><br><span class="line"><span class="keyword">begin</span> </span><br><span class="line">	<span class="keyword">if</span>(!rst_n)</span><br><span class="line">			out_data &lt;= <span class="number">14'd8192</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	<span class="comment">//	out_data &lt;= oper_add_sub ? (out_data-delta_data&lt;14'b0)? 14'b0  : (out_data-delta_data) : </span></span><br><span class="line">	<span class="comment">//					 	  (out_data+delta_data&gt;14'h3fff)? 14'h3fff : (out_data+delta_data);</span></span><br><span class="line">		out_data &lt;= oper_add_sub ? (out_data-delta_data) :(out_data+delta_data);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> data_out = out_data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><p><img src="https://i.loli.net/2019/07/05/5d1f5e80cfb4575537.png" alt="CC"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这次确实是年少轻狂,没认真思考惹的问题. 不过错了就应该大大方方承认嘛.</p>
+<p>自省年少显轻狂，俯首道歉表心怀</p>
+<p>再一次谢谢电子森林苏老师的质疑.</p>
+<p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你觉得有丶收获的话</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/05/基于FPGA的两路信号发生器/" rel="next" title="基于FPGA的两路信号发生器">
+                  <i class="fa fa-chevron-left"></i> 基于FPGA的两路信号发生器
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/26/LMS自适应滤波的FPGA实现-一/" rel="prev" title="LMS自适应滤波的FPGA实现(一)">
+                  LMS自适应滤波的FPGA实现(一) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于DDS的正弦波ROM裁剪问题"><span class="nav-number">1.</span> <span class="nav-text">关于DDS的正弦波ROM裁剪问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题是这样的"><span class="nav-number">1.1.</span> <span class="nav-text">问题是这样的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MATLAB生成1-4的ROM表"><span class="nav-number">1.2.</span> <span class="nav-text">MATLAB生成1/4的ROM表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FPGA状态机控制地址和加减"><span class="nav-number">1.3.</span> <span class="nav-text">FPGA状态机控制地址和加减</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROM操作端"><span class="nav-number">1.4.</span> <span class="nav-text">ROM操作端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真结果"><span class="nav-number">1.5.</span> <span class="nav-text">仿真结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.6.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

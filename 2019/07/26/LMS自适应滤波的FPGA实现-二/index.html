@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="LMS自适应滤波的FPGA实现(二)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LMS自适应滤波的FPGA实现(二)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-二/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="LMS自适应滤波的FPGA实现(二)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/07/26/5d3a9c8cba90d31140.png">
+<meta property="og:image" content="https://i.loli.net/2019/07/26/5d3aa8ac7d2b636209.png">
+<meta property="og:image" content="https://i.loli.net/2019/07/26/5d3aaa145158c86418.png">
+<meta property="og:updated_time" content="2019-10-12T07:26:17.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LMS自适应滤波的FPGA实现(二)">
+<meta name="twitter:description" content="LMS自适应滤波的FPGA实现(二)">
+<meta name="twitter:image" content="https://i.loli.net/2019/07/26/5d3a9c8cba90d31140.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-二/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>LMS自适应滤波的FPGA实现(二) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/07/26/LMS自适应滤波的FPGA实现-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            LMS自适应滤波的FPGA实现(二)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-26 18:32:09" itemprop="dateCreated datePublished" datetime="2019-07-26T18:32:09+08:00">2019-07-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:26:17" itemprop="dateModified" datetime="2019-10-12T15:26:17+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FPGA-DSP/" itemprop="url" rel="index">
+                    <span itemprop="name">FPGA DSP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">LMS自适应滤波的FPGA实现(二)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="LMS自适应滤波的FPGA实现-二"><a href="#LMS自适应滤波的FPGA实现-二" class="headerlink" title="LMS自适应滤波的FPGA实现(二)"></a>LMS自适应滤波的FPGA实现(二)</h1><p>闭环系统搞自闭著</p>
+<p>[TOC]</p>
+<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>这个算法来源于上一篇博客<a href="https://www.jianshu.com/p/c110a0743c79" target="_blank" rel="noopener">LMS自适应滤波的FPGA实现(一)</a><br>所介绍的最后一个算法-&gt;Widrow-Hoff -LMS算法</p>
+<p>回顾一下,最主要的公式:<br>$$ \vec{f}[n+1] = \vec{f}[n] + \mu e[n]\vec{x}[n] $$<br>其中:<br>$$ e[n] = d[n] - y[n] $$</p>
+<p>所以我们可以大致得到算法流程:</p>
+<ol>
+<li>初始化N阶向量 $$ \vec{f} = \vec{x} = \vec{0} $$</li>
+<li>接收一组新的采样值{x[n],d[n]} ,并且将x[n]移入移位寄存器</li>
+<li>计算FIR滤波器输出$$ y[n] = \vec{f^T}[n]\vec{x}[n] $$</li>
+<li>更新误差函数$$ e[n] = d[n] -y[n] $$</li>
+<li>更新滤波器系数$$ \vec{f}[n+1] = \vec{f}[n] + \mu e[n]\vec{x}[n] $$</li>
+<li>To Step 2</li>
+</ol>
+<p>在FPGA中每一个Step单独用一个Always块描述就完事了.</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>由于即便是一个最小的自适应滤波器系统也是一个闭环系统,所以考虑到调试的简便性,这里主要做的工作是<strong>干扰消除</strong>,是自适应滤波里面差不多最常用也是最简单的应用.同时也是一道国赛题.</p>
+<p>在这个场景下,我们要实现的是,已知噪声信号和原始信号,需要从中还原出真实信号,所以系统框图是这样的:<br><img src="https://i.loli.net/2019/07/26/5d3a9c8cba90d31140.png" alt="又是一张自己做的图"></p>
+<h2 id="FPGA实现4阶LMS自适应滤波"><a href="#FPGA实现4阶LMS自适应滤波" class="headerlink" title="FPGA实现4阶LMS自适应滤波"></a>FPGA实现4阶LMS自适应滤波</h2><p>假设AD是12位,采样频率是50M的.<br>根据上面的讨论和假设,代码的大体框架其实已经给出了:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> fir_lms_one</span><br><span class="line">#(<span class="keyword">parameter</span> N1 = <span class="number">12</span> , N2=<span class="number">25</span>, L=<span class="number">4</span>) </span><br><span class="line">	<span class="comment">//N1 for Input data bit width and output coefficient bitwidth </span></span><br><span class="line">	<span class="comment">//N2 for two times of N1 , +1 for 4 coef</span></span><br><span class="line">	<span class="comment">//L  for Filter length </span></span><br><span class="line">	<span class="comment">//Delay for the pipeline of the system</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">input</span> clk,RST_N,					<span class="comment">//system clk and reset</span></span><br><span class="line">	<span class="keyword">input</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] x_in,	<span class="comment">//system_input</span></span><br><span class="line">	<span class="keyword">input</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] d_in,	<span class="comment">//Reference input</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] f0_out, <span class="comment">// 1 st coefficient</span></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] f1_out, <span class="comment">// 2 nd coefficient</span></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] f2_out, <span class="comment">// 3 rd coefficient</span></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] f3_out, <span class="comment">// 4 th coefficient</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">signed</span> [N2-<span class="number">1</span>:<span class="number">0</span>] y_out,	 <span class="comment">//System_output</span></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">signed</span> [N2-<span class="number">1</span>:<span class="number">0</span>] e_out	 <span class="comment">//error sig</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>因为我的quartus装在ubuntu上面,大不了中文注释,大家大概看看…<br>接着我们只要一步一步跟着算法流程跑就完事了,这里有三个点:</p>
+<ol>
+<li>FIR滤波器的输出涉及到的乘法器计算</li>
+<li>在更新误差函数和滤波器系数之间其实也涉及向量乘法</li>
+<li>步进值的选择</li>
+</ol>
+<p>下面就这三点给出部分源码(都很简单):</p>
+<ol>
+<li>FIR乘法器计算:<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//the fir filter circuit</span></span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [N1-<span class="number">1</span>:<span class="number">0</span>] f [<span class="number">0</span>:<span class="number">3</span>];</span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [N2-<span class="number">1</span>:<span class="number">0</span>] p [<span class="number">0</span>:<span class="number">3</span>]; <span class="comment">// fir cal temp array </span></span><br><span class="line"> <span class="keyword">always</span> @(*) </span><br><span class="line"> <span class="keyword">begin</span> : MulGen1    <span class="comment">//for inst L multplier</span></span><br><span class="line">   <span class="keyword">integer</span> I;   		<span class="comment">// loop variable </span></span><br><span class="line">   <span class="keyword">for</span> (I=<span class="number">0</span>; I&lt;L; I=I+<span class="number">1</span>) p[I] &lt;= x[I] * f[I];</span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">wire</span> <span class="keyword">signed</span> [N2-<span class="number">1</span>:<span class="number">0</span>] y;</span><br><span class="line"><span class="keyword">assign</span> y = p[<span class="number">0</span>]+p[<span class="number">1</span>]+p[<span class="number">2</span>]+p[<span class="number">3</span>] ;		 <span class="comment">//accumulation for fir</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>实际上,这就写完了…一定要注意这里的位宽对应,避免溢出</p>
+<ol start="2">
+<li>误差系数的更新和步进值<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//the error cal circuit</span></span><br><span class="line"><span class="keyword">wire</span> <span class="keyword">signed</span>[N2-<span class="number">1</span>:<span class="number">0</span>] e;					  <span class="comment">//to update the error </span></span><br><span class="line"><span class="keyword">assign</span> e 	= d_reg - (y&gt;&gt;&gt;<span class="number">11</span>);      <span class="comment">//cause to the bitwidth  </span></span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [N2-<span class="number">1</span>:<span class="number">0</span>] muex [<span class="number">0</span>:<span class="number">3</span>]; <span class="comment">// error coef temp array </span></span><br><span class="line"><span class="keyword">always</span> @(*) </span><br><span class="line"> <span class="keyword">begin</span> : MulGen2    <span class="comment">//for inst L multplier</span></span><br><span class="line">   <span class="keyword">integer</span> I;    	<span class="comment">// loop variable </span></span><br><span class="line">   <span class="keyword">for</span> (I=<span class="number">0</span>; I&lt;L; I=I+<span class="number">1</span>) muex[I] &lt;= (x[I] * e)&gt;&gt;&gt;<span class="number">4</span>;</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>这里的y因为是4个系数的乘积和,所以他的位宽和新的d[n]位宽是不一样的,需要截位处理</p>
+<p>另外就是步进值的选择,实际上我见过很多人写的都是在算出e之后直接移位的,但实际上这种做法稍稍有点不妥.</p>
+<p>在上一篇博客中,我们没有对这个不仅率进行讨论(虽然现在也不打算),但是,在理论上这一个值并不能太大,否则会导致梯度下降时在极值附近震荡,无法收敛.</p>
+<p>除此之外,我们更需要考虑的一个问题是,在硬件实现时的字长效应.如果我们在算出误差后直接移位的话,很容易会导致误差直接截位成0的情况,虽然闭环系统一成之后这里的误差很难为0,但是实属是一个隐患.所以在这里我选择了在更新完x[n]e之后再移位.</p>
+<p>再者,实际上,在后续的更新滤波器系数依然涉及到对误差的截位,也需要我们去操作一下.</p>
+<h3 id="编写testbeach"><a href="#编写testbeach" class="headerlink" title="编写testbeach..?"></a>编写testbeach..?</h3><p>这里本来是不想写的…但是之前的一些博客被别人问了一下,这里就再写写怎么读入文件数据进行仿真.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">parameter</span> 	data_num =<span class="number">500_000</span>;</span><br><span class="line"><span class="keyword">integer</span> i;   <span class="comment">//数组坐标</span></span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">11</span>:<span class="number">0</span>] stimulus[<span class="number">1</span>:data_num];  <span class="comment">//数组形式存储读出的数据</span></span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">11</span>:<span class="number">0</span>] misc_simulation[<span class="number">1</span>:data_num];  <span class="comment">//数组形式存储读出的数据</span></span><br><span class="line"><span class="keyword">initial</span> </span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">   RST_N = <span class="number">1'b1</span>;  d_in = <span class="number">12'b0</span>; x_in = <span class="number">12'b0</span>;</span><br><span class="line">	#<span class="number">60</span> RST_N = <span class="number">1'b0</span>;</span><br><span class="line">	#<span class="number">60</span> RST_N = <span class="number">1'b1</span>; </span><br><span class="line">	<span class="built_in">$display</span>(<span class="string">"Running testbench"</span>);                       </span><br><span class="line">    <span class="built_in">$readmemb</span>(<span class="string">"miscsig.txt"</span>, misc_simulation);  <span class="comment">//将txt文件中的数据存储在数组中</span></span><br><span class="line">	 <span class="built_in">$readmemb</span>(<span class="string">"xn.txt"</span>, stimulus);  <span class="comment">//将txt文件中的数据存储在数组中</span></span><br><span class="line"></span><br><span class="line">    i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">repeat</span>(data_num) <span class="keyword">begin</span>   <span class="comment">//重复读取数组中的数据</span></span><br><span class="line">        i = i + <span class="number">1</span>;</span><br><span class="line">	    x_in= stimulus[i%data_num];</span><br><span class="line">	    d_in = misc_simulation[i%data_num];</span><br><span class="line">        #PERIOD;         <span class="comment">//每个时钟读取一次</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	 <span class="built_in">$stop</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>readmemb的意思是以二进制的形式读取一个数据,同样有readmemh等一系列函数.这里过于简单,不再赘述.</p>
+<h2 id="Matlab生成仿真数据"><a href="#Matlab生成仿真数据" class="headerlink" title="Matlab生成仿真数据"></a>Matlab生成仿真数据</h2><p>这里为了作死,我选取了一个双音信号做噪声输入,正常信号为一正弦波,还加入了两个相位差:<br>以下为系统参数,具体代码在之前的<a href="https://www.jianshu.com/p/4a51ba7c922d" target="_blank" rel="noopener">IIR滤波器的FPGA实现</a>给出过.</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">%=============设置系统参数==============%</span></span><br><span class="line">f1=<span class="number">2000e3</span>;        <span class="comment">%设置波形频率</span></span><br><span class="line">f2=<span class="number">100e3</span>;</span><br><span class="line">f3=<span class="number">10000e3</span></span><br><span class="line">Fs=<span class="number">50e6</span>;        <span class="comment">%设置采样频率</span></span><br><span class="line">L=<span class="number">50e3</span>;         <span class="comment">%数据长度</span></span><br><span class="line">N=<span class="number">12</span>;           <span class="comment">%数据位宽</span></span><br><span class="line">phase = <span class="built_in">pi</span>/<span class="number">6</span>;</span><br><span class="line"><span class="comment">%=============产生输入信号==============%</span></span><br><span class="line">t=<span class="number">0</span>:<span class="number">1</span>/Fs:(<span class="number">1</span>/Fs)*(L<span class="number">-1</span>);</span><br><span class="line">y1=<span class="built_in">sin</span>(<span class="number">2</span>*<span class="built_in">pi</span>*f1*t);							<span class="comment">%x[n]1</span></span><br><span class="line">y2=<span class="number">1</span>*<span class="built_in">sin</span>(<span class="number">2</span>*<span class="built_in">pi</span>*f2*t+phase);     </span><br><span class="line">y3=<span class="number">1</span>*<span class="built_in">sin</span>(<span class="number">2</span>*<span class="built_in">pi</span>*f3*t+phase);		<span class="comment">%x[n]2</span></span><br><span class="line">y4= y1+y2+y3;</span><br><span class="line">y_n=<span class="built_in">round</span>(y4*(<span class="number">2</span>^(N<span class="number">-3</span>)<span class="number">-1</span>));      <span class="comment">%N比特量化;如果有n个信号相加，则设置（N-n）</span></span><br></pre></td></tr></table></figure>
+
+<p>我们现在要从这个双音信号的干扰中还原出100Khz的这个信号出来.</p>
+<h2 id="Modelsim仿真结果"><a href="#Modelsim仿真结果" class="headerlink" title="Modelsim仿真结果"></a>Modelsim仿真结果</h2><h3 id="收敛时间"><a href="#收敛时间" class="headerlink" title="收敛时间"></a>收敛时间</h3><p><img src="https://i.loli.net/2019/07/26/5d3aa8ac7d2b636209.png" alt="ubuntu截图"><br>如果看系数的话,这大概在1ms左右的时间就收敛了,如果看波形的话,实际上大概在20us左右就收敛了.</p>
+<h3 id="滤波效果"><a href="#滤波效果" class="headerlink" title="滤波效果"></a>滤波效果</h3><p>说实话,滤波效果还不能说很好…<br><img src="https://i.loli.net/2019/07/26/5d3aaa145158c86418.png" alt="滤波效果"><br>效果有点差强人意吧,不过大家其实也不必对<strong>四阶FIR</strong>滤波器抱太大的希望…</p>
+<h2 id="改进方向"><a href="#改进方向" class="headerlink" title="改进方向"></a>改进方向</h2><p>实际上,在真正的电赛中,对频带有很严格的要求,但是收敛时间的要求也有点苛刻,但是也并不是真就做不了</p>
+<p>此处只给方向,</p>
+<h3 id="阶数提高"><a href="#阶数提高" class="headerlink" title="阶数提高"></a>阶数提高</h3><p>这个针对的是频带,因为实际的滤波效果,滤波器性能和阶数是严格正相关的,所以提高阶数能把性能指标给提上去.但是可能会发生一方溢出,多方震荡的麻烦情节,增加许多Debug时间.</p>
+<h3 id="流水线化"><a href="#流水线化" class="headerlink" title="流水线化"></a>流水线化</h3><p>这个针对的是系统的最高运行频率,但是流水线所带来的延时降低这个闭环系统的稳定性,所以这个流水性的阶数和步进因子u都需要好好地选择</p>
+<h3 id="变步长算法"><a href="#变步长算法" class="headerlink" title="变步长算法"></a>变步长算法</h3><p>这个针对的是收敛时间,通过判断误差的大小来选择不同的步长,从而实现更快的收敛速率.不过这个选择同样也需要小心翼翼地选择系数和阈值,否则可能会造成环路失控.</p>
+<h3 id="多相分解"><a href="#多相分解" class="headerlink" title="多相分解"></a>多相分解</h3><p>这个针对的是收敛时间和滤波器性能.这个做法就是典型的”用空间换时间”,通过对输入信号的多相分解,实现高阶数的滤波效果,但是空间复杂度确实猛猛地涨.</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>闭环系统的调试实在是太鸡儿难了,不过一开始还是因为自己理论还没过关,主要是对理论的指标还没过关,然后没有拆环分析,就一直瞎调,真就一顿操作猛如虎,一看波形丑如狗…</p>
+<p>大二的时候都不知道自己怎么做出来的.突然想起了浣沙老师说过的: “你看上去他的代码写得是特别的烂,但是能用,以后工作了,也别想着重构这些代码,能用就行”.大二的那个版本做了变步长和多相分解,但是代码着实写得太烂了…并且用这个代码改上去也不难.我记得当时是根据两三篇硕士论文写出来的,有空再给大家贴上.</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/26/LMS自适应滤波的FPGA实现-一/" rel="next" title="LMS自适应滤波的FPGA实现(一)">
+                  <i class="fa fa-chevron-left"></i> LMS自适应滤波的FPGA实现(一)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/11/hello-world/" rel="prev" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LMS自适应滤波的FPGA实现-二"><span class="nav-number">1.</span> <span class="nav-text">LMS自适应滤波的FPGA实现(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法流程"><span class="nav-number">1.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">1.2.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FPGA实现4阶LMS自适应滤波"><span class="nav-number">1.3.</span> <span class="nav-text">FPGA实现4阶LMS自适应滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编写testbeach"><span class="nav-number">1.3.1.</span> <span class="nav-text">编写testbeach..?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matlab生成仿真数据"><span class="nav-number">1.4.</span> <span class="nav-text">Matlab生成仿真数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modelsim仿真结果"><span class="nav-number">1.5.</span> <span class="nav-text">Modelsim仿真结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#收敛时间"><span class="nav-number">1.5.1.</span> <span class="nav-text">收敛时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滤波效果"><span class="nav-number">1.5.2.</span> <span class="nav-text">滤波效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进方向"><span class="nav-number">1.6.</span> <span class="nav-text">改进方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阶数提高"><span class="nav-number">1.6.1.</span> <span class="nav-text">阶数提高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线化"><span class="nav-number">1.6.2.</span> <span class="nav-text">流水线化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变步长算法"><span class="nav-number">1.6.3.</span> <span class="nav-text">变步长算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多相分解"><span class="nav-number">1.6.4.</span> <span class="nav-text">多相分解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.7.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="博弈论基础(二)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博弈论基础(二)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/08/12/博弈论基础-二/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="博弈论基础(二)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-12T06:24:30.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="博弈论基础(二)">
+<meta name="twitter:description" content="博弈论基础(二)">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/08/12/博弈论基础-二/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>博弈论基础(二) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/08/12/博弈论基础-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            博弈论基础(二)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-12 11:41:51" itemprop="dateCreated datePublished" datetime="2018-08-12T11:41:51+08:00">2018-08-12</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:24:30" itemprop="dateModified" datetime="2019-10-12T14:24:30+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LIFE/" itemprop="url" rel="index">
+                    <span itemprop="name">LIFE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">博弈论基础(二)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="博弈论基础-二"><a href="#博弈论基础-二" class="headerlink" title="博弈论基础(二)"></a>博弈论基础(二)</h1><p><a href="https://www.icourse163.org/learn/ZJU-20001?tid=1002223009#/learn/content?type=detail&id=1002981080" target="_blank" rel="noopener">课程地址</a><br><a href="https://www.bilibili.com/video/av20722890/?p=2" target="_blank" rel="noopener">b站地址</a></p>
+<h2 id="发展简史"><a href="#发展简史" class="headerlink" title="发展简史"></a>发展简史</h2><h3 id="古诺模型"><a href="#古诺模型" class="headerlink" title="古诺模型"></a>古诺模型</h3><p>参加博弈的双方以各自在同一时间内相互独立的产量作为决策的变量,是一个产量竞争模型.</p>
+<h3 id="伯川德模型"><a href="#伯川德模型" class="headerlink" title="伯川德模型"></a>伯川德模型</h3><p>和古诺模型不同之处在于,企业把其产品的价格而不是产量作为竞争手段和决策变量,通过制定一个最优的销售价格来实现利润最大化.</p>
+<h3 id="斯塔克尔伯格模型"><a href="#斯塔克尔伯格模型" class="headerlink" title="斯塔克尔伯格模型"></a>斯塔克尔伯格模型</h3><p>该模型分析的是这么一种市场竞争:企业A先决定一个产量,然后企业B可以观察到这个产量,并根据所观察到的产量来决定它自己的产量.</p>
+<h2 id="理论诞生与发展"><a href="#理论诞生与发展" class="headerlink" title="理论诞生与发展"></a>理论诞生与发展</h2><h3 id="20世纪40年代"><a href="#20世纪40年代" class="headerlink" title="20世纪40年代"></a>20世纪40年代</h3><p>约翰<del>冯</del>诺伊曼<br>约翰<del>福布斯</del>纳什  =》纳什均衡<br>开创并发扬光大<strong>博弈论</strong></p>
+<h3 id="现代博弈论的几个方向"><a href="#现代博弈论的几个方向" class="headerlink" title="现代博弈论的几个方向"></a>现代博弈论的几个方向</h3><ol>
+<li>纳什均衡的弱化</li>
+<li>纳什均衡的精炼</li>
+<li>博弈论基本假设的研究</li>
+<li>博弈论的应用研究</li>
+</ol>
+<h2 id="博弈的术语"><a href="#博弈的术语" class="headerlink" title="博弈的术语"></a>博弈的术语</h2><ol>
+<li>参与人（players）</li>
+<li>信息（information）</li>
+<li>行动（action）</li>
+<li>策略（strategies）: 参与者在行动之前所准备好的一套完整的行动方案（预案）</li>
+<li>损益(payoff)</li>
+<li>结局(outcome)</li>
+<li>均衡(equilibrium):所有参与者的最优策略组合</li>
+<li>博弈的规则(rules of the game)<br>###好的应急预案</li>
+<li>what？（信息分类）</li>
+<li>who?  (责任到人)</li>
+<li>action? (措施具体)</li>
+<li>when?(时效性)</li>
+</ol>
+<h2 id="博弈的定义-offical"><a href="#博弈的定义-offical" class="headerlink" title="博弈的定义(offical)"></a>博弈的定义(offical)</h2><p>博弈论(game theory)是一种研究人们怎么做策略(行动)选择及其最后的均衡结果会是什么的理论</p>
+<h2 id="博弈的分类"><a href="#博弈的分类" class="headerlink" title="博弈的分类"></a>博弈的分类</h2><h3 id="合作博弈和非合作博弈"><a href="#合作博弈和非合作博弈" class="headerlink" title="合作博弈和非合作博弈"></a>合作博弈和非合作博弈</h3><p><strong>合作博弈*</strong>:指参与者能够达成一种具有约束力的协议,在协议范围内选择有利于双方的策略<br><strong>非合作博弈</strong>:指参与者无法达成这样一种协议</p>
+<h3 id="静态博弈和动态博弈"><a href="#静态博弈和动态博弈" class="headerlink" title="静态博弈和动态博弈"></a>静态博弈和动态博弈</h3><p><strong>静态博弈</strong>:指在博弈中,参与者同时选择,或虽非同时选择,但是在逻辑时间上是同时的.<br><strong>动态博弈</strong>:指在博弈中,参与者的行动有先后顺序,且后行动者能够观察到先行动者的行动</p>
+<h3 id="完全信息博弈与不完全信息博弈"><a href="#完全信息博弈与不完全信息博弈" class="headerlink" title="完全信息博弈与不完全信息博弈"></a>完全信息博弈与不完全信息博弈</h3><p><strong>完全信息博弈</strong>:指在博弈中,每个参与者对其它参与者的类型,策略空间及损益函数都有准确的信息.<br><strong>不完全信息博弈</strong>:总有一些信息不是所有参与者都知道的</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/08/11/博弈论基础-一/" rel="next" title="博弈论基础(一)">
+                  <i class="fa fa-chevron-left"></i> 博弈论基础(一)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/08/13/博弈论-一-–yale/" rel="prev" title="博弈论(一)–yale">
+                  博弈论(一)–yale <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#博弈论基础-二"><span class="nav-number">1.</span> <span class="nav-text">博弈论基础(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发展简史"><span class="nav-number">1.1.</span> <span class="nav-text">发展简史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#古诺模型"><span class="nav-number">1.1.1.</span> <span class="nav-text">古诺模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伯川德模型"><span class="nav-number">1.1.2.</span> <span class="nav-text">伯川德模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斯塔克尔伯格模型"><span class="nav-number">1.1.3.</span> <span class="nav-text">斯塔克尔伯格模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论诞生与发展"><span class="nav-number">1.2.</span> <span class="nav-text">理论诞生与发展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#20世纪40年代"><span class="nav-number">1.2.1.</span> <span class="nav-text">20世纪40年代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现代博弈论的几个方向"><span class="nav-number">1.2.2.</span> <span class="nav-text">现代博弈论的几个方向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#博弈的术语"><span class="nav-number">1.3.</span> <span class="nav-text">博弈的术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#博弈的定义-offical"><span class="nav-number">1.4.</span> <span class="nav-text">博弈的定义(offical)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#博弈的分类"><span class="nav-number">1.5.</span> <span class="nav-text">博弈的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#合作博弈和非合作博弈"><span class="nav-number">1.5.1.</span> <span class="nav-text">合作博弈和非合作博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态博弈和动态博弈"><span class="nav-number">1.5.2.</span> <span class="nav-text">静态博弈和动态博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完全信息博弈与不完全信息博弈"><span class="nav-number">1.5.3.</span> <span class="nav-text">完全信息博弈与不完全信息博弈</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

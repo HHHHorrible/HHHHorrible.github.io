@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="ZYNQ入门(三)-定时器中断">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZYNQ入门(三)-定时器中断">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/08/13/ZYNQ入门-三-定时器中断/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="ZYNQ入门(三)-定时器中断">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/806931/201609/806931-20160925150600830-482897278.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/22/5b53db50deecc.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/22/5b53e6d3e441a.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/22/5b53e71467347.jpg">
+<meta property="og:updated_time" content="2019-10-12T06:27:00.690Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZYNQ入门(三)-定时器中断">
+<meta name="twitter:description" content="ZYNQ入门(三)-定时器中断">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/806931/201609/806931-20160925150600830-482897278.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/08/13/ZYNQ入门-三-定时器中断/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>ZYNQ入门(三)-定时器中断 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/08/13/ZYNQ入门-三-定时器中断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            ZYNQ入门(三)-定时器中断
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-13 11:44:21" itemprop="dateCreated datePublished" datetime="2018-08-13T11:44:21+08:00">2018-08-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:27:00" itemprop="dateModified" datetime="2019-10-12T14:27:00+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FPGA-ZYNQ/" itemprop="url" rel="index">
+                    <span itemprop="name">FPGA ZYNQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">ZYNQ入门(三)-定时器中断</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="ZYNQ入门-三-定时器中断"><a href="#ZYNQ入门-三-定时器中断" class="headerlink" title="ZYNQ入门(三)-定时器中断"></a>ZYNQ入门(三)-定时器中断</h1><h2 id="zynq的中断体系结构框图"><a href="#zynq的中断体系结构框图" class="headerlink" title="zynq的中断体系结构框图"></a>zynq的中断体系结构框图</h2><p><img src="https://images2015.cnblogs.com/blog/806931/201609/806931-20160925150600830-482897278.jpg" alt="zynq_interrupt"></p>
+<h2 id="中断控制器-GIC"><a href="#中断控制器-GIC" class="headerlink" title="中断控制器(GIC)"></a>中断控制器(GIC)</h2><p>在zynq中的中断控制比较复杂,主要是因为中断接收端有两个cpu,涉及到cpu的中断协同问题,中断的发起端除了常见的之外还有PL端哔哩吧啦一大推.<br>见<a href="https://www.xilinx.com/support/documentation/user_guides/ug585-Zynq-7000-TRM.pdf" target="_blank" rel="noopener">官方文档chapter_8</a>别慌,问题不大</p>
+<blockquote>
+<p>All interrupt sources are identified by a unique interrupt ID number.All interrupt sources have their own configurable priority and list of targeted CPUs  –chapter7_interrupt</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>SGI: Software Generated Interrupts  软件中断 16个<br>SPI: Shared Peripheral Interrupts      共享(PS/PL)外设中断 60个<br>PPI: Private Peripheral Interrupts      私有中断  每个cpu各5个,计数时钟为主频一半<br>FIQ: Fast inte<br>rrupt request                快速中断响应<br>IRQ: interrupt request                        中断响应</p>
+</blockquote>
+<h2 id="实现一个简单的一秒PPI"><a href="#实现一个简单的一秒PPI" class="headerlink" title="实现一个简单的一秒PPI"></a>实现一个简单的一秒PPI</h2><p>正确认识下,一个PPI是纯PS端的,也就是说他只是我们说的简单的<strong>单片机的中断</strong>而已.</p>
+<ol>
+<li><p>新建一个纯PS工程,并导入SDK,挑选helloworld模板和生成bps(见前面的博客)</p>
+</li>
+<li><p>将heloworld.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xadcps.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xil_types.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Xscugic.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Xil_exception.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xscutimer.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TIMER_DEVICE_ID	 	XPAR_XSCUTIMER_0_DEVICE_ID</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTC_DEVICE_ID  	XPAR_SCUGIC_SINGLE_DEVICE_ID</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TIMER_IRPT_INTR		XPAR_SCUTIMER_INTR</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//加载计数周期，私有定时器癿时钟为CPU癿一般，为333MHZ,如果计数1S,加载值为1sx(333x1000x1000)(1/s)-1=0x13D92D3F</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TIMER_LOAD_VALUE 0x13D92D3F    <span class="comment">//一秒</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> XScuGic 		Intc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> XScuTimer 	Timer;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SetupInterruptSystem</span><span class="params">(XScuGic *Gicptr , XScuTimer *timerptr ,u16 TimerIntrId)</span></span>;   <span class="comment">//中断注册函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">TimerIntrHandler</span><span class="params">(<span class="keyword">void</span> *CallBackRef)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//#include "platform.h"</span></span><br><span class="line"><span class="comment">//void print(char *str);</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    XScuTimer_Config *TMRConfigPtr;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"start/n"</span>);</span><br><span class="line">    <span class="comment">//PPI setup</span></span><br><span class="line">    TMRConfigPtr = XScuTimer_LookupConfig(TIMER_DEVICE_ID);</span><br><span class="line"></span><br><span class="line">    XScuTimer_CfgInitialize(&amp;Timer, TMRConfigPtr,TMRConfigPtr-&gt;BaseAddr);</span><br><span class="line"></span><br><span class="line">    XScuTimer_SelfTest(&amp;Timer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//加载计数周期，私有定时器的时钟为CPU的一半，为333MHZ,</span></span><br><span class="line">    <span class="comment">//如果计数1S,加载值为1sx(333x1000x1000)(1/s)-1=0x13D92D3F</span></span><br><span class="line">    XScuTimer_LoadTimer(&amp;Timer, TIMER_LOAD_VALUE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自劢装载</span></span><br><span class="line">    XScuTimer_EnableAutoReload(&amp;Timer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//启劢定时器</span></span><br><span class="line">    XScuTimer_Start(&amp;Timer);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//set up the GIC</span></span><br><span class="line">    SetupInterruptSystem(&amp;Intc,&amp;Timer,TIMER_IRPT_INTR);</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SetupInterruptSystem</span><span class="params">(XScuGic *Gicptr , XScuTimer *timerptr ,u16 TimerIntrId)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	XScuGic_Config *IntcConfig; <span class="comment">//GIC config</span></span><br><span class="line">	Xil_ExceptionInit();</span><br><span class="line">	IntcConfig = XScuGic_LookupConfig(INTC_DEVICE_ID);</span><br><span class="line">	XScuGic_CfgInitialize(Gicptr, IntcConfig, IntcConfig-&gt;CpuBaseAddress);</span><br><span class="line">	<span class="comment">//connect to the hardware</span></span><br><span class="line">	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler)XScuGic_InterruptHandler, Gicptr);</span><br><span class="line">	<span class="comment">//set up the timer interrupt</span></span><br><span class="line">	XScuGic_Connect(Gicptr, TimerIntrId,</span><br><span class="line">				   (Xil_ExceptionHandler)TimerIntrHandler,</span><br><span class="line">				   (<span class="keyword">void</span> *)timerptr);</span><br><span class="line">	<span class="comment">//enable the interrupt for the Timer at GIC</span></span><br><span class="line">	XScuGic_Enable(Gicptr, TimerIntrId);</span><br><span class="line">	<span class="comment">//enable interrupt on the timer</span></span><br><span class="line">	XScuTimer_EnableInterrupt(timerptr);</span><br><span class="line">	<span class="comment">// Enable interrupts in the Processor.</span></span><br><span class="line">	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">TimerIntrHandler</span><span class="params">(<span class="keyword">void</span> *CallBackRef)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> sec=<span class="number">0</span>;</span><br><span class="line">	XScuTimer *timerptr = (XScuTimer *)CallBackRef;</span><br><span class="line">	XScuTimer_ClearInterruptStatus(timerptr);</span><br><span class="line"></span><br><span class="line">	sec++;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">" %d Second\n\r"</span>,sec); <span class="comment">//每秒打印输出一次</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载到板子上面</p>
+</li>
+</ol>
+<p>##做一点简单的解释</p>
+<p>###为什么gic和timer前面都会带有一个SCU<br>见手册第三章3.3</p>
+<blockquote>
+<p>SCU: snoop control unit  (窥探控制单元?)</p>
+</blockquote>
+<p>再看回上一篇博客的block manager那张图,我们可以看到GIC和SCU是<strong>连在一起的!</strong><br><img src="https://i.loli.net/2018/07/22/5b53db50deecc.jpg" alt="suc"></p>
+<p>可以看到,SCU主要是解决ARM的L1和L2的缓存协调(因为两个processor的缓存是共用的)<br>和AXI总线的ACP存取的,也就是DMA等高速中断需求的外设<br>###流程</p>
+<ol>
+<li><p>设置定时器<br> 通过ID号查配置-&gt;配置写入-&gt;初始化-&gt;加入预加载值-&gt;开启自动重载-&gt;开启定时</p>
+</li>
+<li><p>设置GIC<br> 传入定时器配置-&gt;通过ID号查配置-&gt;配置写入-&gt;注册处理函数-&gt;定时器中断信号和中断函数连接-&gt;使能定时器中断<br> -&gt;使能中断-&gt;使能处理器处理中断</p>
+<p>差不多就是一个流程对应一个函数这样子</p>
+</li>
+<li><p>ID号可以在<code>xparameters.h</code> 里面找到</p>
+</li>
+<li><p>函数(API)可以在bps里面的system.mss里面的每一个模块的docs里面找到</p>
+</li>
+</ol>
+<p>##PS和PL共享中断<br>也就是图上所说的<strong>SPI(Shared Peripheral Interrupts)</strong><br>###同前面的PS-PL协同开发的项目新建<br>2. 加入一个GPIO1,全部输入,使能中断<br><img src="https://i.loli.net/2018/07/22/5b53e6d3e441a.jpg" alt="block1"><br>3. 再加入一个gpio0作led灯用<br><img src="https://i.loli.net/2018/07/22/5b53e71467347.jpg" alt="system_block"><br>4. 同协同项目流程一致,封装,生成bit<del>~</del><br>5. 导入sdk,新建bsp<br>###hello源码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xparameters.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xscugic.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xil_exception.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xgpio.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Parameter definitions</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTC_DEVICE_ID      XPAR_PS7_SCUGIC_0_DEVICE_ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LED_DEVICE_ID       XPAR_GPIO_1_DEVICE_ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BTNS_DEVICE_ID      XPAR_GPIO_0_DEVICE_ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTC_GPIO_INTERRUPT_ID XPAR_FABRIC_KEY_4B_IP2INTC_IRPT_INTR</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BTN_INT             XGPIO_IR_CH1_MASK <span class="comment">// This is the interrupt mask for channel one</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">XGpio   LED;</span><br><span class="line"></span><br><span class="line">XGpio   BTNInst;</span><br><span class="line"></span><br><span class="line">XScuGic INTCInst;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> u8 btn_value;</span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// PROTOTYPE FUNCTIONS</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">BTN_Intr_Handler</span><span class="params">(<span class="keyword">void</span> *baseaddr_p)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">InterruptSystemSetup</span><span class="params">(XScuGic *XScuGicInstancePtr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">IntcInitFunction</span><span class="params">(u16 DeviceId, XGpio *GpioInstancePtr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  INTERRUPT SERVICE ROUTINE(ISR)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//also know as : INTERRUPT HANDLER FUNCTION</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// - called by the buttons interrupt, performs push buttons read</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BTN_Intr_Handler</span><span class="params">(<span class="keyword">void</span> *InstancePtr)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> led_val = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Ignore additional button presses</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ((XGpio_InterruptGetStatus(&amp;BTNInst) &amp; BTN_INT) !=</span><br><span class="line"></span><br><span class="line">            BTN_INT) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Disable GPIO interrupts</span></span><br><span class="line"></span><br><span class="line">    XGpio_InterruptDisable(&amp;BTNInst, BTN_INT);</span><br><span class="line"></span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line">    btn_value = ~XGpio_DiscreteRead(&amp;BTNInst, <span class="number">1</span>)&amp;<span class="number">0x0f</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> (btn_value)&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="number">0x01</span>: led_val = <span class="number">0x01</span>; <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="number">0x02</span>: led_val = <span class="number">0x02</span>; <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="number">0x04</span>: led_val = <span class="number">0x04</span>; <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="number">0x08</span>: led_val = <span class="number">0x08</span>; <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">default</span>:<span class="keyword">break</span>;  &#125;</span><br><span class="line"></span><br><span class="line">    XGpio_DiscreteWrite(&amp;LED,<span class="number">1</span>,~led_val);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Acknowledge GPIO interrupts</span></span><br><span class="line"></span><br><span class="line">    (<span class="keyword">void</span>)XGpio_InterruptClear(&amp;BTNInst, BTN_INT);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Enable GPIO interrupts</span></span><br><span class="line"></span><br><span class="line">    XGpio_InterruptEnable(&amp;BTNInst, BTN_INT);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// MAIN FUNCTION</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化按键</span></span><br><span class="line"></span><br><span class="line">  status = XGpio_Initialize(&amp;BTNInst, BTNS_DEVICE_ID);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(status != XST_SUCCESS) <span class="keyword">return</span> XST_FAILURE;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化LED</span></span><br><span class="line"></span><br><span class="line">  status = XGpio_Initialize(&amp;LED, LED_DEVICE_ID);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(status != XST_SUCCESS) <span class="keyword">return</span> XST_FAILURE;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置按键IO的方向为输入</span></span><br><span class="line"></span><br><span class="line">  XGpio_SetDataDirection(&amp;BTNInst, <span class="number">1</span>, <span class="number">0xF</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置LED IO的方向为输出</span></span><br><span class="line"></span><br><span class="line">  XGpio_SetDataDirection(&amp;LED, <span class="number">1</span>, <span class="number">0x00</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置LED 灯熄灭</span></span><br><span class="line"></span><br><span class="line">  XGpio_DiscreteWrite(&amp;LED,<span class="number">1</span>,<span class="number">0x0f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化按键的中断控制器</span></span><br><span class="line"></span><br><span class="line">  status = IntcInitFunction(INTC_DEVICE_ID, &amp;BTNInst);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(status != XST_SUCCESS) <span class="keyword">return</span> XST_FAILURE;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// INTERRUPT SETUP FUNCTIONS</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">IntcInitFunction</span><span class="params">(u16 DeviceId, XGpio *GpioInstancePtr)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">XScuGic_Config *IntcConfig;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Interrupt controller initialization</span></span><br><span class="line"></span><br><span class="line">    IntcConfig = XScuGic_LookupConfig(DeviceId);</span><br><span class="line"></span><br><span class="line">    status = XScuGic_CfgInitialize(&amp;INTCInst, IntcConfig, IntcConfig-&gt;CpuBaseAddress);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(status != XST_SUCCESS) <span class="keyword">return</span> XST_FAILURE;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call interrupt setup function</span></span><br><span class="line"></span><br><span class="line">    status = InterruptSystemSetup(&amp;INTCInst);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(status != XST_SUCCESS) <span class="keyword">return</span> XST_FAILURE;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Register GPIO interrupt handler</span></span><br><span class="line"></span><br><span class="line">    status = XScuGic_Connect(&amp;INTCInst,</span><br><span class="line"></span><br><span class="line">                             INTC_GPIO_INTERRUPT_ID,</span><br><span class="line"></span><br><span class="line">                             (Xil_ExceptionHandler)BTN_Intr_Handler,</span><br><span class="line"></span><br><span class="line">                             (<span class="keyword">void</span> *)GpioInstancePtr);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(status != XST_SUCCESS) <span class="keyword">return</span> XST_FAILURE;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Enable GPIO interrupts</span></span><br><span class="line"></span><br><span class="line">    XGpio_InterruptEnable(GpioInstancePtr, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    XGpio_InterruptGlobalEnable(GpioInstancePtr);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Enable GPIO interrupts in the controller</span></span><br><span class="line"></span><br><span class="line">    XScuGic_Enable(&amp;INTCInst, INTC_GPIO_INTERRUPT_ID);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> XST_SUCCESS;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">InterruptSystemSetup</span><span class="params">(XScuGic *XScuGicInstancePtr)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Register GIC interrupt handler</span></span><br><span class="line"></span><br><span class="line">    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,</span><br><span class="line"></span><br><span class="line">                                 (Xil_ExceptionHandler)XScuGic_InterruptHandler,</span><br><span class="line"></span><br><span class="line">                                 XScuGicInstancePtr);</span><br><span class="line"></span><br><span class="line">    Xil_ExceptionEnable();</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> XST_SUCCESS;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序也算是很简单了,看到他的初始化流程是先初始化一个指针去查找ID对应的配置,然后用一个函数写入就完事了..</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/08/13/博弈论-一-–yale/" rel="next" title="博弈论(一)–yale">
+                  <i class="fa fa-chevron-left"></i> 博弈论(一)–yale
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/08/28/正则表达式入门/" rel="prev" title="正则表达式入门">
+                  正则表达式入门 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZYNQ入门-三-定时器中断"><span class="nav-number">1.</span> <span class="nav-text">ZYNQ入门(三)-定时器中断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zynq的中断体系结构框图"><span class="nav-number">1.1.</span> <span class="nav-text">zynq的中断体系结构框图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断控制器-GIC"><span class="nav-number">1.2.</span> <span class="nav-text">中断控制器(GIC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现一个简单的一秒PPI"><span class="nav-number">1.3.</span> <span class="nav-text">实现一个简单的一秒PPI</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

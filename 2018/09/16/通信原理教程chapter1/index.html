@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="通信原理教程chapter1">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通信原理教程chapter1">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2018/09/16/通信原理教程chapter1/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="通信原理教程chapter1">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/09/16/5b9e3c10665ca.jpg">
+<meta property="og:updated_time" content="2019-10-12T06:44:12.112Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通信原理教程chapter1">
+<meta name="twitter:description" content="通信原理教程chapter1">
+<meta name="twitter:image" content="https://i.loli.net/2018/09/16/5b9e3c10665ca.jpg">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/09/16/通信原理教程chapter1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>通信原理教程chapter1 | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2018/09/16/通信原理教程chapter1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            通信原理教程chapter1
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-16 20:45:15" itemprop="dateCreated datePublished" datetime="2018-09-16T20:45:15+08:00">2018-09-16</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 14:44:12" itemprop="dateModified" datetime="2019-10-12T14:44:12+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/通信原理/" itemprop="url" rel="index">
+                    <span itemprop="name">通信原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">通信原理教程chapter1</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="通信原理教程chapter1"><a href="#通信原理教程chapter1" class="headerlink" title="通信原理教程chapter1"></a>通信原理教程chapter1</h1><p>山竹著</p>
+<p>教材用的是《通信原理教程》(第三版)–樊昌信著</p>
+<p>[TOC]</p>
+<h2 id="消息-信息和信号"><a href="#消息-信息和信号" class="headerlink" title="消息,信息和信号"></a>消息,信息和信号</h2><p>举个例子:</p>
+<ol>
+<li>假设你家里有矿,形形色色的矿</li>
+<li>有一天你闲得无聊,去看别人挖矿</li>
+</ol>
+<p>你所能看见的各种各样的矿石就是我们所说的”<strong>消息</strong>“,而从矿石里面提炼出金银铜铁,便是”<strong>信息</strong>“,而不管是金银铜铁矿,他们提炼的途径几乎是相似的,便是先熔成熔浆,再用各种处理方法去处理.这里所提到的熔浆,便是”<strong>信号</strong>“了.</p>
+<h3 id="信息量"><a href="#信息量" class="headerlink" title="信息量"></a>信息量</h3><p>用上面的例子就是,怎么去判断熔浆里面,我们<strong>想要的东西的含量</strong>有多少?</p>
+<ol>
+<li>假设你家的矿坍塌了,现在采的矿石都是金银铜铁混合的.</li>
+<li>出现金银铜铁的概率是独立的,不可能互相转化<br>显然:<br>$$P_{金} &lt; P_{银} &lt; P_{铜} &lt; P_{铁}$$</li>
+</ol>
+<p>从普世价值观来说,我们可以隐约感受到:<strong>信息量和每个独立事件的概率是成反比的</strong><br>所以我们定义信息量(I):<br>$$I = - log_{a}\frac1{P(x)} = log_a P(x)$$</p>
+<p>定义为对数反比关系主要是因为我们所定义的消息里各种信息出现的概率是独立的,就是假设的第二条.<br>也就是有:<br>$$I[P(x_1)P(x_2)……]=I[P(x_1)]+I[P(x_2)]+……$$<br>刚好就是对数关系.<br>对于对数的底数怎么取也是有讲究的:</p>
+<ol>
+<li>如果a=2 , 则信息量的单位为比特(bit),简称为b (最为常用)</li>
+<li>如果a=e , 则信息量的单位为奈特(nat)</li>
+<li>如果a=10,则信息量的单位为哈特莱(hartley)</li>
+</ol>
+<p>现在考虑等概率的独立事件情况,也就是:<br>$$P_{金} = P_{银} = P_{铜} = P_{铁}$$<br>由于信息出现的概率是一样的,所以变量在于信息的数量.同时传输M个等概率的消息之一,等同于发送一个M进制的信号.</p>
+<p>所以这时候<strong>衡量信息量</strong>就可以写成(以2为底):<br>$$I=log_2 \frac1{1/M} = log_2 M$$</p>
+<h2 id="数字通信系统"><a href="#数字通信系统" class="headerlink" title="数字通信系统"></a>数字通信系统</h2><h3 id="通信系统基本概念"><a href="#通信系统基本概念" class="headerlink" title="通信系统基本概念"></a>通信系统基本概念</h3><p>不多说,</p>
+<h4 id="模拟通信系统"><a href="#模拟通信系统" class="headerlink" title="模拟通信系统"></a>模拟通信系统</h4><ol>
+<li>系统传输质量的准则:信号噪声功率比(信噪比)</li>
+<li>基本问题:连续波形的参量估值问题</li>
+</ol>
+<h4 id="数字通信系统-1"><a href="#数字通信系统-1" class="headerlink" title="数字通信系统"></a>数字通信系统</h4><ol>
+<li>系统传输质量的准则:产生错误判决的概率(误码率)</li>
+<li>理论基础:<strong>统计判决理论</strong></li>
+</ol>
+<h3 id="数字通信的优点"><a href="#数字通信的优点" class="headerlink" title="数字通信的优点:"></a>数字通信的优点:</h3><ol>
+<li>由于有中继站对失真信号的整形,所以到接收端依然有高质量的接收信号.</li>
+<li>可以采用纠错编码等差错控制技术,提高系统抗干扰能力.(汉明码)</li>
+<li>可以采用数字加密技术,提高系统的保密性</li>
+<li>可以综合传输各种模拟和数字输入消息,便于存储和处理</li>
+<li>设计和制造更容易,体积更小,重量更轻</li>
+<li>可以通过信源编码进行压缩,提高信道利用率</li>
+<li>输出信噪比随带宽按指数规律增长.</li>
+</ol>
+<h3 id="数字通信系统模型"><a href="#数字通信系统模型" class="headerlink" title="数字通信系统模型"></a>数字通信系统模型</h3><p>这里由于有些上课没讲,有些上课讲了很多次了.而且又是基本概念,后面会有详细讲,这里就不详述了.<br>字不重要,看图:<br><img src="https://i.loli.net/2018/09/16/5b9e3c10665ca.jpg" alt></p>
+<h3 id="数字通信系统的主要性能指标"><a href="#数字通信系统的主要性能指标" class="headerlink" title="数字通信系统的主要性能指标"></a>数字通信系统的主要性能指标</h3><p>这里是这一节的重点,因为终于有点数学了…,有点要注意的是,这里所针对的对象是系统.前面所说的是就信息本身所说的.</p>
+<h4 id="传输速率"><a href="#传输速率" class="headerlink" title="传输速率"></a>传输速率</h4><ol>
+<li>码元速率($R_B$):单位时间(s)内传输的<strong>码元数目</strong>,单位是”波特(Band)”</li>
+<li>信息速率($R_b$):单位时间(s)内传输的<strong>信息量</strong>,单位是”比特/秒(b/s)”<br>  对于一个系统而言,我们是没有办法确知下一个信号是什么从而评判系统的性能指标的,所以这里引入一个<strong>平均信息量</strong><br>  假设离散信息的种类数目为N,第i个消息出现的概率为$p_i$,则有:<br>  $$I=\sum^N_{i=1}p_i log_2 (1/p_i)  (b)$$<br>其实概念很简单,就是对各个消息根据概率做加权平均数而已…</li>
+</ol>
+<p>这里考虑如果各个消息概率相等的情况,就是加权平均数变成了普通平均数…就是说:<br>$$I=log_2 N$$<br>至于N的话呢,你回看一下前面就会知道,他也是进制的意思.</p>
+<p>相当于你有一条加工线,一次可以识别任意两种矿石.</p>
+<p>现在你有8种矿石要分辨,那你需要多少条加工线去分辨这个矿石呢?</p>
+<p><strong>3条便可,相当于识别了3次</strong>,相当于数据结构的二分查找法.</p>
+<p>但是你作为一个家里有矿的人,可不可以直接买一条可以识别8种矿石的加工线呢?<br>这时候<strong>1条便可,相当于只识别1次</strong></p>
+<p>此时(以8进制码传输8进制信号)你的一个码元的平均信息量便是<br>$$I_N = log_2 8 = 3$$<br>由于每个码元所携带的信息量提高到原来的$log_2 N$倍,所以码元速率和信息速率有以下关系:<br>$$R_b =R_B log_2 M$$</p>
+<p>至于以2进制码元传输8进制信号?课后习题了解一下.</p>
+<ol start="3">
+<li>消息速率($R_M$)单位时间内传输的<strong>消息</strong>数目.</li>
+</ol>
+<h4 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h4><ol>
+<li>误码率($P_e$):<br>$$P_e = 错误接收码元数目/传输码元总数目$$</li>
+<li>误比特率($P_b$):<br>$$P_b = 错误接收比特数目/传输比特总数目$$</li>
+<li>误字率($P_w$):<br>$$P_b = 错误接收字数目/传输字总数目$$<br>特别地,如果一个字由k比特组成:<br>$$P_w = 1-(1-P_e)^k$$</li>
+</ol>
+<h4 id="频带利用率"><a href="#频带利用率" class="headerlink" title="频带利用率"></a>频带利用率</h4><h4 id="能量利用率"><a href="#能量利用率" class="headerlink" title="能量利用率"></a>能量利用率</h4><h3 id="信道"><a href="#信道" class="headerlink" title="信道"></a>信道</h3><p>这里主要的内容是简介了信道的构成分类什么的,个人感觉后面会再讲(所以这里就不写了)<br>主要就是大二下学期的电磁场,所以不如我们来讲讲电磁场的几道大题吧…</p>
+<h4 id="电磁场四道大题"><a href="#电磁场四道大题" class="headerlink" title="电磁场四道大题"></a>电磁场四道大题</h4><h5 id="1已知电场求磁场"><a href="#1已知电场求磁场" class="headerlink" title="1已知电场求磁场"></a>1已知电场求磁场</h5><ol>
+<li><p>已知电场求磁场<br> 这里有两种情况:</p>
+<ol>
+<li><p>均匀平面波</p>
+</li>
+<li><p>不知道哪里来的随意电磁波<br>分成这两个的主要原因是,我们都知道求TEM波的电磁场转换是有一个简便方式的(P137)<br>$$\vec H(\vec r)=\frac1{\eta}\vec a_n X \vec E(\vec r) = \frac1{\eta} (\vec a_n X \vec E^+_0) e^{-jk_n\bullet r}$$<br>  $$\eta=\sqrt{\frac \mu\varepsilon}$$<br>这个公式虽然非常好用,但是一定要注意他的细节:</p>
+<ol>
+<li>必须是TEM波</li>
+<li>注意方向的转变</li>
+</ol>
+<p>对于非TEM波,我们有万能的<strong>麦克斯韦方程组</strong><br>$$\nabla \times \vec E=j\omega \mu \vec H $$<br>一样可以把这题搞定,简单</p>
+<h5 id="2平行传输线-已知阻抗求传输线长度"><a href="#2平行传输线-已知阻抗求传输线长度" class="headerlink" title="2平行传输线,已知阻抗求传输线长度"></a>2平行传输线,已知阻抗求传输线长度</h5><ol>
+<li>一定要先去看看我的电磁学乱七八糟的符号(五),大概弄懂各个参量的定义和意义</li>
+<li>至于用阻抗求长度的话,要明确一个叫做波长的概念:<br>$$\lambda = \frac{2\pi}{\beta}$$</li>
+<li>还有一个叫做阻抗转换的概念:<br>第一种情况是我前面博客所写的$\frac \lambda 4$阻抗变换性,下面的公式,这个时候你就要把相关反射系数的概念给弄清楚.<br>第二种情况就是书上的例题(P207)还有一点点的课后习题<br>看着公式觉得难的时候就写写课后习题吧,应用起来还是蛮简单的<h5 id="3理想导体平面-垂直极化斜入射"><a href="#3理想导体平面-垂直极化斜入射" class="headerlink" title="3理想导体平面,垂直极化斜入射"></a>3理想导体平面,垂直极化斜入射</h5></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>一定要先去看看我的电磁学乱七八糟的符号(三)</p>
+</li>
+<li><p>…其实不知道写什么,毕竟我的博客里面<strong>偏偏就有这种情况的分析</strong></p>
+</li>
+</ol>
+<h5 id="4时变磁场-在滑轨上连电阻-求电流"><a href="#4时变磁场-在滑轨上连电阻-求电流" class="headerlink" title="4时变磁场,在滑轨上连电阻,求电流"></a>4时变磁场,在滑轨上连电阻,求电流</h5><ol start="0">
+<li>这是一条,高中奥数题</li>
+<li>公式在我的电磁学乱七八糟的符号(一),里面的感应电动势,如果电阻已知的话,其实就是求电压</li>
+<li>B和S其实定其中一个,变另外一个那还好说,直接套公式就求出来了.</li>
+<li>最怕的是B和S同时变化,这种情况下就要用定义式<br>$$\varepsilon_{in} \triangleq -\frac{d \psi}{d t}$$<br>其中$\psi$为磁通量<br>里面的$\psi$在变化的时候,微分变量分解会有两个东西:<br>$$d\psi = \vec B \frac{d \vec S}{d t} + \vec S \frac{d \vec B}{d t}$$</li>
+</ol>
+<h3 id="信道噪声"><a href="#信道噪声" class="headerlink" title="信道噪声"></a>信道噪声</h3><p>这里要明白的是,热噪声=白噪声,在频率上各个频率都有恒定的功率.</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>新的一年又来了,不知道追不追的上更新呢.</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/09/12/quartus和modelsim之间的大坑/" rel="next" title="quartus和modelsim之间的大坑">
+                  <i class="fa fa-chevron-left"></i> quartus和modelsim之间的大坑
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/09/19/通信原理教程chapter2-上/" rel="prev" title="通信原理教程chapter2(上)">
+                  通信原理教程chapter2(上) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通信原理教程chapter1"><span class="nav-number">1.</span> <span class="nav-text">通信原理教程chapter1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#消息-信息和信号"><span class="nav-number">1.1.</span> <span class="nav-text">消息,信息和信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息量"><span class="nav-number">1.1.1.</span> <span class="nav-text">信息量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字通信系统"><span class="nav-number">1.2.</span> <span class="nav-text">数字通信系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通信系统基本概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">通信系统基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟通信系统"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">模拟通信系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数字通信系统-1"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">数字通信系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字通信的优点"><span class="nav-number">1.2.2.</span> <span class="nav-text">数字通信的优点:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字通信系统模型"><span class="nav-number">1.2.3.</span> <span class="nav-text">数字通信系统模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字通信系统的主要性能指标"><span class="nav-number">1.2.4.</span> <span class="nav-text">数字通信系统的主要性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#传输速率"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">传输速率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误率"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">错误率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#频带利用率"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">频带利用率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#能量利用率"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">能量利用率</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信道"><span class="nav-number">1.2.5.</span> <span class="nav-text">信道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#电磁场四道大题"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">电磁场四道大题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1已知电场求磁场"><span class="nav-number">1.2.5.1.1.</span> <span class="nav-text">1已知电场求磁场</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2平行传输线-已知阻抗求传输线长度"><span class="nav-number">1.2.5.1.2.</span> <span class="nav-text">2平行传输线,已知阻抗求传输线长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3理想导体平面-垂直极化斜入射"><span class="nav-number">1.2.5.1.3.</span> <span class="nav-text">3理想导体平面,垂直极化斜入射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4时变磁场-在滑轨上连电阻-求电流"><span class="nav-number">1.2.5.1.4.</span> <span class="nav-text">4时变磁场,在滑轨上连电阻,求电流</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信道噪声"><span class="nav-number">1.2.6.</span> <span class="nav-text">信道噪声</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.3.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="数字锁相环的FPGA实现(一)">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content=" 数字锁相环的FPGA实现(一)">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2019/05/09/数字锁相环的FPGA实现-一/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="数字锁相环的FPGA实现(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/05/05/5cceaa751594b.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/05/5cceafd99ba22.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/07/5cd0fc80200ac.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/05/05/5cceb8da4a50c.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/05/5ccebb2546e83.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/07/5cd0fe438c04e.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/05/07/5cd0fedc95dcb.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/05/07/5cd125a6cf1fa.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/07/5cd154720062c.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/09/5cd300ff3b66e.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/09/5cd303ee55ba1.png">
+<meta property="og:updated_time" content="2019-10-12T07:19:44.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=" 数字锁相环的FPGA实现(一)">
+<meta name="twitter:description" content="数字锁相环的FPGA实现(一)">
+<meta name="twitter:image" content="https://i.loli.net/2019/05/05/5cceaa751594b.png">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/05/09/数字锁相环的FPGA实现-一/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title> 数字锁相环的FPGA实现(一) | 何伟宝的后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2019/05/09/数字锁相环的FPGA实现-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+             数字锁相环的FPGA实现(一)
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 00:54:52" itemprop="dateCreated datePublished" datetime="2019-05-09T00:54:52+08:00">2019-05-09</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-12 15:19:44" itemprop="dateModified" datetime="2019-10-12T15:19:44+08:00">2019-10-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DSP-FPGA/" itemprop="url" rel="index">
+                    <span itemprop="name">DSP FPGA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">数字锁相环的FPGA实现(一)</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数字锁相环的FPGA实现-一"><a href="#数字锁相环的FPGA实现-一" class="headerlink" title="数字锁相环的FPGA实现(一)"></a>数字锁相环的FPGA实现(一)</h1><p>电赛著</p>
+<p>开篇之前,感谢杜勇老师,和他所著的《数字通信同步技术的MATLAB与FPGA实现,Altera/Verilog版》</p>
+<p>[TOC]</p>
+<p>说到锁相环,相信大家都熟悉.锁相环路(Phase Locked Loop,PLL)是一个闭环的相位控制系统.这博客分成两篇,第一篇讲锁相环的基本原理和参数设置,第二篇写实战.</p>
+<h2 id="锁相环的环路模型"><a href="#锁相环的环路模型" class="headerlink" title="锁相环的环路模型"></a>锁相环的环路模型</h2><p>可以先看锁相环的组成再跳回来看这里.</p>
+<p>假设输入信号和本地振荡器的输出信号是<br>$$<br>\begin{aligned} u_{\mathrm{i}}(t) &amp;=U_{\mathrm{i}} \sin \left[\omega_{\mathrm{i}} t+\theta_{\mathrm{i}}(t)\right] \ u_{\mathrm{o}}(t) &amp;=U_{\mathrm{o}} \cos \left[\omega_{\mathrm{o}} t+\theta_{\mathrm{o}}(t)\right] \end{aligned}<br>$$</p>
+<p>我们通过这个来得到他们的瞬时相差和瞬时频差:<br>$$<br>\begin{array}{c}{\theta_{\mathrm{c}}(t)=\left(\omega_{\mathrm{i}}-\omega_{\mathrm{o}}\right) t+\theta_{\mathrm{i}}(t)-\theta_{\mathrm{o}}(t)=\Delta \omega_{0} t+\theta_{\mathrm{i}}(t)-\theta_{\mathrm{o}}(t)} \ {\dot{\theta}<em>{\mathrm{e}}(t)=\left(\omega</em>{\mathrm{i}}-\omega_{\mathrm{o}}\right)+\dot{\theta}<em>{\mathrm{i}}(t)-\dot{\theta}</em>{\mathrm{o}}(t)=\Delta \omega_{0}+\dot{\theta}<em>{\mathrm{i}}(t)-\dot{\theta}</em>{\mathrm{o}}(t)}\end{array}<br>$$</p>
+<h3 id="锁定与跟踪"><a href="#锁定与跟踪" class="headerlink" title="锁定与跟踪"></a>锁定与跟踪</h3><p>总所周知,我们一般假设输入信号的频率和本地振荡器的初始频率(也叫作自由振荡频率)是不同的,也就是说在这种情况下两者会存在固定频差$\Delta\omega_0$,如果没有进行相位追踪的话,显然两信号的相差$\theta_e(t)$就会爆炸.如果我们可以控制固定频差在一个很小的范围,就能保证两个信号的相位差在$2n\pi$左右一个很小的范围震荡,这个就是锁相环路的捕获过程,如下:<br><img src="https://i.loli.net/2019/05/05/5cceaa751594b.png" alt><br>当瞬时相差$\theta_e(t)$稳定在$2n\pi$附近,频差接近为0的时候,称锁相环进入同步状态,或称为跟踪状态<br>所以我们可以定义同步态的定义为:<br>$$<br>\left|\dot{\theta}<em>{\mathrm{e}}(t)\right| \leqslant \varepsilon</em>{\Delta \omega}, \quad\left|\theta_{\mathrm{e}}(t)-2 n \pi\right| \leqslant \varepsilon_{\theta \mathrm{e}}<br>$$</p>
+<p>再定义两个锁相环的参量,捕获时间和捕获带<br><img src="https://i.loli.net/2019/05/05/5cceafd99ba22.png" alt="a"></p>
+<h3 id="环路的基本性能要求"><a href="#环路的基本性能要求" class="headerlink" title="环路的基本性能要求"></a>环路的基本性能要求</h3><p>如上所述,锁相环路存在两种状态,捕获状态和同步状态,就两种不同的工作状态下会有不同的性能参数:</p>
+<ol>
+<li>捕获状态下的<strong>捕获时间</strong><br>$$T_p = t_a -t_0$$<br>因为捕获时间其实和$t_0$是有关系的,毕竟不同时间切入的瞬时相差是不一样的,在这里我们取起始频差等于$\Delta\omega_p$的初始状态来计算最大捕获时间</li>
+<li>环路的<strong>捕获带</strong>$\Delta\omega_p$,即环路能通过捕获状态进入同步状态的最大固有频差$|\Delta\omega_0|_{max}$</li>
+<li><strong>稳态相差</strong>,反映环路的跟踪精度<br>$$\theta_{\mathrm{e}}(\infty)=\left|\theta_{\mathrm{i}}(t)-\varepsilon_{\theta e}\right|_{\max }$$ </li>
+<li>对已经锁定的环路,若改变其固有频差$\Delta\omega_0$环路所能最大稳定的频率称为<strong>同步带</strong>$\Delta\omega_H$<br><img src="https://i.loli.net/2019/05/07/5cd0fc80200ac.jpg" alt="b"><br>我们可以看看捕获带和同步带之间的关系,应该注意到在捕捉带外,同步带以内的频带,一旦出现失锁,是不能够重新捕获的</li>
+</ol>
+<p>显然,不介绍基本结构和动态方程之前谈性能是没意义的,所以:</p>
+<h2 id="锁相环的组成"><a href="#锁相环的组成" class="headerlink" title="锁相环的组成"></a>锁相环的组成</h2><p>因为我们需要锁相环来实现相位跟踪,最终的目的是为了实现输出信号和输入信号的同步,出于此来考虑的话,我们需要这个系统的相位误差是可收敛的,即锁相环的系统模型是一个相位的负反馈控制系统,他的基本组成大家也清楚:<br><img src="https://i.loli.net/2019/05/05/5cceb8da4a50c.png" alt="c"><br>分别有: </p>
+<ol>
+<li>PD(Phase Detector)鉴相器</li>
+<li>LF(Loop Filter)环路滤波器</li>
+<li>VCO(Voltage-Controlled Oscillator,VCO)压控振荡源</li>
+</ol>
+<h3 id="鉴相器-PD"><a href="#鉴相器-PD" class="headerlink" title="鉴相器(PD)"></a>鉴相器(PD)</h3><p>名副其实,鉴相器就是用来进行相位比较的,<br>比较常用的就是我们上课所讲过的乘法器加低通滤波器所构成的正弦型特性的鉴相器:<br><img src="https://i.loli.net/2019/05/05/5ccebb2546e83.png" alt="d"></p>
+<p>但实际上到后面实现数字锁相环的时候可能就有不一样的方法了,敬请期待.</p>
+<p>不妨推导一下:(设乘法器增益为$K_m$)<br>$$<br>\begin{aligned} K_{\mathrm{m}} u_{\mathrm{i}}(t) u_{\mathrm{o}}(t)=&amp; K_{\mathrm{m}} U_{\mathrm{i}} \sin \left[\omega_{0} t+\theta_{1}(t)\right] U_{\mathrm{o}} \cos \left[\omega_{0} t+\theta_{2}(t)\right] \=&amp; \frac{1}{2} K_{\mathrm{m}} U_{i} U_{\mathrm{o}} \sin \left[2 \omega_{0} t+\theta_{1}(t)+\theta_{2}(t)\right] \ &amp;+\frac{1}{2} K_{\mathrm{m}} U_{\mathrm{i}} U_{\mathrm{o}} \sin \left[\theta_{1}(t)-\theta_{2}(t)\right] \end{aligned}<br>$$</p>
+<p>经过LPF滤除$2\omega$的高频分量之后,得到:<br>$$<br>u_{\mathrm{d}}(t)=\frac{1}{2} K_{\mathrm{m}} U_{\mathrm{i}} U_{\mathrm{o}} \sin \left[\theta_{1}(t)-\theta_{2}(t)\right]=U_{\mathrm{d}} \sin \theta_{\mathrm{e}}(t)<br>$$<br>其中:<br>$$ U_d = \frac12 K_m U_i U_o $$</p>
+<h3 id="环路滤波器-LF"><a href="#环路滤波器-LF" class="headerlink" title="环路滤波器(LF)"></a>环路滤波器(LF)</h3><p>环路滤波器具有低通特性,一方面起着LPF的作用,另一方面是调节锁相环的参数的重要环节之一.对环路滤波器来说,他是一个线性电路,所以在时域分析中可用一个传输算子$F(p)$来表示,其实p是微分算子,在频域中就可以用$F(s)$来表示:<br><img src="https://i.loli.net/2019/05/07/5cd0fe438c04e.jpg" alt="e"></p>
+<p>在这里我们不妨直接举一个我们都熟知的又有源比例积分滤波器:<br><img src="https://i.loli.net/2019/05/07/5cd0fedc95dcb.jpg" alt="f"><br>可用较为轻松地算出他的传输算子:<br>$$<br>F(p)=-A \frac{1+p \tau_{2}}{1+p \tau_{1}}<br>$$<br>其中:<br>$$<br>\tau_{1}=\left(R_{1}+A R_{1}+R_{2}\right) C, \quad \tau_{2}=R_{2} C<br>$$<br>其中A为运放开环增益,假设非常大,那么我们可用代入进行一些近似:<br>$$<br>\begin{aligned} F(p) &amp;=-A \frac{1+p \tau_{2}}{1+p \tau_{1}} \approx-A \frac{1+p \tau_{2}}{1+p A R_{1} C} \ \approx-A \frac{1+p \tau_{2}}{p A R_{1} C} &amp;=-\frac{1+p \tau_{2}}{p R_{1} C} \end{aligned}<br>$$<br>所以经过近似后,我们可用得到:<br>$$<br>F(p)=-\frac{1+p \tau_{2}}{p \tau_{1}}<br>$$<br>其中:<br>$$<br>\tau_{1}=R_{1} C, \quad \tau_{2}=R_{2} C<br>$$<br>这个简化模型,特别如果有$R_1 C &gt;&gt; 1$的时候,性能会接近无源比例积分滤波器</p>
+<h3 id="压控振荡器-VCO"><a href="#压控振荡器-VCO" class="headerlink" title="压控振荡器(VCO)"></a>压控振荡器(VCO)</h3><p>显然,对压控振荡器来说,他的本征方程是:<br>$$<br>\omega_{\mathrm{v}}(t)=\omega_{0}+K_{0} u_{\mathrm{c}}(t)<br>$$<br>其中<br>$\omega_{\mathrm{v}}(t)$表示输出瞬时角频率,$K_0$为控制灵敏度或增益系数,单位是$rad/s \cdot V$<br>我们可以轻松看出,他的控制特性依然是线性的.<br>而压控振荡器输出到鉴相器中,我们所需要考虑的是他所变化的相位情况,即:<br>$$<br>\begin{array}{l}{\int_{0}^{t} \omega_{\mathrm{v}}(\tau) \mathrm{d} \tau=\omega_{0} t+K_{0} \int_{0}^{t} u_{\mathrm{c}}(\tau) \mathrm{d} \tau} \ {\theta_{2}(t)=K_{0} \int_{0}^{t} u_{\mathrm{c}}(\tau) \mathrm{d} \tau=\frac{K_{0}}{p} u_{\mathrm{c}}(t)}\end{array}<br>$$</p>
+<p>所以我们可以看出鉴相器输出的<strong>相位误差信号</strong>和压控振荡器的<strong>电压控制信号</strong>中存在一个积分关系,而这个积分关系自然而然是在压控振荡源中完成的,对锁相环整体的性能也有比较大的影响.</p>
+<h2 id="锁相环的动态方程"><a href="#锁相环的动态方程" class="headerlink" title="锁相环的动态方程"></a>锁相环的动态方程</h2><p>现在要把刚刚介绍的三个部分综合起来一个系统来看了</p>
+<h3 id="非线性相位模型"><a href="#非线性相位模型" class="headerlink" title="非线性相位模型"></a>非线性相位模型</h3><p>锁相环在时域上的传输流程是这样的<br><img src="https://i.loli.net/2019/05/07/5cd125a6cf1fa.png" alt="g"><br>在考虑相位模型前,我们可以先反过来考虑稳态相差的问题,因为这涉及到锁相环稳定的可能性.显然在锁相环捕获的时候$\omega_v(t)$会逐步接近$\omega_i(t)$到同步状态的时候有$\omega_v(t) = \omega_i(t)$,但是两个信号间存在稳态误差(相位)使得控制电压$u_c(t)$不为0,从而使输出频率在输入频率间震荡.但实际上对理想二阶环(A无穷大)来说,当环路锁定时,稳态相差理论上为0.但具体的分析还看后头</p>
+<p>从上述模型中不难得出:<br>$$\begin{array} \theta_e(t) = \theta_1(t)-\theta_2(t)  \ \theta_2(t) = K_0U_d\frac{F(p)}{p}sin \theta_e(t) \end{array}$$<br>代入得锁相环路动态方程的一般形式:<br>$$<br>p \theta_{\mathrm{e}}(t)=p \theta_{1}(t)-K_{0} U_{\mathrm{d}} F(p) \sin \theta_{\mathrm{e}}(t)\tag{*}<br>$$<br>不妨定义环路增益<br>$$K = K_0U_d$$<br>显然这个环路增益表示的是VCO的最大频偏量,因为$U_d$是误差信号的最大值,$K_0$是增益系数(见上)</p>
+<p>因为经过环路滤波器之后输出的误差信号是直流的,所以稳态误差很容易就可以解出:<br>$$<br>\theta_{\mathrm{e}}(\infty)=\arcsin \frac{\Delta \omega_{0}}{K F(j 0)}<br>$$<br>这时考虑环路滤波器的传递因子$F(p)$,当A&gt;&gt;0时,有下列近似<br>$$<br>F(p)=-\frac{1+p \tau_{2}}{p \tau_{1}}<br>$$<br>其中:<br>$$<br>\tau_{1}=R_{1} C, \quad \tau_{2}=R_{2} C<br>$$</p>
+<p>所以容易得$F(j0) = \infty$,这也是刚刚所说的理想二阶环没有稳态误差的来源.<br>但是实际上,因为A不可能无穷大,上式也只是近似得来的,所以上面的式子成立的可能性几乎也为0…</p>
+<p>不妨将$F(p)$代入锁相环的动态方程:<br>$$<br>p^{2} \tau_{1} \theta_{\mathrm{e}}(t)=p^{2} \tau_{1} \theta_{1}(t)-K\left(1+p \tau_{2}\right) \sin \theta_{\mathrm{e}}(t)<br>$$<br>因为环路滤波器只有一个极点,传输算子是一阶的,所以相应的环路动态方程是二阶非线性微分方程,所以这种锁相环路称为<strong>二阶锁相环路</strong>.本博客缺少了对RC积分滤波器和无源比例积分滤波器的分析,有兴趣的pong友可以自行回去看书</p>
+<h3 id="线性相位模型"><a href="#线性相位模型" class="headerlink" title="线性相位模型"></a>线性相位模型</h3><p>线性相位模型就是将 非线性相位模型 近似得出的,因为显然动态方程是一个高阶的非线性微分方程(特别是加上噪声之后),而又由于瞬时相差一般是很小的,回顾一下高等数学的等价无穷小,我们容易想到sin(x)~x:<br><img src="https://i.loli.net/2019/05/07/5cd154720062c.png" alt="h"><br>也就是说,我们可以把正弦换成:<br>$$<br>\begin{array}{c}{u_{\mathrm{d}}(t)=U_{\mathrm{d}} \sin \theta_{\mathrm{e}}(t)} \ {K_{\mathrm{d}}=\left.\frac{\mathrm{d} u_{\mathrm{d}}(t)}{\mathrm{d} \theta_{\mathrm{c}}(t)}\right|<em>{\theta</em>{e}=0}=U_{\mathrm{d}} \cos \theta_{\mathrm{e}}\left.(t)\right|<em>{\theta</em>{e}=0}=U_{\mathrm{d}}(\mathrm{V} / \mathrm{rad})}\end{array}<br>$$<br>斜率是$K_d$的直线代替,代入$(*)$式得:<br>$$<br>p \theta_{\mathrm{e}}(t)=p \theta_{1}(t)-K_{0} K_{\mathrm{d}} F(p) \theta_{\mathrm{e}}(t)<br>$$<br>再令环路增益:<br>$$ K =K_0 K_d $$<br>则得到线性模型:<br>$$<br>p \theta_{\mathrm{c}}(t)=p \theta_{1}(t)-K F(p) \theta_{\mathrm{e}}(t)<br>$$</p>
+<h3 id="环路的传递函数"><a href="#环路的传递函数" class="headerlink" title="环路的传递函数"></a>环路的传递函数</h3><p>事先说明一点就是,这里对环路传递函数的建模是基于线性模型的,也就是说他同样存在上述的等价无穷小代换问题,所以不适应瞬时相差过大的情况.</p>
+<p>不妨对线性模型做拉普拉斯变换:<br>$$<br>s \theta_{\mathrm{e}}(s)=s \theta_{1}(s)-K F(s) \theta_{\mathrm{e}}(s)<br>$$</p>
+<ol>
+<li>考虑<strong>开环</strong>状态下(无反馈支路),输入相位$\theta_1(t)$驱动所引起的<strong>输出相位</strong>$\theta_2(t)$的响应:<br>$$<br>s (\theta_{\mathrm{1}}(s)-\theta_{\mathrm{2}}(s))=s \theta_{1}(s)-K F(s) \theta_{\mathrm{1}}(s)<br>$$<br>解得:<br>$$ H_0(s) = \frac{\theta_2(s)}{\theta_1(s)}\big |_{open loop} =  K\frac{F(s)}{s} $$</li>
+<li>考虑<strong>闭环</strong>状态下,输入相位$\theta_1(t)$驱动所引起的<strong>输出相位</strong>$\theta_2(t)$的响应:<br>$$<br>s (\theta_{\mathrm{1}}(s)-\theta_{\mathrm{2}}(s))=s \theta_{1}(s)-K F(s) (\theta_{\mathrm{1}}(s)-\theta_{\mathrm{2}}(s))<br>$$</li>
+</ol>
+<p>$$ H(s) = \frac{\theta_2(s)}{\theta_1(s)}\big |_{close loop} = \frac{K F(s)}{s+K F(s)} $$</p>
+<ol start="3">
+<li>考虑<strong>闭环</strong>状态下,输入相位$\theta_1(t)$驱动所引起的<strong>误差相位</strong>$\theta_e(t)$的响应:<br>$$<br>s \theta_{\mathrm{e}}(s)=s \theta_{1}(s)-K F(s) \theta_{\mathrm{e}}(s)<br>$$<br>$$ H_e (s) = \frac{\theta_e(s)}{\theta_1(s)}\big |_{close loop} = \frac{s}{s+K F(s)} $$</li>
+</ol>
+<p>不妨将不同的环路滤波器的传递函数代入得下表:<br><img src="https://i.loli.net/2019/05/09/5cd300ff3b66e.png" alt="i"></p>
+<p>显然此时的二阶系统经线性化后变成二阶线性系统,这个的话我们在学校学的知识就已经足以应付了(特别是电路),此时定义描述二阶线性系统的两个系统常量:无阻尼振荡频率$\omega_n$和阻尼系数$\xi$来描述系统的响应,对应关系见下表:<br><img src="https://i.loli.net/2019/05/09/5cd303ee55ba1.png" alt="j"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这里先省略锁相环的性能分析,搞这个有点累,放到下一篇(或下几篇)博客再讨论,或者边实战边讨论吧.因为电赛这次做得题目最多就做一个位同步而已,根本就没有这么多的东西要看.我也只是先做一点基础铺垫,以免后面出问题.</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/05/03/离散小波变换的FPGA-Verilog实现/" rel="next" title="离散小波变换的FPGA-Verilog实现">
+                  <i class="fa fa-chevron-left"></i> 离散小波变换的FPGA-Verilog实现
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/06/12/一些Verilog的小东西/" rel="prev" title="一些Verilog的小东西">
+                  一些Verilog的小东西 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数字锁相环的FPGA实现-一"><span class="nav-number">1.</span> <span class="nav-text">数字锁相环的FPGA实现(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁相环的环路模型"><span class="nav-number">1.1.</span> <span class="nav-text">锁相环的环路模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁定与跟踪"><span class="nav-number">1.1.1.</span> <span class="nav-text">锁定与跟踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环路的基本性能要求"><span class="nav-number">1.1.2.</span> <span class="nav-text">环路的基本性能要求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁相环的组成"><span class="nav-number">1.2.</span> <span class="nav-text">锁相环的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#鉴相器-PD"><span class="nav-number">1.2.1.</span> <span class="nav-text">鉴相器(PD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环路滤波器-LF"><span class="nav-number">1.2.2.</span> <span class="nav-text">环路滤波器(LF)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压控振荡器-VCO"><span class="nav-number">1.2.3.</span> <span class="nav-text">压控振荡器(VCO)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁相环的动态方程"><span class="nav-number">1.3.</span> <span class="nav-text">锁相环的动态方程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性相位模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">非线性相位模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性相位模型"><span class="nav-number">1.3.2.</span> <span class="nav-text">线性相位模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环路的传递函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">环路的传递函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.4.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/694431056@qq.com" title="E-Mail &rarr; 694431056@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>
