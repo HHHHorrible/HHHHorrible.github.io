@@ -63,17 +63,17 @@
 <meta property="og:site_name" content="何伟宝的后花园">
 <meta property="og:description" content="quartus和modelsim之间的大坑唉,人生何其多坑 [TOC] 因为解决bug的时候没有截图,所以合并了一些忘记的,大家对号入座吧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2018/09/12/5b9871d8cb1f1.png">
-<meta property="og:image" content="https://i.loli.net/2018/09/12/5b9873dd2d93f.png">
-<meta property="og:image" content="https://i.loli.net/2018/09/12/5b990d1542939.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/09/12/5b990e9d86999.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/09/12/5b9917f22df05.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/09/12/5b991829c2ede.jpg">
-<meta property="og:updated_time" content="2019-10-12T08:12:40.808Z">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9871d8cb1f1.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9873dd2d93f.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b990d1542939.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b990e9d86999.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9917f22df05.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b991829c2ede.jpg">
+<meta property="og:updated_time" content="2020-05-25T04:22:08.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="quartus和modelsim之间的大坑">
 <meta name="twitter:description" content="quartus和modelsim之间的大坑唉,人生何其多坑 [TOC] 因为解决bug的时候没有截图,所以合并了一些忘记的,大家对号入座吧">
-<meta name="twitter:image" content="https://i.loli.net/2018/09/12/5b9871d8cb1f1.png">
+<meta name="twitter:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9871d8cb1f1.png">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/09/12/quartus和modelsim之间的大坑/">
 
 
@@ -272,7 +272,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 16:12:40" itemprop="dateModified" datetime="2019-10-12T16:12:40+08:00">2019-10-12</time>
+                <time title="修改时间：2020-05-25 12:22:08" itemprop="dateModified" datetime="2020-05-25T12:22:08+08:00">2020-05-25</time>
               </span>
             
           
@@ -342,14 +342,14 @@
 </blockquote>
 <p>这是因为我们要用的是modelsim-intel,而不是modelsim.所以这个bug会在两个地方出现:</p>
 <ol>
-<li>错误设置编译器为modelsim,解决方法:<br>导航栏/assignment/setting/EDA Tool Setting<br><img src="https://i.loli.net/2018/09/12/5b9871d8cb1f1.png" alt="bug1_1"><br>顺道看看下面的simulation的路径有没有错误就好了</li>
-<li>错误设置引导栏/tools/launch simulation library compiler,解决方法<br> 第一步:不管怎样,先用modelsim的正确路径填入executable location<br> 第二步:<strong>一定要修改output directory 为正确合法路径</strong>(别问我为什么知道,哭)<br> 第三步:Start Compilation ,虽然还是会报错,但是output directory保存下来就可以了<br> 第四步:正常rtl simulation就可以用了.<br> <img src="https://i.loli.net/2018/09/12/5b9873dd2d93f.png" alt="bug1_2"></li>
+<li>错误设置编译器为modelsim,解决方法:<br>导航栏/assignment/setting/EDA Tool Setting<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9871d8cb1f1.png" alt="bug1_1"><br>顺道看看下面的simulation的路径有没有错误就好了</li>
+<li>错误设置引导栏/tools/launch simulation library compiler,解决方法<br> 第一步:不管怎样,先用modelsim的正确路径填入executable location<br> 第二步:<strong>一定要修改output directory 为正确合法路径</strong>(别问我为什么知道,哭)<br> 第三步:Start Compilation ,虽然还是会报错,但是output directory保存下来就可以了<br> 第四步:正常rtl simulation就可以用了.<br> <img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9873dd2d93f.png" alt="bug1_2"></li>
 </ol>
 <h2 id="BUG4"><a href="#BUG4" class="headerlink" title="BUG4"></a>BUG4</h2><p>以下为modelsim</p>
 <blockquote>
 <p>Error: (vsim-3033) /home/heweibao/project_fpga/altera/ip/add.v(91): Instantiation of ‘altmult_add’ failed. The design unit was not found.</p>
 </blockquote>
-<p>这是因为没有加库,可以在:simulate-&gt;start simulation<br>design选自己要仿真的,然后点libraries,选自己用过的ipcore<br><img src="https://i.loli.net/2018/09/12/5b990d1542939.jpg" alt="bug4"></p>
+<p>这是因为没有加库,可以在:simulate-&gt;start simulation<br>design选自己要仿真的,然后点libraries,选自己用过的ipcore<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b990d1542939.jpg" alt="bug4"></p>
 <h2 id="BUG5"><a href="#BUG5" class="headerlink" title="BUG5"></a>BUG5</h2><blockquote>
 <p>Error (suppressible): (vsim-10000) /home/heweibao/project_fpga/altera/ip/add.v(154): Unresolved defparam reference to ‘ALTMULT_ADD_component’ in ALTMULT_ADD_component.input_aclr_a0./#    Time: 0 ps  Iteration: 0  Instance: /helloworld/U1 File: /home/heweibao/project_fpga/altera/ip/add.v</p>
 </blockquote>
@@ -357,8 +357,8 @@
 <li>这是个令人苦笑不得的bug…因为添加库的时候加错了,直接加的是VHDL语言的,只有后缀是****_ver的才是verilog的库.</li>
 </ol>
 <h2 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h2><p>lpm的库在220model上面…</p>
-<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>在没美化之前,我的界面是这样的:<br><img src="https://i.loli.net/2018/09/12/5b990e9d86999.jpg" alt="美化前"><br>黑色是源自我的ubuntu18的主题,而编辑器是在内部配置的:tools-&gt;option-&gt;text editor-&gt;colors<br><img src="https://i.loli.net/2018/09/12/5b9917f22df05.jpg" alt="yoyo"></p>
-<p>这是改过之后的界面:<br><img src="https://i.loli.net/2018/09/12/5b991829c2ede.jpg" alt="yoyo2"></p>
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>在没美化之前,我的界面是这样的:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b990e9d86999.jpg" alt="美化前"><br>黑色是源自我的ubuntu18的主题,而编辑器是在内部配置的:tools-&gt;option-&gt;text editor-&gt;colors<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9917f22df05.jpg" alt="yoyo"></p>
+<p>这是改过之后的界面:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b991829c2ede.jpg" alt="yoyo2"></p>
 <p>当然了,你也可以直接把这个text editor改成gedit啊什么乱七八糟的,我就不折腾了</p>
 <p><a href="https://blog.csdn.net/weixin_38071135/article/details/83039402">如果你觉得有丶收获的话</a></p>
 
@@ -454,7 +454,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -467,7 +467,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -533,7 +533,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76k字</span>
+  <span class="post-count">博客全站共79.6k字</span>
 </div>
 <span id="busuanzi_container_site_pv" style='display:none'>
     本站总访问量<span id="busuanzi_value_site_pv"></span>次

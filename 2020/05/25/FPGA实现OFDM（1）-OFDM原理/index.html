@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="FPGA实现OFDM（1）-OFDM原理">
+<meta name="keywords" content="FPGA ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA实现OFDM（1）-OFDM原理">
+<meta property="og:url" content="https://blog.csdn.net/weixin_38071135/2020/05/25/FPGA实现OFDM（1）-OFDM原理/index.html">
+<meta property="og:site_name" content="何伟宝的后花园">
+<meta property="og:description" content="FPGA实现OFDM（1）-OFDM原理">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121161717468">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121172226078">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121180013500">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121172431187">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121171022468">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/v2-256315a1b8106a7186fe04b16b331197_b.webp">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525031944103.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525033611853.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525034836033.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525035000199.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525040652043.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525040754856.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525041144912.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525050317791.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525043848006.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525044735481.png">
+<meta property="og:updated_time" content="2020-05-25T04:47:12.642Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FPGA实现OFDM（1）-OFDM原理">
+<meta name="twitter:description" content="FPGA实现OFDM（1）-OFDM原理">
+<meta name="twitter:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121161717468">
+  <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2020/05/25/FPGA实现OFDM（1）-OFDM原理/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>FPGA实现OFDM（1）-OFDM原理 | 何伟宝的后花园</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a379268dd5f327d467ed17a9a9be106b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何伟宝的后花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">今日你学左米啊</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.csdn.net/weixin_38071135/2020/05/25/FPGA实现OFDM（1）-OFDM原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="He Wei Bao">
+      <meta itemprop="description" content="认识到了自己的无知,才能真正认识世界">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何伟宝的后花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            FPGA实现OFDM（1）-OFDM原理
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-25 05:40:03 / 修改时间：12:47:12" itemprop="dateCreated datePublished" datetime="2020-05-25T05:40:03+08:00">2020-05-25</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OFDM/" itemprop="url" rel="index">
+                    <span itemprop="name">OFDM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/25/FPGA实现OFDM（1）-OFDM原理/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/25/FPGA实现OFDM（1）-OFDM原理/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">FPGA实现OFDM（1）-OFDM原理</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="FPGA实现OFDM（1）-OFDM原理"><a href="#FPGA实现OFDM（1）-OFDM原理" class="headerlink" title="FPGA实现OFDM（1）-OFDM原理"></a>FPGA实现OFDM（1）-OFDM原理</h1><p>失 踪 人 口 回 归</p>
+<h2 id="OFDM定义"><a href="#OFDM定义" class="headerlink" title="OFDM定义"></a>OFDM定义</h2><p>fromwiki:调制是将传送资料对应于载波变化的动作，可以是载波的相位、频率、幅度、或是其组合。正交频分复用之基本观念为将一高速资料流程，分割成数个低速资料流程，并将这数个低速资料流程同时调制在数个彼此相互正交载波上传送。由于每个子载波带宽较小，更接近于相干带宽，故可以有效对抗频率选择性衰弱，因此现今以大量采用于无线通信。</p>
+<p>正交频分复用属于多载波（multi-carrier）传输技术，所谓多载波传输技术指的是将可用的频谱分割成多个子载波，每个子载波可以载送一低速资料流程。</p>
+<h2 id="直观感受"><a href="#直观感受" class="headerlink" title="直观感受"></a>直观感受</h2><p>在频域上,不妨考虑常规FDM(frequency division multiplexing):</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121161717468" alt="img"></p>
+<p>可以看出,在两路的信号中存在着保护频段(Guard bands)来保证不发生频谱泄露.显然,这样会带来额外的开销和较低的吞吐量.</p>
+<p>那我们可不可以把他在不发生干扰(或者尽量小)的情况下靠近一点,甚至发生一定的重叠呢?</p>
+<p>考虑两个正弦信号sin(t)和sin(2t)作为中心频率,假设理想门函数在[0-2$\pi$],则频域上为分别对sinc信号的搬移:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121172226078" alt="img"></p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121180013500" alt="img"></p>
+<p>此时不妨将两个信号进行叠加:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121172431187" alt="img"></p>
+<p>可见,此时信号主要部分在[$\frac1\pi$-$\frac2\pi$]间发生了重叠,但不妨对其进行内积计算(不过我看正常人都知道这两玩意正交吧…):</p>
+<p>$$ &lt;sin(t)Rect(2\pi),sin(2t)Rect(2\pi)&gt; = \int^{2\pi}_0sin(t)sin(2t)dt$$</p>
+<p>$$ =-\frac12\int^{2\pi}_0 sin(t) +sin(3t)dt = 0$$</p>
+<p>所以事实证明我们可以将他按一个最小的频率间隔进行重叠,但此时由于考虑到实际的升余弦滤波器,实际的频谱图应该是长这样的:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20140121171022468" alt="img"></p>
+<p>需要注意的是,由于后续的频谱搬移,原信号的负频率部分也会被移出来.而对理想带通信道,奈奎斯特带宽W=1/T.此时可以理解为此信号在传输一个复数信号,而一个复数实际上传输了两个数据，分别承载在sin和cos载波上。</p>
+<p>所以加上中心导频后,整个频谱图就可以看成:</p>
+<p>![img](<a href="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/ofdm" target="_blank" rel="noopener">https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/ofdm</a> orthogonalspacedsubcarriers.png)</p>
+<p>但由于虽然我们只说了两个子载波之间可以重叠,但是其实并没有说明他们每一路信号应该怎么调制,所以OFDM中就会有很多变种,比如说ASK-OFDM等(见于<a href="https://zhuanlan.zhihu.com/p/60794288" target="_blank" rel="noopener">直观图解<em>OFDM</em>原理</a>).</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/v2-256315a1b8106a7186fe04b16b331197_b.webp" alt="img"></p>
+<h2 id="OFDM信号模型"><a href="#OFDM信号模型" class="headerlink" title="OFDM信号模型"></a>OFDM信号模型</h2><p>从上面的直观感受中,能大概看出OFDM的信号产生流程应该是这样:</p>
+<p>![img](<a href="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/ofdm" target="_blank" rel="noopener">https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/ofdm</a> simplegenerator.png)</p>
+<p>从频域的角度,结合傅里叶变换公式:</p>
+<p>$$\hat{f}(t)=\int_{-\infty}^{\infty} f(x) e^{2 \pi j f t} d x$$</p>
+<p>易得在$t_s$时刻下的OFDM信号模型:</p>
+<p>$$s(t)=\operatorname{Re}\left{\sum_{k=0}^{N-1} X_{k} g\left(t-t_{s}-\frac{T}{2}\right) \exp \left[j 2 \pi\left(f_{c}+\left(k-\frac{N-1}{2}\right) \Delta f\right)\left(t-t_{s}\right)\right]\right}$$</p>
+<p>其中,s(t)为时域OFDM信号,累加为N个子载波.T为每一信号维持时间.</p>
+<p>$X_k$为第k个子载波的发送信号,$g\left(t-t_{s}-\frac{T}{2}\right)$为脉冲成型函数</p>
+<p>此时第k个子载波的频率为:$f_{c}+\left(k-\frac{N-1}{2}\right) \Delta f$,$f_c$为中心频率.</p>
+<p>此时不妨假设g(t)为矩阵脉冲,还没开始频谱搬移,则可得上式等效低通形式为:</p>
+<p>$$s_{l}(t)=\sum_{k=0}^{N-1} X_{k} \exp \left[j 2 \pi k \Delta f\left(t-t_{s}\right)\right]$$</p>
+<p>由于在OFDM中,<strong>任意两个子载波都要求正交</strong>,那不妨对任意两个子载波进行内积,即:</p>
+<p>$$\frac{1}{T} \int_{t_{s}}^{t_{s}+T} X_{k} X_{l}^{*} \exp \left[j 2 \pi k \Delta f\left(t-t_{s}\right)\right] \exp \left[-j 2 \pi l \Delta f\left(t-t_{s}\right)\right] d t=0$$</p>
+<p>合并得:</p>
+<p>$$\frac{1}{T} \int_{0}^{T} \exp [j 2 \pi(k-l) \Delta f t] d t=0$$</p>
+<p>可以回想一下上文中sin(t)和sin(2t)正交证明时的积分过程,易得此时正交成立的条件为:</p>
+<p>$$\Delta f=\frac{m}{T}(m \text { 为正整数 })$$</p>
+<p>那不妨取最小值,即:</p>
+<p>$$\Delta f=1 / T$$</p>
+<p>此时回代等效低通形式,得:</p>
+<p>$$s_{l}(t)=\sum_{k=0}^{N-1} X_{k} \exp \left[\frac{j 2 k \pi}{T}\left(t-t_{s}\right)\right]$$</p>
+<p><strong>正交条件表明：任意两个子载波的间隔为1/T的整数倍时，各个子载波相互重叠正交；理想情况下不存在子载波间干扰.</strong></p>
+<h3 id="解调"><a href="#解调" class="headerlink" title="解调"></a>解调</h3><p>解调的思路也很简单,由于各个载频间互相正交,所以只要对上变频后的信号下变频,再进行fft就可以得到源信号了,对第l路信号解调具体证明如下:</p>
+<p>$$\begin{aligned}<br>\hat{X}<em>{l} &amp;=\frac{1}{T} \int</em>{t_{s}}^{t_{s}+T}\left{\exp \left[-\frac{j 2 l \pi}{T}\left(t-t_{s}\right)\right] \sum_{k=0}^{N-1} X_{k} \exp \left[\frac{j 2 k \pi}{T}\left(t-t_{s}\right)\right]\right} d t \<br>&amp;=\sum_{k=0}^{N-1} X_{k} \frac{1}{T} \int_{t_{s}}^{t_{s}+T} \exp \left[\frac{j 2(k-l) \pi}{T}\left(t-t_{s}\right)\right] d t=X_{l}<br>\end{aligned}$$</p>
+<h2 id="对OFDM信号进行抽样"><a href="#对OFDM信号进行抽样" class="headerlink" title="对OFDM信号进行抽样"></a>对OFDM信号进行抽样</h2><p>显然,上面的讨论都是模拟的,对我们OFDM的实现没有什么帮助.此时我们需要对OFDM信号模型进行抽样.,注意此时跟平时讨论的情况不一样,负频率也是作为子载波的一部分,所以抽样间隔应为T/N.</p>
+<p>所以假设一个OFDM符号维持时间为T,共有N个子载波,开始时间为$t_s$则根据奈奎斯特抽样定理</p>
+<p>$$t_{n}=t_{s}+\frac{n T}{N}$$</p>
+<h3 id="利用DFT-IDFT实现OFDM"><a href="#利用DFT-IDFT实现OFDM" class="headerlink" title="利用DFT/IDFT实现OFDM"></a>利用DFT/IDFT实现OFDM</h3><p>此时将$t_n$回代到信号模型的低频等效形式中可得:</p>
+<p>$$s_{n}=s\left(t_{s}+n T\right)=\sum_{k=0}^{N-1} X_{k} e^{\frac{j 2 k n \pi}{N}}$$</p>
+<p>噢,这该死的形式,那不就是 <strong>IDFT</strong>吗!同样的,我们对信号进行解调过程中也进行抽样,可得:</p>
+<p>$$\hat{X}<em>{k}=\frac{1}{N} \sum</em>{n=0}^{N-1} s_{n} e^{-\frac{j 2 k n \pi}{N}}$$</p>
+<p>噢,这该死的形式,那不就是 <strong>DFT</strong>吗!这究竟是人性的丧失还是道德的沦丧呢?</p>
+<p>这里的DFT啊说是天意也好,说是巧合也好,他不仅大大简化了实现的方式(现在大概就是调个ip那样的难度吧),而且还由于DFT的一些特性,在后面他还带来了一些好东西.</p>
+<h3 id="框图更新"><a href="#框图更新" class="headerlink" title="框图更新"></a>框图更新</h3><p>在这里,得知这个消息之后我们可以进一步更新实现框图:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525031944103.png" alt="image-20200525031944103"></p>
+<h2 id="OFDM保护间隔"><a href="#OFDM保护间隔" class="headerlink" title="OFDM保护间隔"></a>OFDM保护间隔</h2><h3 id="信道介绍"><a href="#信道介绍" class="headerlink" title="信道介绍"></a>信道介绍</h3><p>由于在OFDM中,频带能重叠的根本保障是各子载波频率间是互相正交的,所以我们需要减低有关对频率正交性的干扰,对通信信道中的衰落和干扰大致分为以下几类:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525033611853.png" alt="image-20200525033611853"></p>
+<p>此处我们主要考虑多径对OFDM所引入的符元间干扰(Inter-symbol Interference),即ISI,指过去的信号对现在所得信号的干扰.用公式来说就是,对输入x[n],经过传输后的信号可能就变成了这样:</p>
+<p>$$y[n]=\sum_{j=0}^{L-1} h_{l} x[n-l]+z[n]=h_{0} x[n]+\sum_{j=1}^{L-1} h_{l} x[n-l]+z[n]$$</p>
+<p>其中,$h_0x[n]$为我们想要的信号,而$\sum_{j=1}^{L-1} h_{l} x[n-l]$即为过去的信号对现在的信号的干扰,z[n]为信道噪声.用图来说,现在是这个样子:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525034836033.png" alt="image-20200525034836033"></p>
+<h3 id="加特定字段UW-ZP"><a href="#加特定字段UW-ZP" class="headerlink" title="加特定字段UW/ZP"></a>加特定字段UW/ZP</h3><p>那在这个时候,我们能不能在信号前后加点特别的字段,当他一看见这个字段就揪出这多径干扰了呢?</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525035000199.png" alt="image-20200525035000199"></p>
+<p>这是第一种方法,在每一个符号的后面加一个特殊的字段(例如补零,即ZP-OFDM),那便是数00000都能数出多径干扰来.</p>
+<h3 id="循环前缀CP-后缀CS"><a href="#循环前缀CP-后缀CS" class="headerlink" title="循环前缀CP(后缀CS)"></a>循环前缀CP(后缀CS)</h3><p>但实际上有一种更巧妙的方式来填充这一个字段,在上一节中我们讨论过,OFDM的调制解调可以通过IDFT/DFT来实现.</p>
+<p>而从DSP原理上,我们可以说DFT是DFS取主值周期的一种方式,不同于DTFT采用的是线性卷积,在DFS/DFT中采用的是循环卷积,则DFT具有循环移位性,就是时域序列上的移位可以对应频域序列的相移:</p>
+<p>$$\mathcal{F}\left(\left{x_{n-m}\right}\right)<em>{k}=X</em>{k} e^{-\frac{2 \pi i}{N} k m}$$</p>
+<p>所以我们可以将这个OFDM符号的后一段搬到前面去,即为循环前缀(CP).又或是将符号的前一段搬到后面去,即为循环后缀(CS).下文以CP举例,即为:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525040652043.png" alt="image-20200525040652043"></p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525040754856.png" alt="image-20200525040754856"></p>
+<p>可见引入了CP后,不仅消除了多径所引起的ISI,而且这对FFT的积分窗位置也有了一定的宽容,即能增强OFDM信号对符号定时误差的容忍度.这里放国防科技大学一页ppt来作为好处和抗多径能力总结:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525041144912.png" alt="image-20200525041144912"></p>
+<p>其中,ICI为信道间干扰,多径时延是造成OFDM系统ISI和ICI的根本原因。</p>
+<p>通过加入保护间隔，可以有效避免ISI。这个保护间隔可以填充ZP(补零)或者CP(循环前缀)或者CS(循环后缀)。</p>
+<p>但是想要消除ICI，之能是往保护间隔里面填充CP和CS。 一个一石二鸟的同时消除ISI和ICI的方法就是加入保护间隔，并且给给保护间隔填充CP或者CS。</p>
+<p>所以在这里,我们要进一步拓展实现框图:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525050317791.png" alt="image-20200525050317791"></p>
+<h2 id="多载波调制"><a href="#多载波调制" class="headerlink" title="多载波调制"></a>多载波调制</h2><p>我们说OFDM系统采用的是多载波方式,应用方式讲一大堆了,却还没好好讲讲多载波调制是啥.</p>
+<p>还是从多径效应入手,多径在时域上是不同时延的信号产生混叠,从而导致码间串扰(ISI).所以在符号的持续时间太短(远小于多径时延拓展)的时候,ISI会严重影响传输性能.而且传统的单载波系统中均衡方法比较复杂,对ISI严重时补偿还未必跟得上.</p>
+<p>另外,多径信道是频率选择性信道,即频率选择性衰落(Frequency Selective Fading):</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525043848006.png" alt="image-20200525043848006"></p>
+<p>结合上述情况,多载波调制即将带宽内划分为多个信道,则每个信道所分到的带宽为BW/N.由香农公式可知,此时<strong>总的</strong>信道容量不变,则每一子信道中的符号维持时间能到原来的N倍.图示即为:</p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/image-20200525044735481.png" alt="image-20200525044735481"></p>
+<p>可见此时我们便有了更多的时间去处理ISI,而且由于在多载波调制中,如果信道足够窄,则可以认为信道特性接近理想信道特性.</p>
+<p>又由于在OFDM中,仅规定了每一子载波的频率,但并没有规定该子载波的幅度和相位,所以不同信道中可以分别使用如PSK,ASK,QAM等调制方式.在这个前提下,我们可以选择在频率衰落严重的信道中采用更抗干扰,低数据率的调制方式,在频率响应号的信道采用更高数据率的调制方式等策略来是适应频率选择性衰落.</p>
+<h2 id="OFDM缺点"><a href="#OFDM缺点" class="headerlink" title="OFDM缺点"></a>OFDM缺点</h2><p>主要参考wiki,这里主要考虑首尾呼应(doge.主要是不想写了…</p>
+<h3 id="传送与接收端需要精确的同步"><a href="#传送与接收端需要精确的同步" class="headerlink" title="传送与接收端需要精确的同步"></a>传送与接收端需要精确的同步</h3><p>此項缺點是指取樣頻率產生偏移時，會造成所收到的星座圖產生旋轉的現象，若無法取出正確的訊號時，則會造成ICI的產生，使性能下降。此外，都卜勒效應所造成的頻率偏移，或是傳送端和接收端的振盪器產生的頻率有所誤差，也皆會造成系統同步上有偏差。</p>
+<h3 id="对于多普勒效应频率漂移敏感"><a href="#对于多普勒效应频率漂移敏感" class="headerlink" title="对于多普勒效应频率漂移敏感"></a>对于多普勒效应频率漂移敏感</h3><p> 當符元時間的取樣點不準確時，會造成ISI與ICI，ISI現象是因為取樣點的偏移量，超過防護區間長度時，會去取到下一個符元的訊號。ICI現象是因為取樣點取錯時，會使得OFDM子載波彼此之間失去正交性。</p>
+<h3 id="峰均比高"><a href="#峰均比高" class="headerlink" title="峰均比高"></a>峰均比高</h3><p>由定性的角度思考，OFDM系統架構中，所傳送的訊號是所有子載波訊號的線性加總，因此OFDM訊號的振幅會產生一個極大範圍的動態變化，即振幅的大小範圍很廣。PAPR高的缺點在於對於能量使用率並不是非常好。</p>
+<h3 id="循环前缀（Cyclic-Prefix）造成的负荷"><a href="#循环前缀（Cyclic-Prefix）造成的负荷" class="headerlink" title="循环前缀（Cyclic Prefix）造成的负荷"></a>循环前缀（Cyclic Prefix）造成的负荷</h3><p>對於傳輸而言，需要多傳輸循環前綴，而使單位時間內能傳輸的內容較沒有傳輸循環前綴時來的少。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>整个项目是想做一个符合802.11a的基带,所以原理部分其实还没写完,除开了OFDM的核心部分之外,还有信道编码,交织/解交织,数字调制,插入导频等没有讲.下一篇会结合802.11a讲一下上述的内容跟协议规定的子载波和系统实现的一些计算.而且接收机的同步，均衡，解调，解码也是些大问题，不过应该会先放一下。</p>
+<p>当然,这么大工程肯定不会是单干的,这里主要参考书目是《XILINX FPGA的OFDM通信系统基带设计》</p>
+<p>这应该是做完毕设，除了毕业答辩外,回校前最后想做的一个东西了.</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="[https://zh.wikipedia.org/wiki/%E6%AD%A3%E4%BA%A4%E9%A0%BB%E5%88%86%E5%A4%8D%E7%94%A8](https://zh.wikipedia.org/wiki/正交頻分复用)">维基百科定义</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/60794288" target="_blank" rel="noopener">直观图解<em>OFDM</em>原理</a></p>
+<p><a href="https://blog.csdn.net/wordwarwordwar/article/details/79605916">给”小白”图示讲解OFDM的原理</a></p>
+<p><a href="https://www.csie.ntu.edu.tw/~hsinmu/courses/" target="_blank" rel="noopener">台湾大学无线网络-基础和应用</a></p>
+<p><a href="http://rfmw.em.keysight.com/wireless/helpfiles/89600B/WebHelp/Subsystems/wlan-ofdm/Content/ofdm_basicprinciplesoverview.htm" target="_blank" rel="noopener">正交频分多路复用(OFDM)和802.11 WLAN的概念</a></p>
+<p><a href="https://www.icourse163.org/learn/NUDT-316006?tid=1450211451" target="_blank" rel="noopener">国防科技大学-通信原理</a></p>
+<p><a href="https://item.jd.com/11255583.html" target="_blank" rel="noopener">MIMO-OFDM无线通信技术及MATLAB实现</a></p>
+<p><a href="https://zh.wikipedia.org/wiki/离散傅里叶变换" target="_blank" rel="noopener">离散傅里叶变换</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/57967971" target="_blank" rel="noopener">OFDM完整仿真过程及解释（MATLAB）</a></p>
+<p><a href="https://baike.baidu.com/item/符号间干扰/8199164?fr=aladdin" target="_blank" rel="noopener">符号间干扰(ISI)百度百科</a></p>
+<p><a href="[https://baike.baidu.com/item/%E4%BF%A1%E9%81%93%E9%97%B4%E5%B9%B2%E6%89%B0/5920572?fr=aladdin](https://baike.baidu.com/item/信道间干扰/5920572?fr=aladdin)">信道间干扰(ICI)百度百科</a></p>
+<p><a href="https://blog.csdn.net/dreamandxiaochouyu/article/details/45393059">OFDM消除ICI和ISI的原理剖析CSDN</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/02/02/QT下的udp视频传输系统/" rel="next" title="QT下的udp视频传输系统">
+                  <i class="fa fa-chevron-left"></i> QT下的udp视频传输系统
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FPGA实现OFDM（1）-OFDM原理"><span class="nav-number">1.</span> <span class="nav-text">FPGA实现OFDM（1）-OFDM原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OFDM定义"><span class="nav-number">1.1.</span> <span class="nav-text">OFDM定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直观感受"><span class="nav-number">1.2.</span> <span class="nav-text">直观感受</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OFDM信号模型"><span class="nav-number">1.3.</span> <span class="nav-text">OFDM信号模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解调"><span class="nav-number">1.3.1.</span> <span class="nav-text">解调</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对OFDM信号进行抽样"><span class="nav-number">1.4.</span> <span class="nav-text">对OFDM信号进行抽样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#利用DFT-IDFT实现OFDM"><span class="nav-number">1.4.1.</span> <span class="nav-text">利用DFT/IDFT实现OFDM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框图更新"><span class="nav-number">1.4.2.</span> <span class="nav-text">框图更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OFDM保护间隔"><span class="nav-number">1.5.</span> <span class="nav-text">OFDM保护间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信道介绍"><span class="nav-number">1.5.1.</span> <span class="nav-text">信道介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加特定字段UW-ZP"><span class="nav-number">1.5.2.</span> <span class="nav-text">加特定字段UW/ZP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环前缀CP-后缀CS"><span class="nav-number">1.5.3.</span> <span class="nav-text">循环前缀CP(后缀CS)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多载波调制"><span class="nav-number">1.6.</span> <span class="nav-text">多载波调制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OFDM缺点"><span class="nav-number">1.7.</span> <span class="nav-text">OFDM缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传送与接收端需要精确的同步"><span class="nav-number">1.7.1.</span> <span class="nav-text">传送与接收端需要精确的同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于多普勒效应频率漂移敏感"><span class="nav-number">1.7.2.</span> <span class="nav-text">对于多普勒效应频率漂移敏感</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#峰均比高"><span class="nav-number">1.7.3.</span> <span class="nav-text">峰均比高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环前缀（Cyclic-Prefix）造成的负荷"><span class="nav-number">1.7.4.</span> <span class="nav-text">循环前缀（Cyclic Prefix）造成的负荷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.8.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.9.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">He Wei Bao</p>
+  <div class="site-description" itemprop="description">认识到了自己的无知,才能真正认识世界</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/HHHHorrible" title="GitHub &rarr; https://github.com/HHHHorrible" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/weixin_38071135" title="https://blog.csdn.net/weixin_38071135">CSDN</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">He Wei Bao</span>
+</div>
+  <span class="post-meta-divider">|</span>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共79.6k字</span>
+</div>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+<span id="busuanzi_container_site_uv" style='display:none'>
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.55' zIndex='-1' count='189' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'Je2dWN05DHNOQvY3sv9Wdmjr-gzGzoHsz',
+    appKey: 'x0onFKIleViD7EDdyuWKISyN',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！快活呀！~',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

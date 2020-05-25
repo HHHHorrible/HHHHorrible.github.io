@@ -63,24 +63,24 @@
 <meta property="og:site_name" content="何伟宝的后花园">
 <meta property="og:description" content="离散小波变换的FPGA-Verilog实现">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbc1a59a0e9.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbc2661fbd1.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbc41db84eb.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbda3ce7edf.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbdd6891faf.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbdff27e3e7.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbe0a709346.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbe0e862943.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbdd6891faf.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbe5229c73c.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbe6b37f7e4.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbecdd4c556.png">
-<meta property="og:image" content="https://i.loli.net/2019/05/03/5ccbeeec0f4d0.jpg">
-<meta property="og:updated_time" content="2019-10-12T07:57:07.253Z">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc1a59a0e9.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc2661fbd1.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc41db84eb.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbda3ce7edf.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbdd6891faf.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbdff27e3e7.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe0a709346.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe0e862943.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbdd6891faf.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe5229c73c.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe6b37f7e4.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbecdd4c556.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbeeec0f4d0.jpg">
+<meta property="og:updated_time" content="2020-05-25T04:34:41.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="离散小波变换的FPGA-Verilog实现">
 <meta name="twitter:description" content="离散小波变换的FPGA-Verilog实现">
-<meta name="twitter:image" content="https://i.loli.net/2019/05/03/5ccbc1a59a0e9.png">
+<meta name="twitter:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc1a59a0e9.png">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2019/05/03/离散小波变换的FPGA-Verilog实现/">
 
 
@@ -279,7 +279,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 15:57:07" itemprop="dateModified" datetime="2019-10-12T15:57:07+08:00">2019-10-12</time>
+                <time title="修改时间：2020-05-25 12:34:41" itemprop="dateModified" datetime="2020-05-25T12:34:41+08:00">2020-05-25</time>
               </span>
             
           
@@ -338,8 +338,8 @@
 <h2 id="尺度函数族"><a href="#尺度函数族" class="headerlink" title="尺度函数族"></a>尺度函数族</h2><p>众所周知,小波变换的双正交基就来自与小波函数和尺度函数,而他们通过scale和平移来得到的小波函数族和尺度函数族正正表示了不同小波(尺度)函数的分辨率,下面来用公式回顾一下:</p>
 <h3 id="小波函数定义"><a href="#小波函数定义" class="headerlink" title="小波函数定义"></a>小波函数定义</h3><p>小波函数族$\psi_{j,k}(t)$定义为:<br>$$\psi_{j,k}(t) = 2^{j/2}\psi(2^jt-k);\quad j,k\in Z$$</p>
 <h3 id="尺度函数定义"><a href="#尺度函数定义" class="headerlink" title="尺度函数定义"></a>尺度函数定义</h3><p>尺度函数族$\varphi_{j,k}(t)$定义为:<br>$$\varphi_{j,k}(t) = 2^{j/2}\varphi(2^jt-k);\quad j,k\in Z$$</p>
-<h3 id="尺度函数分辨率沿拓"><a href="#尺度函数分辨率沿拓" class="headerlink" title="尺度函数分辨率沿拓"></a>尺度函数分辨率沿拓</h3><p>事实上,尺度函数族中的尺度 j 决定着不同的时间分辨率<br><img src="https://i.loli.net/2019/05/03/5ccbc1a59a0e9.png" alt="1"><br>而实际上(证明请看参考资料),高时间分辨率的尺度函数必然可以代表低时间分辨率的尺度函数,如上图的三角尺度函数可以表示为:<br><img src="https://i.loli.net/2019/05/03/5ccbc2661fbd1.png" alt="2"></p>
-<h2 id="多分辨分析-MRA-方程"><a href="#多分辨分析-MRA-方程" class="headerlink" title="多分辨分析(MRA)方程"></a>多分辨分析(MRA)方程</h2><h3 id="尺度函数的MRA方程"><a href="#尺度函数的MRA方程" class="headerlink" title="尺度函数的MRA方程"></a>尺度函数的MRA方程</h3><p>有了上面的铺垫,这里就比较简单了,因为我们知道,低分辨率信号可以由高分辨率信号线性表达,所以我们可以看出,高分辨率信号所张成的空间必然包含低分辨率张成的空间:<br><img src="https://i.loli.net/2019/05/03/5ccbc41db84eb.png" alt="3"></p>
+<h3 id="尺度函数分辨率沿拓"><a href="#尺度函数分辨率沿拓" class="headerlink" title="尺度函数分辨率沿拓"></a>尺度函数分辨率沿拓</h3><p>事实上,尺度函数族中的尺度 j 决定着不同的时间分辨率<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc1a59a0e9.png" alt="1"><br>而实际上(证明请看参考资料),高时间分辨率的尺度函数必然可以代表低时间分辨率的尺度函数,如上图的三角尺度函数可以表示为:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc2661fbd1.png" alt="2"></p>
+<h2 id="多分辨分析-MRA-方程"><a href="#多分辨分析-MRA-方程" class="headerlink" title="多分辨分析(MRA)方程"></a>多分辨分析(MRA)方程</h2><h3 id="尺度函数的MRA方程"><a href="#尺度函数的MRA方程" class="headerlink" title="尺度函数的MRA方程"></a>尺度函数的MRA方程</h3><p>有了上面的铺垫,这里就比较简单了,因为我们知道,低分辨率信号可以由高分辨率信号线性表达,所以我们可以看出,高分辨率信号所张成的空间必然包含低分辨率张成的空间:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbc41db84eb.png" alt="3"></p>
 <p>图中越外围的代表越高分辨率的尺度函数,而$ L^2 $为平方可积空间,即:<br>$$ \int_{t\in R}|x(t)|^2 dt &lt; \infty $$<br>学过信号与系统的应该都知道积分式的定义吧…</p>
 <p>所以在这个基础上我们引出<strong>尺度函数的多分辨分析方程</strong>(用以映射用高分辨率信号来表示低分辨率信号之间的关系)<br>$$<br>\varphi(t)=\sum_{k} h_{0}[k] \cdot \sqrt{2} \varphi(2 t-k)<br>$$<br>其中$h_0[k]$是尺度函数系数,也可以说成尺度滤波器的单位脉冲响应,到后面这个是重点.</p>
 <h3 id="小波函数的MRA方程"><a href="#小波函数的MRA方程" class="headerlink" title="小波函数的MRA方程"></a>小波函数的MRA方程</h3><p>讲小波函数的MRA方程之前,我们不妨来回顾一下IDWT的定义:<br>$$x(t) = \sum_nc_0[k]\varphi_{0,k}(t) + \sum_nd_0[k]\psi_{0,k}(t)  + \sum_nd_1[k]\psi_{1,k}(t) +\cdots $$</p>
@@ -350,17 +350,17 @@
 <p>而事实上,小波函数和尺度函数满足一下关系:<br>$$<br>\begin{array}{l}{V_{1}=V_{0} \oplus W_{0}} \ {x_{1}(t)=C_{0}(t)+D_{0}(t)}\end{array}<br>$$</p>
 <p>所以上上式中可以将$ V_{j_0}  $无限递归分解为小波信号张成的信号空间,即:<br>$$<br>\begin{array}{c}{L^{2}=\cdots \oplus W_{-2} \oplus W_{-1} \oplus W_{0} \oplus W_{1} \oplus W_{2} \oplus \cdots} \ {x(t)=\sum_{k} \sum_{j=-\infty}^{\infty} d_{j, k} \psi_{j, k}(t)}\end{array}<br>$$</p>
 <p>所以从这个角度去考虑的话,我们就知道为什么$c_j [k]$表示的是信号的粗略(coarse)信息,而$ d_j [k] $ 表示的是信号的精细(detail)信息,当然,这只是其中一种理解,还有一种比较有意思的想法就是从差分的角度出发来考虑两种系数之间的意义,详见孙延奎教授的《小波分析及其应用》</p>
-<p>结合尺度函数的MRA方程中的信号空间的图,我们可以看出,其实每一圈$V_j$所包含的就是低一维的尺度函数族张成的信号空间($V_{j-1}$)在加上低一维的小波函数张成的信号空间($W_{j-1}$),即:<br><img src="https://i.loli.net/2019/05/03/5ccbda3ce7edf.png" alt="4"></p>
+<p>结合尺度函数的MRA方程中的信号空间的图,我们可以看出,其实每一圈$V_j$所包含的就是低一维的尺度函数族张成的信号空间($V_{j-1}$)在加上低一维的小波函数张成的信号空间($W_{j-1}$),即:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbda3ce7edf.png" alt="4"></p>
 <p>自然而然,我们可以知道小波函数的MRA方程的递归意义是更为重要的,所以有:<br>$$<br>\psi(t)=\sum_{k} h_{1}[k] \cdot \sqrt{2} \varphi(2 t-k)<br>$$<br>其中$ h_1[k] $称为小波函数系数</p>
 <p>由于篇幅关系,这里没办法进一步讨论信号空间映射,小波函数系数和尺度函数系数的关系还有对称性,看情况会再作一篇博客讨论.</p>
-<h3 id="离散小波变换的分解算法"><a href="#离散小波变换的分解算法" class="headerlink" title="离散小波变换的分解算法"></a>离散小波变换的分解算法</h3><p>有了MRA方程的概念,想必这里会比较简单,其实分解算法很简单,就是围绕着<br>$$<br>\begin{array}{l}{V_{1}=V_{0} \oplus W_{0}} \ {x_{1}(t)=C_{0}(t)+D_{0}(t)}\end{array}<br>$$<br>这个方程来进行分解,这里不给出证明过程(其实很简单,但是篇幅过长,详见参考资料),直接给出算法框图:<br>DWT的一级分解算法框图:<br><img src="https://i.loli.net/2019/05/03/5ccbdd6891faf.png" alt="5"></p>
-<p>再将$C_j [k]$ 进行分解,可得DWT的二级分解算法框图:<br><img src="https://i.loli.net/2019/05/03/5ccbdff27e3e7.png" alt="6"><br>所以多级的大家也会求了吧…</p>
+<h3 id="离散小波变换的分解算法"><a href="#离散小波变换的分解算法" class="headerlink" title="离散小波变换的分解算法"></a>离散小波变换的分解算法</h3><p>有了MRA方程的概念,想必这里会比较简单,其实分解算法很简单,就是围绕着<br>$$<br>\begin{array}{l}{V_{1}=V_{0} \oplus W_{0}} \ {x_{1}(t)=C_{0}(t)+D_{0}(t)}\end{array}<br>$$<br>这个方程来进行分解,这里不给出证明过程(其实很简单,但是篇幅过长,详见参考资料),直接给出算法框图:<br>DWT的一级分解算法框图:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbdd6891faf.png" alt="5"></p>
+<p>再将$C_j [k]$ 进行分解,可得DWT的二级分解算法框图:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbdff27e3e7.png" alt="6"><br>所以多级的大家也会求了吧…</p>
 <p>可以简单地看出,信号经过小波函数系数(尺度函数系数)之后还需要经过一个抽取的过程,这个的话自己看看小波函数和尺度函数的定义式就可以了</p>
-<h3 id="离散小波变换的重构算法"><a href="#离散小波变换的重构算法" class="headerlink" title="离散小波变换的重构算法"></a>离散小波变换的重构算法</h3><p>这里是相似的,而且由于懒的原因我没有做重构,所以也直接放图:<br><img src="https://i.loli.net/2019/05/03/5ccbe0a709346.png" alt="fff"><br><img src="https://i.loli.net/2019/05/03/5ccbe0e862943.png" alt="ffe"><br>可以简单地看出,信号经过小波函数系数(尺度函数系数)之后还需要经过一个内插的过程,这个的话自己看看小波函数和尺度函数的定义式就可以了.</p>
+<h3 id="离散小波变换的重构算法"><a href="#离散小波变换的重构算法" class="headerlink" title="离散小波变换的重构算法"></a>离散小波变换的重构算法</h3><p>这里是相似的,而且由于懒的原因我没有做重构,所以也直接放图:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe0a709346.png" alt="fff"><br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe0e862943.png" alt="ffe"><br>可以简单地看出,信号经过小波函数系数(尺度函数系数)之后还需要经过一个内插的过程,这个的话自己看看小波函数和尺度函数的定义式就可以了.</p>
 <p>需要注意的是,可以先抽取再滤波,但是不能先滤波后内插,见上图,(常识)</p>
-<h2 id="小波变换-DWT-的FPGA实现"><a href="#小波变换-DWT-的FPGA实现" class="headerlink" title="小波变换(DWT)的FPGA实现"></a>小波变换(DWT)的FPGA实现</h2><p>总所周知,这次我们要实现的算法框图是这个:<br><img src="https://i.loli.net/2019/05/03/5ccbdd6891faf.png" alt="ffd"></p>
+<h2 id="小波变换-DWT-的FPGA实现"><a href="#小波变换-DWT-的FPGA实现" class="headerlink" title="小波变换(DWT)的FPGA实现"></a>小波变换(DWT)的FPGA实现</h2><p>总所周知,这次我们要实现的算法框图是这个:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbdd6891faf.png" alt="ffd"></p>
 <h3 id="多相结构模型"><a href="#多相结构模型" class="headerlink" title="多相结构模型"></a>多相结构模型</h3><p>本来我是直接按照算法流程实现了DWT,然后讲抽取和滤波对调了位置(为了提高系统的性能)</p>
-<p>后来从网上仅有的资料中查看到别人做了多相分解,后面我想了想,如果不用多相结构的话,相当于原信号的先经过了一次抽取,也是极大地浪费了信号.<br>又有:<br>$$ H_0(z) = H_{0e} (z^2) +z^{-1} H_{0o}(z^2)  $$<br>$$ H_1(z) = H_{1e} (z^2) +z^{-1} H_{1o}(z^2)  $$<br>所以我们将信号和滤波器系数都进行奇偶分解,分别进行滤波,得到整体FPGA框图:<br><img src="https://i.loli.net/2019/05/03/5ccbe5229c73c.png" alt="ffc"></p>
+<p>后来从网上仅有的资料中查看到别人做了多相分解,后面我想了想,如果不用多相结构的话,相当于原信号的先经过了一次抽取,也是极大地浪费了信号.<br>又有:<br>$$ H_0(z) = H_{0e} (z^2) +z^{-1} H_{0o}(z^2)  $$<br>$$ H_1(z) = H_{1e} (z^2) +z^{-1} H_{1o}(z^2)  $$<br>所以我们将信号和滤波器系数都进行奇偶分解,分别进行滤波,得到整体FPGA框图:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe5229c73c.png" alt="ffc"></p>
 <p>接下来我们简单地理一下过程</p>
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
 <li>激励和系数都是带符号位的,所有和信号流有关的reg和ip都要设置成signed</li>
@@ -368,7 +368,7 @@
 <li>以db4小波为示例,其他小波只需要改改滤波器和matalb就可以了</li>
 <li>仅实现一级分解,多级分解只要自己认真看博客就知道怎么做了</li>
 </ol>
-<h3 id="信号奇偶分解"><a href="#信号奇偶分解" class="headerlink" title="信号奇偶分解:"></a>信号奇偶分解:</h3><p>这个模块比较简单,但是想设计好需要一点小心思,思路就是做一个二分频时钟,上升沿将数据写入偶数部分,下降沿将数据写入奇数部分,还顺手设计了个三段式写法,确保建立时间和保持时间是信号保持时间的一半,但是都是FPGAer的常识了,这里不给出代码<br><img src="https://i.loli.net/2019/05/03/5ccbe6b37f7e4.png" alt="ffb"></p>
+<h3 id="信号奇偶分解"><a href="#信号奇偶分解" class="headerlink" title="信号奇偶分解:"></a>信号奇偶分解:</h3><p>这个模块比较简单,但是想设计好需要一点小心思,思路就是做一个二分频时钟,上升沿将数据写入偶数部分,下降沿将数据写入奇数部分,还顺手设计了个三段式写法,确保建立时间和保持时间是信号保持时间的一半,但是都是FPGAer的常识了,这里不给出代码<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbe6b37f7e4.png" alt="ffb"></p>
 <h3 id="matlab获取滤波器系数"><a href="#matlab获取滤波器系数" class="headerlink" title="matlab获取滤波器系数"></a>matlab获取滤波器系数</h3><p>代码很简单,先生成,再量化:</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">wn=<span class="string">'db4'</span>;</span><br><span class="line">[Ld,Hd,Lr,Hr] = wfilters(wn);</span><br><span class="line">k=<span class="number">0</span>:<span class="built_in">length</span>(Ld)<span class="number">-1</span>;</span><br><span class="line"> subplot(<span class="number">221</span>);stem(k,Ld);</span><br><span class="line"> title(<span class="string">'低通分解滤波器Ld'</span>);</span><br><span class="line"> subplot(<span class="number">222</span>);stem(k,Lr);</span><br><span class="line"> title(<span class="string">'低通重建滤波器Lr'</span>);</span><br><span class="line"> subplot(<span class="number">223</span>);stem(k,Hd);</span><br><span class="line"> title(<span class="string">'高通分解滤波器Hd'</span>);</span><br><span class="line"> subplot(<span class="number">224</span>);stem(k,Hd);</span><br><span class="line"> title(<span class="string">'高通重建滤波器Hr'</span>);</span><br><span class="line"></span><br><span class="line">qua_ld = <span class="built_in">round</span>(Ld*<span class="number">2</span>^<span class="number">8</span>);</span><br><span class="line">qua_hd = <span class="built_in">round</span>(Hd*<span class="number">2</span>^<span class="number">8</span>);</span><br><span class="line">qua_lr = <span class="built_in">round</span>(Lr*<span class="number">2</span>^<span class="number">8</span>);</span><br><span class="line">qua_hr = <span class="built_in">round</span>(Hr*<span class="number">2</span>^<span class="number">8</span>);</span><br><span class="line"><span class="built_in">disp</span>(qua_ld);</span><br><span class="line"><span class="built_in">disp</span>(qua_hd);</span><br><span class="line"><span class="built_in">disp</span>(qua_lr);</span><br><span class="line"><span class="built_in">disp</span>(qua_hr);</span><br></pre></td></tr></table></figure>
 
@@ -383,8 +383,8 @@
 <h3 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h3><p>用tb读入数据:</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;   <span class="comment">//数组坐标</span></span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">15</span>:<span class="number">0</span>] stimulus[<span class="number">1</span>:data_num];  <span class="comment">//数组形式存储读出的数据</span></span><br><span class="line"><span class="keyword">initial</span> </span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    RST_N = <span class="number">1'b1</span>;</span><br><span class="line">	#<span class="number">60</span> RST_N = <span class="number">1'b0</span>;</span><br><span class="line">	#<span class="number">60</span> RST_N = <span class="number">1'b1</span>; </span><br><span class="line">    <span class="built_in">$readmemh</span>(<span class="string">"sinx.txt"</span>, stimulus);  <span class="comment">//将txt文件中的数据存储在数组中</span></span><br><span class="line">    i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">repeat</span>(data_num) <span class="keyword">begin</span>   <span class="comment">//重复读取数组中的数据</span></span><br><span class="line">        i = i + <span class="number">1</span>;</span><br><span class="line">        data_in = stimulus[i]; </span><br><span class="line">        #PERIOD;         <span class="comment">//每个时钟读取一次</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	 <span class="built_in">$stop</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>那么又到了紧张刺激的,看波形环节:<br>matlab计算:<br><img src="https://i.loli.net/2019/05/03/5ccbecdd4c556.png" alt="ff"></p>
-<p>fpga计算:<br><img src="https://i.loli.net/2019/05/03/5ccbeeec0f4d0.jpg" alt><br>误差大概率来源于字长效应…</p>
+<p>那么又到了紧张刺激的,看波形环节:<br>matlab计算:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbecdd4c556.png" alt="ff"></p>
+<p>fpga计算:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5ccbeeec0f4d0.jpg" alt><br>误差大概率来源于字长效应…</p>
 <p>想要具体源码的可以联系/私信本人</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/22450818" target="_blank" rel="noopener">形象易懂讲解算法I——小波变换</a><br><a href="https://zhuanlan.zhihu.com/p/44215123" target="_blank" rel="noopener">小波变换完美通俗讲解系列之 （一）</a><br><a href="https://zhuanlan.zhihu.com/p/44217268" target="_blank" rel="noopener">小波变换完美通俗讲解系列之 （二   </a><br><a href="https://en.wikipedia.org/wiki/Discrete_wavelet_transform" target="_blank" rel="noopener">Wavelet transform - Wikipedia</a><br><a href="disp.ee.ntu.edu.tw/tutorial/WaveletTutorial.pdf">A Tutorial of the Wavelet Transform</a></p>
 <hr>
@@ -486,7 +486,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -499,7 +499,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -565,7 +565,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76k字</span>
+  <span class="post-count">博客全站共79.6k字</span>
 </div>
 <span id="busuanzi_container_site_pv" style='display:none'>
     本站总访问量<span id="busuanzi_value_site_pv"></span>次

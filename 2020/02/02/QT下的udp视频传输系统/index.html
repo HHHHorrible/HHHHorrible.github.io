@@ -63,14 +63,14 @@
 <meta property="og:site_name" content="何伟宝的后花园">
 <meta property="og:description" content="QT下的udp视频传输系统前段时间工作著 本文只为记录思路,若想认真学会开发请参考 参考资料和官方文档 @[toc] 总体框图框图是从需求里面来的,那我自然是奔着视频流传输去的,但是在底层的硬件配置摄像头的过程中,我们可以通过IIC去重设一些参数,比如宽高啊,白平衡啊什么的.所以我在这里的设计是这样的.就是分两条线程去写,主线程ui,新建一条UDP线程,不然在视频流传输的时候程序会很容易crash">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200201011657949.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200201011731447.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020020101180268.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-02-07T09:31:47.308Z">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20200201011657949.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20200201011731447.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/2020020101180268.jpg">
+<meta property="og:updated_time" content="2020-05-25T04:21:08.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QT下的udp视频传输系统">
 <meta name="twitter:description" content="QT下的udp视频传输系统前段时间工作著 本文只为记录思路,若想认真学会开发请参考 参考资料和官方文档 @[toc] 总体框图框图是从需求里面来的,那我自然是奔着视频流传输去的,但是在底层的硬件配置摄像头的过程中,我们可以通过IIC去重设一些参数,比如宽高啊,白平衡啊什么的.所以我在这里的设计是这样的.就是分两条线程去写,主线程ui,新建一条UDP线程,不然在视频流传输的时候程序会很容易crash">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200201011657949.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20200201011657949.png">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2020/02/02/QT下的udp视频传输系统/">
 
 
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-07 17:31:47" itemprop="dateModified" datetime="2020-02-07T17:31:47+08:00">2020-02-07</time>
+                <time title="修改时间：2020-05-25 12:21:08" itemprop="dateModified" datetime="2020-05-25T12:21:08+08:00">2020-05-25</time>
               </span>
             
           
@@ -321,7 +321,7 @@
         <h1 id="QT下的udp视频传输系统"><a href="#QT下的udp视频传输系统" class="headerlink" title="QT下的udp视频传输系统"></a>QT下的udp视频传输系统</h1><p>前段时间工作著</p>
 <p>本文只为记录思路,若想认真学会开发请参考 <strong>参考资料</strong>和<strong>官方文档</strong></p>
 <p>@[toc]</p>
-<h2 id="总体框图"><a href="#总体框图" class="headerlink" title="总体框图"></a>总体框图</h2><p>框图是从需求里面来的,那我自然是奔着视频流传输去的,但是在底层的硬件配置摄像头的过程中,我们可以通过IIC去重设一些参数,比如宽高啊,白平衡啊什么的.所以我在这里的设计是这样的.<br><img src="https://img-blog.csdnimg.cn/20200201011657949.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70" alt="框图"><br>就是分两条线程去写,主线程ui,新建一条UDP线程,不然在视频流传输的时候程序会很容易crash.<br>然后由于我想在一个路由器中搞完,不用自己指定ip,所以获取一下ip地址这样子</p>
+<h2 id="总体框图"><a href="#总体框图" class="headerlink" title="总体框图"></a>总体框图</h2><p>框图是从需求里面来的,那我自然是奔着视频流传输去的,但是在底层的硬件配置摄像头的过程中,我们可以通过IIC去重设一些参数,比如宽高啊,白平衡啊什么的.所以我在这里的设计是这样的.<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20200201011657949.png" alt="框图"><br>就是分两条线程去写,主线程ui,新建一条UDP线程,不然在视频流传输的时候程序会很容易crash.<br>然后由于我想在一个路由器中搞完,不用自己指定ip,所以获取一下ip地址这样子</p>
 <a id="more"></a>
 
 <h2 id="帧结构-帧头"><a href="#帧结构-帧头" class="headerlink" title="帧结构(帧头)"></a>帧结构(帧头)</h2><p>帧结构最初可见参考资料,我增删了一些东西</p>
@@ -351,7 +351,7 @@
 <h2 id="图片显示"><a href="#图片显示" class="headerlink" title="图片显示"></a>图片显示</h2><p>其实在上面注册完信号和槽之后思路就很清晰了,这里要处理的主要是底层摄像头传回来的byte数据我们要怎么”显示”.<br>因为不同于其他抽象层次的传输,我们传上来的数据是没有编码的.看见有用opencv来干的,但是想想又要编译感觉好麻烦,我就去翻了一下官方手册,才发现官方是提供方法编码的.<br>核心代码见:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Udp_Widget::slotRecv(<span class="keyword">char</span>* buf,<span class="keyword">int</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    frame_count++;</span><br><span class="line">    <span class="keyword">int</span> w = ui-&gt;m_combo_width-&gt;currentText().toInt();</span><br><span class="line">    <span class="keyword">int</span> h = ui-&gt;m_combo_height-&gt;currentText().toInt();</span><br><span class="line">    QImage *img = <span class="keyword">new</span> QImage((uchar*)buf,w,h,QImage::Format_RGB888);</span><br><span class="line">    QPixmap pixmap;</span><br><span class="line">    pixmap.convertFromImage(*img);</span><br><span class="line">    ui-&gt;m_pixmap-&gt;setPixmap(pixmap);</span><br><span class="line">    ui-&gt;m_label_recv-&gt;setNum(frame_count);</span><br><span class="line">    <span class="function">emit <span class="title">sigwhChanged</span><span class="params">(w, h)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>那顺便记录一下,QT还支持多少这些像素格式编码.哎啊自己看手册吧<br><img src="https://img-blog.csdnimg.cn/20200201011731447.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70" alt="format"><br>这里也引来一个<strong>毛病</strong>,就是如果也只是在一个线程中来编码的话,有时候会因为fps过高而爆炸,正常做法是做一个队列,再动态新建线程来处理,但是 赶工程 然后当时也没这个需求就没做了<strong>:)</strong></p>
+<p>那顺便记录一下,QT还支持多少这些像素格式编码.哎啊自己看手册吧<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/20200201011731447.png" alt="format"><br>这里也引来一个<strong>毛病</strong>,就是如果也只是在一个线程中来编码的话,有时候会因为fps过高而爆炸,正常做法是做一个队列,再动态新建线程来处理,但是 赶工程 然后当时也没这个需求就没做了<strong>:)</strong></p>
 <h2 id="一些设计细节"><a href="#一些设计细节" class="headerlink" title="一些设计细节"></a>一些设计细节</h2><ol>
 <li><p>绑定的端口是8080,用之前要改win的防火墙规则</p>
 </li>
@@ -364,7 +364,7 @@
 </li>
 </ol>
 <p>这样做的原因是因为在zynq中的lwip也是我设计的,当时在做的时候不知道发点啥,就回传一下ip看看误码怎么样<br>4. 功能码funcode我的定义是这样的<br>    - funcode = 24 从-&gt;主,视频帧<br>    - funcode = 25 主-&gt;从,命令帧<br>    - funcode = 26 从-&gt;主,回复帧<br>5. 做了个截图功能,会保存在当前目录下</p>
-<h2 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h2><p><img src="https://img-blog.csdnimg.cn/2020020101180268.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODA3MTEzNQ==,size_16,color_FFFFFF,t_70" alt="res"><br>由于赶工原因,界面ui我们就不讲究了吧…</p>
+<h2 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h2><p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/2020020101180268.jpg" alt="res"><br>由于赶工原因,界面ui我们就不讲究了吧…</p>
 <h3 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h3><table>
 <thead>
 <tr>
@@ -410,6 +410,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/05/25/FPGA实现OFDM（1）-OFDM原理/" rel="prev" title="FPGA实现OFDM（1）-OFDM原理">
+                  FPGA实现OFDM（1）-OFDM原理 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -474,7 +478,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -487,7 +491,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -553,7 +557,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76k字</span>
+  <span class="post-count">博客全站共79.6k字</span>
 </div>
 <span id="busuanzi_container_site_pv" style='display:none'>
     本站总访问量<span id="busuanzi_value_site_pv"></span>次

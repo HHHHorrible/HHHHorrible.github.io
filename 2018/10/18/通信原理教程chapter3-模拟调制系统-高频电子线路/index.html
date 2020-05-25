@@ -63,17 +63,17 @@
 <meta property="og:site_name" content="何伟宝的后花园">
 <meta property="og:description" content="通信原理chapter3-模拟调制系统+高频电子线路">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2018/09/16/5b9e3c10665ca.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/12/23/5c1f9fb095b20.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/23/5c1f9e832bf68.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/12/24/5c2059c631a1b.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/24/5c205bed17620.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/12/24/5c20553facb57.jpg">
-<meta property="og:updated_time" content="2019-10-12T07:44:21.014Z">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9e3c10665ca.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1f9fb095b20.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1f9e832bf68.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c2059c631a1b.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c205bed17620.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c20553facb57.jpg">
+<meta property="og:updated_time" content="2020-05-25T04:37:01.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通信原理chapter3-模拟调制系统+高频电子线路">
 <meta name="twitter:description" content="通信原理chapter3-模拟调制系统+高频电子线路">
-<meta name="twitter:image" content="https://i.loli.net/2018/09/16/5b9e3c10665ca.jpg">
+<meta name="twitter:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9e3c10665ca.jpg">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/10/18/通信原理教程chapter3-模拟调制系统-高频电子线路/">
 
 
@@ -272,7 +272,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 15:44:21" itemprop="dateModified" datetime="2019-10-12T15:44:21+08:00">2019-10-12</time>
+                <time title="修改时间：2020-05-25 12:37:01" itemprop="dateModified" datetime="2020-05-25T12:37:01+08:00">2020-05-25</time>
               </span>
             
           
@@ -326,16 +326,16 @@
         <h1 id="通信原理chapter3-模拟调制系统-高频电子线路"><a href="#通信原理chapter3-模拟调制系统-高频电子线路" class="headerlink" title="通信原理chapter3-模拟调制系统+高频电子线路"></a>通信原理chapter3-模拟调制系统+高频电子线路</h1><p>本来这一篇我是想通信原理的第三章和第六章专门就调制和解调写的，想到高频也有学这个，所以我就合在一起写了算了。</p>
 <p>这篇博客会以通信为纲，然后补高频的东西。</p>
 <p>[TOC]</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img src="https://i.loli.net/2018/09/16/5b9e3c10665ca.jpg" alt></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5b9e3c10665ca.jpg" alt></p>
 <p>哎啊没找到图，先放一张数字系统的，也大同小异。（数字上）我们可以看见一个信号在发送之前都会先经过信道编码，但依然是一个低频信号。从上学期学的电磁场我们就可以知道，一个低频信号所能发射出去的功率是很低的，并且需要一条长城那么大的天线才有可能能接收。所以我们需要通过调制来将信号抬到一个足够高的频率上，以便信道传输。模拟上也是同理的。</p>
 <p>我们知道一个正弦波：<br>$$ c(t) = A cos(\omega t +\phi) $$<br>有三个参量，幅值，频率，相位，所以相应的我们会有振幅调制，频率调制和相位调制。其中振幅调制（+一些特殊的变种）又称为线性调制，频率调制和相位调制称为非线性调制，因为后两者是将调制信号附加在载波的相位上。</p>
 <h2 id="线性调制"><a href="#线性调制" class="headerlink" title="线性调制"></a>线性调制</h2><p>设载波为：<br>$$ c(t) = Acos\omega_0 t $$<br>而这里所说的线性调制就是<strong>用调制信号的瞬时值控制载波信号的幅值</strong>，而后边还会说到的双边带，单边带调制都是基于这个的。</p>
-<p>显然，由傅立叶变换我们可以知道，一个正弦信号的傅立叶变换是：<br>$$ y=cos\omega_0 t &lt;==&gt; F(j\omega_0) = \frac{e^{j\omega_0 t}+e^{-j\omega_0 t}}{2} $$<br>可见，这相当于是两个可以提供频移的信号，如果我们想利用他的频移特性的话，不妨可以直接将调制信号乘上载波信号，利用<strong>积化和差</strong>即：<br>$$ y = cos \Omega_0 t  cos\omega t  \ y =  (cos(\omega + \Omega_0)t+cos(\omega - \Omega_0)t)/2 $$<br>在频谱上面看就是这样的:<br><img src="https://i.loli.net/2018/12/23/5c1f9fb095b20.png" alt><br>而这大概就是线性调制的原理了,也是双边带调制的原理.</p>
+<p>显然，由傅立叶变换我们可以知道，一个正弦信号的傅立叶变换是：<br>$$ y=cos\omega_0 t &lt;==&gt; F(j\omega_0) = \frac{e^{j\omega_0 t}+e^{-j\omega_0 t}}{2} $$<br>可见，这相当于是两个可以提供频移的信号，如果我们想利用他的频移特性的话，不妨可以直接将调制信号乘上载波信号，利用<strong>积化和差</strong>即：<br>$$ y = cos \Omega_0 t  cos\omega t  \ y =  (cos(\omega + \Omega_0)t+cos(\omega - \Omega_0)t)/2 $$<br>在频谱上面看就是这样的:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1f9fb095b20.png" alt><br>而这大概就是线性调制的原理了,也是双边带调制的原理.</p>
 <h3 id="振幅调制（AM）"><a href="#振幅调制（AM）" class="headerlink" title="振幅调制（AM）"></a>振幅调制（AM）</h3><p>这里开始用高频的符号</p>
 <p>而振幅调制就是在上面的基础上,在调制信号加入一个直流信号,即:<br>$$ v_\Omega =  V_o + k_a V_\Omega cos\Omega t \&lt;==&gt;v_\Omega =  V_o (1+m_a ) cos\Omega t $$<br>其中:$k_a$为比例系数,$m_a = \frac{k_a V_\Omega}{V_o}$为<strong>调制指数</strong></p>
 <p>从通信的前几章我们可以知道这个直流信号是没有信息量的,而从信号与系统的角度说,这个直流信号在频域上是一个冲激信号,在这个基础上乘载波信号,就相当于发送了载波信号.这个时候已调波的表达式和频谱是这样的:</p>
 <p>$$ v(t) = V_o (1+m_a ) cos\Omega t  cos\omega t$$</p>
-<p><img src="https://i.loli.net/2018/12/23/5c1f9e832bf68.jpg" alt></p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1f9e832bf68.jpg" alt></p>
 <p>所以说他带来的影响就是:</p>
 <ol>
 <li>带来了载波的信息,可以使用非相干解调*</li>
@@ -348,13 +348,13 @@
 <li>下边带功率:<br>$$P_{\omega_0+\Omega} = \frac1{2R} (\frac{m_aV_0^2}{2})^2 =\frac14 m_a^2 P_{OT} $$</li>
 <li>输出总功率:<br>$$P_{o} = P_{OT} +P_{\omega_0-\Omega} +P_{\omega_0+\Omega} = P_{OT}(1+\frac{m_a^2}{2})$$</li>
 </ol>
-<h4 id="加法器-乘法器调幅"><a href="#加法器-乘法器调幅" class="headerlink" title="加法器,乘法器调幅"></a>加法器,乘法器调幅</h4><p>现在讨论怎么实现调幅,从上文我们可以得到最直接的方法:<br><img src="https://i.loli.net/2018/12/24/5c2059c631a1b.png" alt><br>假设乘法器的输入输出符合:<br>$$ v_o=kv_1v_2 $$</p>
+<h4 id="加法器-乘法器调幅"><a href="#加法器-乘法器调幅" class="headerlink" title="加法器,乘法器调幅"></a>加法器,乘法器调幅</h4><p>现在讨论怎么实现调幅,从上文我们可以得到最直接的方法:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c2059c631a1b.png" alt><br>假设乘法器的输入输出符合:<br>$$ v_o=kv_1v_2 $$</p>
 <p>如果不要直流信号和加法器,直接将调制信号和载波信号相乘也是可用的,这就是不含载波分量的双边带调幅(平衡调幅),后面再讨论.</p>
 <p>实际上我们可以发现,所有调幅的方法的重点就在于怎么实现相乘这一点上,下面再来看一个重点内容</p>
-<h4 id="二极管平衡调幅"><a href="#二极管平衡调幅" class="headerlink" title="二极管平衡调幅"></a>二极管平衡调幅</h4><p><img src="https://i.loli.net/2018/12/24/5c205bed17620.jpg" alt><br>电路图网上的都好丑,在高频书P319,或者直接看ppt吧<br>考虑二极管在高频的时候相当于一个单向小电阻$r_d$,且单向性只受$u_c$控制,即得<strong>开关函数</strong>(总电阻)</p>
+<h4 id="二极管平衡调幅"><a href="#二极管平衡调幅" class="headerlink" title="二极管平衡调幅"></a>二极管平衡调幅</h4><p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c205bed17620.jpg" alt><br>电路图网上的都好丑,在高频书P319,或者直接看ppt吧<br>考虑二极管在高频的时候相当于一个单向小电阻$r_d$,且单向性只受$u_c$控制,即得<strong>开关函数</strong>(总电阻)</p>
 <p>$$S_1(t) =\begin{cases}      r_d+R \quad\quad,cos\omega_o t \geq 0   \    0 \quad\quad\quad\quad ,cos\omega_o t &lt; 0 \end{cases} $$</p>
 <p>不妨将$S_1(t)$作三角傅里叶级数分解的:<br>$$ S_1(t) =  $$</p>
-<h4 id="二极管包络检波"><a href="#二极管包络检波" class="headerlink" title="二极管包络检波"></a>二极管包络检波</h4><p>在讲完调制之后,不妨可以讲一下他的解调(检波).最常用的一种检波方式就是二极管包络检波.原理比较简单,就是一个整流器加一个LPF.当然,在电路上他是这样的:<br><img src="https://i.loli.net/2018/12/24/5c20553facb57.jpg" alt></p>
+<h4 id="二极管包络检波"><a href="#二极管包络检波" class="headerlink" title="二极管包络检波"></a>二极管包络检波</h4><p>在讲完调制之后,不妨可以讲一下他的解调(检波).最常用的一种检波方式就是二极管包络检波.原理比较简单,就是一个整流器加一个LPF.当然,在电路上他是这样的:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c20553facb57.jpg" alt></p>
 <p>显然,这个LPF的过渡带应该落在$\Omega$和$ \omega $中间,所以有:<br>$$ \begin{cases}      \frac1{RC}&gt;&gt;\Omega_{max}    \        \frac1{RC}&lt;&lt; \omega     \end{cases} $$</p>
 <p><strong>这里因为当时用马克飞象写+印象笔记同步，当时不慎关机后没恢复，现在让我补已经没当时那种感觉了，所以</strong></p>
 <p><strong>能看到这里的有心人，如果刚好也在学习的话可以帮忙补一下，commit上来</strong> </p>
@@ -452,7 +452,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -465,7 +465,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -531,7 +531,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76k字</span>
+  <span class="post-count">博客全站共79.6k字</span>
 </div>
 <span id="busuanzi_container_site_pv" style='display:none'>
     本站总访问量<span id="busuanzi_value_site_pv"></span>次

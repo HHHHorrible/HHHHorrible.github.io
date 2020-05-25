@@ -63,26 +63,26 @@
 <meta property="og:site_name" content="何伟宝的后花园">
 <meta property="og:description" content="FPGA-Verilog 设计FIR滤波器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18a9b3b7496.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18ab34c3e9d.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18abbabc8fe.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c14cb5a8f.jpg">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c320c8578.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c80f32683.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c18c8d683b92.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c190762700cc.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18a9b3b7496.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18ab34c3e9d.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18abbabc8fe.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c14cb5a8f.jpg">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c320c8578.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c80f32683.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c8d683b92.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c190762700cc.png">
 <meta property="og:image" content="https://i.loli.net/2018/12/18/5c190a857f414.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/18/5c190bf6d8ef9.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/19/5c1919f8a21d5.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/19/5c192535701d0.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/19/5c1929c21afb4.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/19/5c192b35ec376.png">
-<meta property="og:image" content="https://i.loli.net/2018/12/19/5c192b557e904.png">
-<meta property="og:updated_time" content="2019-10-12T07:56:38.610Z">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c190bf6d8ef9.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1919f8a21d5.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c192535701d0.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1929c21afb4.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c192b35ec376.png">
+<meta property="og:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c192b557e904.png">
+<meta property="og:updated_time" content="2020-05-25T04:17:05.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FPGA-Verilog 设计FIR滤波器">
 <meta name="twitter:description" content="FPGA-Verilog 设计FIR滤波器">
-<meta name="twitter:image" content="https://i.loli.net/2018/12/18/5c18a9b3b7496.png">
+<meta name="twitter:image" content="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18a9b3b7496.png">
   <link rel="canonical" href="https://blog.csdn.net/weixin_38071135/2018/12/19/FPGA-Verilog-设计FIR滤波器/">
 
 
@@ -281,7 +281,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-12 15:56:38" itemprop="dateModified" datetime="2019-10-12T15:56:38+08:00">2019-10-12</time>
+                <time title="修改时间：2020-05-25 12:17:05" itemprop="dateModified" datetime="2020-05-25T12:17:05+08:00">2020-05-25</time>
               </span>
             
           
@@ -339,27 +339,27 @@
 </blockquote>
 <h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><p>设计一个10阶的FIR低通滤波器,滤波器的通带截止频率是2MHz,阻带截止频率是4MHz. </p>
 <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="数字滤波器"><a href="#数字滤波器" class="headerlink" title="数字滤波器"></a>数字滤波器</h3><p>滤波器是一种对信号有处理作用的器件或电路,其主要作用是让有用信号尽可能无衰减地通过,对无用信号尽可能大地衰减.而数字滤波器就是一个按预定的<strong>有限精度</strong>算法实现的,将输入的数字信号转换为所要求的输出数字信号的<strong>线性时不变系统</strong>.<br>如果对上面加粗的莫得认识的话,那你就直接想成是用数字电路实现的滤波器得了.</p>
-<h3 id="FIR滤波器"><a href="#FIR滤波器" class="headerlink" title="FIR滤波器"></a>FIR滤波器</h3><p>FIR(Finite Impulse Response,FIR)滤波器,中文名叫有限<strong>冲激响应</strong>滤波器,在讲冲激响应之前,我们不妨预习/回顾一下信号与系统:<br><img src="https://i.loli.net/2018/12/18/5c18a9b3b7496.png" alt="1"></p>
+<h3 id="FIR滤波器"><a href="#FIR滤波器" class="headerlink" title="FIR滤波器"></a>FIR滤波器</h3><p>FIR(Finite Impulse Response,FIR)滤波器,中文名叫有限<strong>冲激响应</strong>滤波器,在讲冲激响应之前,我们不妨预习/回顾一下信号与系统:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18a9b3b7496.png" alt="1"></p>
 <p>就是一个输入信号,经过一个系统,每个系统会有他对应的系统函数来处理输入信号,最后得到输出信号.对常见的滤波器来说,他们的理想系统函数往往是这些:</p>
 <ol>
-<li>低通滤波器(红线部分),也是这篇blog要实现的东西<br><img src="https://i.loli.net/2018/12/18/5c18ab34c3e9d.png" alt="2"></li>
-<li>others<br><img src="https://i.loli.net/2018/12/18/5c18abbabc8fe.png" alt="3"></li>
+<li>低通滤波器(红线部分),也是这篇blog要实现的东西<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18ab34c3e9d.png" alt="2"></li>
+<li>others<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18abbabc8fe.png" alt="3"></li>
 </ol>
 <p>注意看横坐标,我们可以看到,输入信号是时域进来的,但是系统函数是<strong>频域</strong>来的.而他们的命名也是跟频率有关系的.<br>这个时候我们就需要用到傅里叶变换了,至于详情,请看:<br><a href="https://zhuanlan.zhihu.com/p/19763358" target="_blank" rel="noopener">这是一个通俗易懂的傅里叶变换简介/教程</a></p>
 <p>我们可以看到频域上的乘积就是时域上的卷积:<br>$$ y(n) = x(n)h(n) = \sum^N_{k=0}h(k)x(n-k) $$<br>用Z变换来就是:<br>$$H(z) = \sum^{N-1}_{n=0}h(n)z^{-n}$$<br>突然想起并不是在教DSP,所以我们了解到这里就够了,也就是说,我们只要把h(k)求出来,然后知道他可以有滤波的效果就完事了.</p>
-<p>这里用的是FIR的横向结构:<br><img src="https://i.loli.net/2018/12/18/5c18c14cb5a8f.jpg" alt="3"></p>
+<p>这里用的是FIR的横向结构:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c14cb5a8f.jpg" alt="3"></p>
 <p>我们可以看到主要有三个部分,<strong>第一部分是对输入信号的延时,第二部分是输入信号和抽头系数的相乘,第三部分是相乘结果的累加</strong>.这也是fpga的基本结构假设</p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><h3 id="matlab-获取FIR抽头系数"><a href="#matlab-获取FIR抽头系数" class="headerlink" title="matlab-获取FIR抽头系数"></a>matlab-获取FIR抽头系数</h3><p>在matlab命令行窗口打入filterDesigner(善用tab键):<br><img src="https://i.loli.net/2018/12/18/5c18c320c8578.png" alt="4"><br>大家大概可以看见面板下面有很多东西,分别是:</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><h3 id="matlab-获取FIR抽头系数"><a href="#matlab-获取FIR抽头系数" class="headerlink" title="matlab-获取FIR抽头系数"></a>matlab-获取FIR抽头系数</h3><p>在matlab命令行窗口打入filterDesigner(善用tab键):<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c320c8578.png" alt="4"><br>大家大概可以看见面板下面有很多东西,分别是:</p>
 <ol>
 <li>指定滤波器类型,是IIR还是FIR,用什么算法生成</li>
 <li>滤波器阶数,是特定阶数还是自动生成最小阶数的</li>
 <li>采样频率,信号频率,截止频率</li>
-<li>衰减倍数<br>当中的折衷关系不是这里的重点,根据设计要求,最后要改成这样:<br><img src="https://i.loli.net/2018/12/18/5c18c80f32683.png" alt="5"><br>记得按下方的design filter.</li>
+<li>衰减倍数<br>当中的折衷关系不是这里的重点,根据设计要求,最后要改成这样:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c80f32683.png" alt="5"><br>记得按下方的design filter.</li>
 </ol>
 <p>右上的图就是系统函数的形状了.</p>
 <p>接下来点[file]-&gt;[Export]导出,快捷键ctrl+E,直接导出到workspace就可以了</p>
 <p>然后在命令行窗口打:round(Num*512),意思是放大512倍并取整,方便我们后面在fpga中做定点数乘法</p>
-<p><img src="https://i.loli.net/2018/12/18/5c18c8d683b92.png" alt="6"></p>
+<p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c18c8d683b92.png" alt="6"></p>
 <p>保存下来即可</p>
 <h3 id="matlab-产生波形数据"><a href="#matlab-产生波形数据" class="headerlink" title="matlab-产生波形数据"></a>matlab-产生波形数据</h3><p>因为懒得接信号源和写ad模块驱动,这次实验直接在fpga中用一个rom的ip核储存波形数据<br>matlab代码如下:</p>
 <ol>
@@ -371,12 +371,12 @@
 
 </li>
 </ol>
-<p>运行整套代码我们也可以看见:<br><img src="https://i.loli.net/2018/12/18/5c190762700cc.png" alt="7"><br>红色是2MHz的正弦波,绿色是8MHz的正弦波,蓝色是混合信号.</p>
+<p>运行整套代码我们也可以看见:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c190762700cc.png" alt="7"><br>红色是2MHz的正弦波,绿色是8MHz的正弦波,蓝色是混合信号.</p>
 <h3 id="FPGA-导入波形数据"><a href="#FPGA-导入波形数据" class="headerlink" title="FPGA-导入波形数据"></a>FPGA-导入波形数据</h3><p>这里我们需要例化一个ROM模块来在fpga上预存前面生成的波形文件,打开quartus,[Tools]-&gt;[IP Catalog]<br>查找ROM,会找到一个在[Basic Function]-&gt;[On Chip Memory]下面的<strong>ROM:1-PORT</strong>(其实只要看见这个名字就可以了)双击例化</p>
 <ol>
 <li><p>设置好位宽和数据长度<br><img src="https://i.loli.net/2018/12/18/5c190a857f414.png" alt="8"></p>
 </li>
-<li><p>由于对ROM没有别的要求,所以看直接next到下图这个位置:<br><img src="https://i.loli.net/2018/12/18/5c190bf6d8ef9.png" alt="9"><br>填进刚刚在matlab里面生成的数据文件.<br>然后直接finish就可以了</p>
+<li><p>由于对ROM没有别的要求,所以看直接next到下图这个位置:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c190bf6d8ef9.png" alt="9"><br>填进刚刚在matlab里面生成的数据文件.<br>然后直接finish就可以了</p>
 </li>
 <li><p>例化这个新建的ROM,顺便加时钟</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例化ROM模块</span></span><br><span class="line">data_rom 			ROM_Init</span><br><span class="line">(</span><br><span class="line">	<span class="variable">.address</span>			(address_rom		),	<span class="comment">//rom的地址端口</span></span><br><span class="line">	<span class="variable">.clock</span>	    		(CLK_50M			),	<span class="comment">//rom的时钟端口</span></span><br><span class="line">	<span class="variable">.q</span>					(data_rom	)	<span class="comment">//rom的数据端口</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">//时序电路,用来给rom_addr寄存器赋值</span></span><br><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> CLK_50M <span class="keyword">or</span> <span class="keyword">negedge</span> RST_N)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	<span class="keyword">if</span>(!RST_N)								<span class="comment">//判断复位</span></span><br><span class="line">		address_rom &lt;= <span class="number">7'd0</span>;				<span class="comment">//初始化time_cnt值</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		address_rom &lt;= address_rom + <span class="number">2</span> ;			<span class="comment">//用来给time_cnt赋值</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">		<span class="comment">//这里为什么是   +2   后面再讨论</span></span><br></pre></td></tr></table></figure>
@@ -407,13 +407,13 @@
 </li>
 </ol>
 <p>至此,整个系统的各个关键部件就搭建完成了.</p>
-<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><h3 id="仿真波形"><a href="#仿真波形" class="headerlink" title="仿真波形"></a>仿真波形</h3><p><img src="https://i.loli.net/2018/12/19/5c1919f8a21d5.png" alt="10"><br>第一个波形是输入信号,<br>第二个波形是加法器的输出,<br>第三个波形是用上面第一种加法器写出来的波形,<br>第四个波形是用上面第二种加法器写出来的波形.</p>
+<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><h3 id="仿真波形"><a href="#仿真波形" class="headerlink" title="仿真波形"></a>仿真波形</h3><p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1919f8a21d5.png" alt="10"><br>第一个波形是输入信号,<br>第二个波形是加法器的输出,<br>第三个波形是用上面第一种加法器写出来的波形,<br>第四个波形是用上面第二种加法器写出来的波形.</p>
 <p>可以看出基本有那么一点点的滤波的作用,然而噪声还是非常的大,其中最主要的原因就在于,这个FIR滤波器只有十阶,再加上FIR本身的滤波特性,<strong>莫得办法啦</strong></p>
 <p>而事实上由于阶数太少了,以至于滤波效果还没有收到字长效应的影响,这也是让我始料未及的…</p>
 <h3 id="方案对比"><a href="#方案对比" class="headerlink" title="方案对比"></a>方案对比</h3><p>写这个最主要的原因是为了回答一下那些说用类c写法来直接写fpga的大兄弟们…因为真的很多人学了之后都这样子…</p>
-<h4 id="方案一-类c写法"><a href="#方案一-类c写法" class="headerlink" title="方案一:类c写法"></a>方案一:类c写法</h4><p>我们来看一下他的资源占用和最高运行速率:<br><img src="https://i.loli.net/2018/12/19/5c192535701d0.png" alt="11"><br><img src="https://i.loli.net/2018/12/19/5c1929c21afb4.png" alt="12"></p>
+<h4 id="方案一-类c写法"><a href="#方案一-类c写法" class="headerlink" title="方案一:类c写法"></a>方案一:类c写法</h4><p>我们来看一下他的资源占用和最高运行速率:<br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c192535701d0.png" alt="11"><br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c1929c21afb4.png" alt="12"></p>
 <p>总共用了857个逻辑单元,最高运行速率是59.2MHz</p>
-<h4 id="方案二-例化ip写法"><a href="#方案二-例化ip写法" class="headerlink" title="方案二:例化ip写法"></a>方案二:例化ip写法</h4><p><img src="https://i.loli.net/2018/12/19/5c192b35ec376.png" alt="13"><br><img src="https://i.loli.net/2018/12/19/5c192b557e904.png" alt="14"></p>
+<h4 id="方案二-例化ip写法"><a href="#方案二-例化ip写法" class="headerlink" title="方案二:例化ip写法"></a>方案二:例化ip写法</h4><p><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c192b35ec376.png" alt="13"><br><img src="https://hwb-pic.oss-cn-shenzhen.aliyuncs.com/img/5c192b557e904.png" alt="14"></p>
 <p>总共用了797个逻辑单元,最高运行速率是190.59MHz.<br>还千万不要忘记了,这个ip是16个输入位的,而我们只用了其中的11个!</p>
 <p>所以结果就是,我用的资源比你少,速度可以比你快,出来的波形还一样.虽然类C写法确实带来了不少的方便,但是他确实敌不过速度的制约,速度的制约出问题之后,显然时序约束就是天荒夜谈了.</p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这一个应用或许是fpga在dsp上面较为简单的一个应用了,用fpga写dsp,还是要有扎扎实实的dsp基础才行.</p>
@@ -513,7 +513,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -526,7 +526,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -592,7 +592,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76k字</span>
+  <span class="post-count">博客全站共79.6k字</span>
 </div>
 <span id="busuanzi_container_site_pv" style='display:none'>
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
